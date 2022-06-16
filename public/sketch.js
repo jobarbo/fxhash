@@ -1,8 +1,3 @@
-/*
- * @name Noise Wave
- * @description Using Perlin Noise to generate a wave-like pattern.
- * Original by Daniel Shiffman.
- */
 let seaYoff = 0.0;
 let seaHoff = 0.1; // 2nd dimension of perlin noise
 let seaMinY, seaMaxY, seaHue;
@@ -22,6 +17,7 @@ let hazeStrokeAlpha = 0.01;
 let hazeFillSat = 0;
 let hazeFillBright = 0;
 let hazeFillAlpha = 0;
+let hazeLimit = 0;
 let bgHue = 0;
 function setup() {
 	createCanvas(window.innerHeight, window.innerHeight);
@@ -29,21 +25,23 @@ function setup() {
 
 	randomSeed(fxrand() * 100000);
 	noiseSeed(fxrand() * 100000);
-	bgHue = random(365);
-	console.log(bgHue);
-	background(bgHue, 23, 92);
+	bgHue = random(175, 225);
+	hzHue = random(365);
+	background(bgHue, 50, 100);
+
 	seaMinY = height / 2;
 	seaMaxY = height / 1.95;
 	seaHue = 265;
 
 	hazeMinY = seaMinY + 250;
 	hazeMaxY = seaMaxY + 250;
-	hazeHue = bgHue;
+	hazeHue = hzHue;
 
 	while (seaMinY < height) {
 		createOcean();
 	}
-	while (hazeMinY > 0) {
+
+	while (hazeMinY > height / 3) {
 		createHaze();
 	}
 }
@@ -83,7 +81,12 @@ function createHaze() {
 				hazeStrokeBright -= 0.000003;
 			}
 			if (hazeStrokeAlpha < 100) {
-				hazeStrokeAlpha += 0.00005;
+				hazeStrokeAlphaTimeline = map(hazeMinY, height / 2 + 250, height / 3, 0, 100);
+				if (hazeStrokeAlphaTimeline < 50) {
+					hazeStrokeAlpha += 0.000025;
+				} else {
+					hazeStrokeAlpha -= 0.000025;
+				}
 			}
 		}
 
