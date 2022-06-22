@@ -1,24 +1,6 @@
-let seaYoff = 0.0;
-let seaHoff = 0.1; // 2nd dimension of perlin noise
-let seaMinY, seaMaxY, seaHue;
-let seaStrokeSat = 20;
-let seaStrokeBright = 100;
-let seaStrokeAlpha = 0.001;
-let seaFillSat = 60;
-let seaFillBright = 100;
-let seaFillAlpha = 0.001;
-
-let hazeYoff = 0.0;
-let hazeHoff = 0.1;
-let hazeMinY, hazeMaxY, hazeHue;
-let hazeStrokeSat = 30;
-let hazeStrokeBright = 100;
-let hazeStrokeAlpha = 0.01;
-let hazeFillSat = 0;
-let hazeFillBright = 0;
-let hazeFillAlpha = 0;
-let hazeLimit = 0;
-let bgHue = 0;
+let sun;
+let haze;
+let ocean;
 
 function setup() {
 	createCanvas(window.innerHeight, window.innerHeight);
@@ -26,149 +8,181 @@ function setup() {
 
 	randomSeed(fxrand() * 100000);
 	noiseSeed(fxrand() * 100000);
-	bgHue = random(175, 225);
-	hzHue = random(365);
+	bgHue = random(0, 360);
+	hazeHue = bgHue;
 	background(bgHue, 50, 100);
 
-	seaMinY = height / 2;
-	seaMaxY = height / 1.95;
-	seaHue = 265;
+	sun = new Sun(hazeHue);
+	sun.display();
 
-	hazeMinY = seaMinY + 250;
-	hazeMaxY = seaMaxY + 250;
-	hazeHue = hzHue;
+	ocean = new Ocean(hazeHue);
+	ocean.display();
 
-	createSun();
-
-	while (seaMinY < height) {
-		createOcean();
-	}
-
-	while (hazeMinY > height / 3) {
-		createHaze();
-	}
+	haze = new Haze(hazeHue);
+	haze.display();
 }
 
-function createHaze() {
-	strokeWeight(2);
-	// We are going to draw a polygon out of the wave points
-	beginShape();
-	noFill();
+class Haze {
+	constructor(hazeHue) {
+		this.hue = hazeHue;
+		this.yoff = 0.1;
+		this.xoff = 0.2;
+		this.hoff = 0.1;
+		this.minY = height / 2 + 200;
+		this.maxY = height / 1.95 + 200;
+		this.strokeSat = 30;
+		this.strokeBright = 100;
+		this.strokeAlpha = 0.0;
+		this.fillSat = 0;
+		this.fillBright = 0;
+		this.fillAlpha = 0;
+		this.limit = 0;
+		this.bgHue = 0;
+	}
+	display() {
+		while (this.minY > 0) {
+			strokeWeight(2);
+			// We are going to draw a polygon out of the wave points
+			beginShape();
+			noFill();
 
-	let xoff = 0;
-	// Option #1: 2D Noise
-	// let xoff = seaYoff; // Option #2: 1D Noise
+			this.xoff = 0.2;
+			// Option #1: 2D Noise
+			// let xoff = seaYoff; // Option #2: 1D Noise
 
-	// Iterate over horizontal pixels
-	for (let x = -100; x <= width + 100; x += 5) {
-		// Calculate a y value according to noise, map to
+			// Iterate over horizontal pixels
+			for (let x = -100; x <= width + 100; x += 5) {
+				// Calculate a y value according to noise, map to
 
-		// Option #1: 2D Noise
-		let y = map(noise(xoff, hazeYoff), 0, 1, hazeMinY, hazeMaxY);
-		let h = map(noise(hazeYoff, hazeHoff + xoff), 0, 1, hazeHue - 30, hazeHue + 30);
-		// Option #2: 1D Noise
-		//let h = map(noise(seaHoff), 0, 1, 170, 240);
-		stroke(h, hazeStrokeSat, hazeStrokeBright, hazeStrokeAlpha);
-		// Set the vertex
-		if (hazeMinY > 0) {
-			curveVertex(x, y);
-			xoff += 0.01;
-			hazeHoff += 0.00002;
-			hazeMinY -= 0.001;
-			hazeMaxY -= 0.00115;
-			if (hazeStrokeSat < 20) {
-				hazeStrokeSat += 0.0005;
-			}
-			if (hazeStrokeBright > 75) {
-				hazeStrokeBright -= 0.000003;
-			}
-			if (hazeStrokeAlpha < 100) {
-				hazeStrokeAlphaTimeline = map(hazeMinY, height / 2 + 250, height / 3, 0, 100);
-				if (hazeStrokeAlphaTimeline < 50) {
-					hazeStrokeAlpha += 0.000025;
-				} else {
-					hazeStrokeAlpha -= 0.000025;
+				// Option #1: 2D Noise
+				let y = map(noise(this.xoff, this.yoff), 0, 1, this.minY, this.maxY);
+				let h = map(noise(this.yoff, this.hoff + this.xoff), 0, 1, this.hue - 30, this.hue + 30);
+				// Option #2: 1D Noise
+				//let h = map(noise(seaHoff), 0, 1, 170, 240);
+				stroke(h, this.strokeSat, this.strokeBright, this.strokeAlpha);
+				// Set the vertex
+				if (this.minY > 0) {
+					curveVertex(x, y);
+					this.xoff += 0.01;
+					this.hoff += 0.00002;
+					this.minY -= 0.001;
+					this.maxY -= 0.00115;
+					if (this.strokeSat < 20) {
+						this.strokeSat += 0.0005;
+					}
+					if (this.strokeBright > 75) {
+						this.strokeBright -= 0.000003;
+					}
+					if (this.strokeAlpha < 100) {
+						let strokeAlphaTimeline = map(this.minY, height / 2 + 200, 0, 0, 100);
+						if (strokeAlphaTimeline < 30) {
+							this.strokeAlpha += 0.000125;
+						} else {
+							this.strokeAlpha -= 0.000155;
+						}
+					}
 				}
-			}
-		}
 
-		// Increment x dimension for noise
+				// Increment x dimension for noise
+			}
+			// increment y dimension for noise
+			this.yoff += 0.004;
+			vertex(width + 100, -100);
+			vertex(-100, -100);
+			endShape(CLOSE);
+		}
 	}
-	// increment y dimension for noise
-	hazeYoff += 0.004;
-	vertex(width + 100, -100);
-	vertex(-100, -100);
-	endShape(CLOSE);
 }
 
-function createOcean() {
-	strokeWeight(2);
-	// We are going to draw a polygon out of the wave points
-	beginShape();
-	noFill();
-
-	let xoff = 0;
-	// Option #1: 2D Noise
-	// let xoff = seaYoff; // Option #2: 1D Noise
-
-	// Iterate over horizontal pixels
-	for (let x = -100; x <= width + 100; x += 5) {
-		// Calculate a y value according to noise, map to
-
-		// Option #1: 2D Noise
-		let y = map(noise(xoff, seaYoff), 0, 1, seaMinY, seaMaxY);
-		let h = map(noise(seaYoff, seaHoff + xoff), 0, 1, 160, 230);
-
-		// Option #2: 1D Noise
-		//let h = map(noise(seaHoff), 0, 1, 170, 240);
-		stroke(hazeHue, seaStrokeSat, seaStrokeBright, seaStrokeAlpha);
-		fill(h, seaFillSat, seaFillBright, seaFillAlpha);
-		// Set the vertex
-		if (seaMinY < height) {
-			curveVertex(x, y);
-			xoff += 0.01;
-			seaHoff += 0.00002;
-			seaMinY += 0.001;
-			seaMaxY += 0.00115;
-			if (seaStrokeSat < 20) {
-				seaStrokeSat += 0.0005;
-			}
-			if (seaStrokeBright > 75) {
-				seaStrokeBright -= 0.000003;
-			}
-			if (seaStrokeAlpha < 5) {
-				seaStrokeAlpha += 0.0003;
-			}
-			if (seaFillSat < 70) {
-				seaFillSat += 0.0005;
-			}
-			if (seaFillBright > 70) {
-				seaFillBright -= 0.001;
-			}
-			if (seaFillAlpha < 10) {
-				seaFillAlpha += 0.00015;
-			}
-		}
-
-		// Increment x dimension for noise
+class Ocean {
+	constructor(hazeHue) {
+		this.xoff = 0;
+		this.yoff = 0.1;
+		this.hueoff = 0.1;
+		this.minY = height / 2;
+		this.maxY = height / 1.95;
+		this.hue = hazeHue;
+		this.strokeSat = 20;
+		this.strokeBright = 100;
+		this.strokeAlpha = 0.001;
+		this.fillSat = 60;
+		this.fillBright = 100;
+		this.fillAlpha = 0.001;
 	}
-	// increment y dimension for noise
-	seaYoff += 0.004;
-	vertex(width + 100, height + 100);
-	vertex(-100, height + 100);
-	endShape(CLOSE);
+	display() {
+		while (this.minY < height) {
+			strokeWeight(2);
+			// We are going to draw a polygon out of the wave points
+			beginShape();
+			noFill();
+			this.xoff = 0;
+			// Option #1: 2D Noise
+			// let xoff = seaYoff; // Option #2: 1D Noise
+
+			// Iterate over horizontal pixels
+			for (let x = -100; x <= width + 100; x += 5) {
+				// Calculate a y value according to noise, map to
+
+				// Option #1: 2D Noise
+				let y = map(noise(this.xoff, this.yoff), 0, 1, this.minY, this.maxY);
+				let h = map(noise(this.yoff, this.hueoff + this.xoff), 0, 1, 160, 230);
+
+				// Option #2: 1D Noise
+				//let h = map(noise(seaHoff), 0, 1, 170, 240);
+				stroke(this.hue, this.strokeSat, this.strokeBright, this.strokeAlpha);
+				fill(h, this.fillSat, this.fillBright, this.fillAlpha);
+				// Set the vertex
+				if (this.minY < height) {
+					curveVertex(x, y);
+					this.xoff += 0.01;
+					this.hueoff += 0.000012;
+					this.minY += 0.001;
+					this.maxY += 0.00115;
+					if (this.strokeSat < 20) {
+						this.strokeSat += 0.0005;
+					}
+					if (this.strokeBright > 75) {
+						this.strokeBright -= 0.000003;
+					}
+					if (this.strokeAlpha < 5) {
+						this.strokeAlpha += 0.0003;
+					}
+					if (this.fillSat < 70) {
+						this.fillSat += 0.0005;
+					}
+					if (this.fillBright > 70) {
+						this.fillBright -= 0.001;
+					}
+					if (this.fillAlpha < 10) {
+						this.fillAlpha += 0.00015;
+					}
+				}
+
+				// Increment x dimension for noise
+			}
+			// increment y dimension for noise
+			this.yoff += 0.004;
+			vertex(width + 100, height + 100);
+			vertex(-100, height + 100);
+			endShape(CLOSE);
+		}
+	}
 }
 
-function createSun() {
-	let sunSize = random(150, 400);
-	let sunX = random(sunSize, width - sunSize);
-	let sunY = random(sunSize, height / 2 - sunSize);
-	let sunHue = hazeHue;
-	let sunSat = random(5, 25);
-	let sunBright = random(95, 100);
-	let sunAlpha = random(60, 95);
+class Sun {
+	constructor(hazeHue) {
+		this.sunSize = random(150, 400);
+		this.sunX = random(this.sunSize, width - this.sunSize);
+		this.sunY = random(this.sunSize, height / 2 - this.sunSize);
+		this.sunHue = hazeHue;
+		this.sunSat = random(5, 25);
+		this.sunBright = 100;
+		this.sunAlpha = random(60, 95);
+	}
 
-	noStroke();
-	fill(sunHue, sunSat, sunBright, sunAlpha);
-	ellipse(sunX, sunY, sunSize, sunSize);
+	display() {
+		noStroke();
+		fill(this.sunHue, this.sunSat, this.sunBright, this.sunAlpha);
+		ellipse(this.sunX, this.sunY, this.sunSize, this.sunSize);
+	}
 }
