@@ -19,6 +19,7 @@ let hazeFillBright = 0;
 let hazeFillAlpha = 0;
 let hazeLimit = 0;
 let bgHue = 0;
+
 function setup() {
 	createCanvas(window.innerHeight, window.innerHeight);
 	colorMode(HSB, 360, 100, 100, 100);
@@ -37,6 +38,8 @@ function setup() {
 	hazeMaxY = seaMaxY + 250;
 	hazeHue = hzHue;
 
+	createSun();
+
 	while (seaMinY < height) {
 		createOcean();
 	}
@@ -46,7 +49,6 @@ function setup() {
 	}
 }
 
-function draw() {}
 function createHaze() {
 	strokeWeight(2);
 	// We are going to draw a polygon out of the wave points
@@ -98,6 +100,7 @@ function createHaze() {
 	vertex(-100, -100);
 	endShape(CLOSE);
 }
+
 function createOcean() {
 	strokeWeight(2);
 	// We are going to draw a polygon out of the wave points
@@ -154,4 +157,18 @@ function createOcean() {
 	vertex(width + 100, height + 100);
 	vertex(-100, height + 100);
 	endShape(CLOSE);
+}
+
+function createSun() {
+	let sunSize = random(150, 400);
+	let sunX = random(sunSize, width - sunSize);
+	let sunY = random(sunSize, height / 2 - sunSize);
+	let sunHue = hazeHue;
+	let sunSat = random(5, 25);
+	let sunBright = random(95, 100);
+	let sunAlpha = random(60, 95);
+
+	noStroke();
+	fill(sunHue, sunSat, sunBright, sunAlpha);
+	ellipse(sunX, sunY, sunSize, sunSize);
 }
