@@ -28,8 +28,8 @@ class Haze {
 		this.yoff = 0.1;
 		this.xoff = 0.2;
 		this.hoff = 0.1;
-		this.minY = height / 2 + 200;
-		this.maxY = height / 1.95 + 200;
+		this.minY = height / 2 + 250;
+		this.maxY = height / 1.9 + 250;
 		this.strokeSat = 30;
 		this.strokeBright = 100;
 		this.strokeAlpha = 0.0;
@@ -41,7 +41,7 @@ class Haze {
 	}
 	display() {
 		while (this.minY > 0) {
-			strokeWeight(2);
+			strokeWeight(1);
 			// We are going to draw a polygon out of the wave points
 			beginShape();
 			noFill();
@@ -56,14 +56,15 @@ class Haze {
 
 				// Option #1: 2D Noise
 				let y = map(noise(this.xoff, this.yoff), 0, 1, this.minY, this.maxY);
-				let h = map(noise(this.yoff, this.hoff + this.xoff), 0, 1, this.hue - 30, this.hue + 30);
+				let h = map(noise(this.yoff, this.hoff + this.xoff), 0, 1, this.hue - 1, this.hue + 1);
 				// Option #2: 1D Noise
 				//let h = map(noise(seaHoff), 0, 1, 170, 240);
 				stroke(h, this.strokeSat, this.strokeBright, this.strokeAlpha);
+				//fill(h, this.fillSat, this.fillBright, this.fillAlpha);
 				// Set the vertex
 				if (this.minY > 0) {
 					curveVertex(x, y);
-					this.xoff += 0.01;
+					this.xoff += 0.015;
 					this.hoff += 0.00002;
 					this.minY -= 0.001;
 					this.maxY -= 0.00115;
@@ -74,11 +75,12 @@ class Haze {
 						this.strokeBright -= 0.000003;
 					}
 					if (this.strokeAlpha < 100) {
-						let strokeAlphaTimeline = map(this.minY, height / 2 + 200, 0, 0, 100);
-						if (strokeAlphaTimeline < 30) {
-							this.strokeAlpha += 0.000125;
+						let strokeAlphaTimeline = map(this.minY, height / 2 + 250, 0, 0, 100);
+						let timeline = constrain(strokeAlphaTimeline, 0, 100);
+						if (timeline < 35) {
+							this.strokeAlpha += 0.0002;
 						} else {
-							this.strokeAlpha -= 0.000155;
+							this.strokeAlpha -= 0.0004;
 						}
 					}
 				}
