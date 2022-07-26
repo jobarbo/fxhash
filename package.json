@@ -10,6 +10,7 @@
     "start": "webpack serve --config ./config/webpack.config.dev.js"
   },
   "dependencies": {
+    "nice-color-palettes": "^3.0.0",
     "p5": "^1.4.1"
   },
   "devDependencies": {
