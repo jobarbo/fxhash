@@ -16,6 +16,9 @@ function setup() {
 	let step = 2;
 
 	let hue = random(360);
+	let hueSteps = random(20, 200);
+	console.log(hue);
+	console.log(hueSteps);
 
 	let saturation = 100;
 	let brightness = 100;
@@ -28,7 +31,7 @@ function setup() {
 		xnoise = xstart;
 		for (let x = margin; x <= width - margin; x += step) {
 			xnoise += 0.01;
-			drawLine(x, y, noise(xnoise, ynoise), basew, hue);
+			drawLine(x, y, noise(xnoise, ynoise), basew, hue, hueSteps);
 		}
 	}
 
@@ -61,8 +64,16 @@ function setup() {
 }
 
 /* draw line according to the noise factor */
-function drawLine(x, y, noiseFactor, basew, hue) {
-	let newHue = constrain(map(noiseFactor, 0, 1, hue - 150, hue + 150), 0, 360);
+function drawLine(x, y, noiseFactor, basew, hue, hueSteps) {
+	let newHue = map(noiseFactor, 0, 1, hue - hueSteps, hue + hueSteps);
+
+	// if newHue is out of range, set it to the closest bound
+	if (newHue < 0) {
+		newHue = 360 + newHue; // add 360 to make it positive
+	} else if (newHue > 360) {
+		newHue = newHue - 360; // subtract 360 to make it positive
+	}
+
 	let newSaturation = map(noiseFactor, 0, 1, 100, 20);
 	let newBrightness = map(noiseFactor, 0, 1, 20, 100);
 	let angle = map(noiseFactor, 0, 1, 0, 360);
@@ -82,7 +93,7 @@ function drawLine(x, y, noiseFactor, basew, hue) {
 function createTexture() {
 	let texture = [];
 
-	for (let index = 0; index < 3000; index++) {
+	for (let index = 0; index < 2000; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
 		const rdnW1 = random(5, 150);
