@@ -7,18 +7,16 @@ function setup() {
 	angleMode(DEGREES);
 	smooth();
 
-	let margin = 0;
-	let border = width / 14;
-	let xstart = random(10);
+	let margin = -100;
+	let border = 0;
+	let xstart = random(1000);
 	let xnoise = xstart;
-	let ynoise = random(10);
-	let basew = 100;
+	let ynoise = random(1000);
+	let basew = 1;
 	let step = 2;
 
-	let hue = random(360);
-	let hueSteps = random(20, 200);
-	console.log(hue);
-	console.log(hueSteps);
+	let hue = 80;
+	let hueSteps = 120;
 
 	let saturation = 100;
 	let brightness = 100;
@@ -27,7 +25,7 @@ function setup() {
 	background(50, 5, 15);
 
 	for (let y = margin; y <= height - margin; y += step) {
-		ynoise += 0.05;
+		ynoise += 0.08;
 		xnoise = xstart;
 		for (let x = margin; x <= width - margin; x += step) {
 			xnoise += 0.01;
@@ -58,9 +56,7 @@ function setup() {
 	noFill();
 	rect(width / 2, height / 2, width, height);
 
-	//blendMode(OVERLAY);
-	createTexture();
-	//blendMode(BLEND);
+	//createTexture();
 }
 
 /* draw line according to the noise factor */
@@ -74,19 +70,39 @@ function drawLine(x, y, noiseFactor, basew, hue, hueSteps) {
 		newHue = newHue - 360; // subtract 360 to make it positive
 	}
 
-	let newSaturation = map(noiseFactor, 0, 1, 100, 20);
-	let newBrightness = map(noiseFactor, 0, 1, 20, 100);
-	let angle = map(noiseFactor, 0, 1, 0, 360);
-	let sw = map(noiseFactor, 0, 1, 20, 0);
+	let newSaturation = map(noiseFactor, 0.3, 1, 0, 80);
+	let newBrightness = map(noiseFactor, 0, 1, 60, 10);
+	let angle = map(noiseFactor, 0, 1, 100, 300);
+	let sw = map(noiseFactor, 0, 0.8, 10, 0);
 
 	push();
 	translate(x, y);
-	rotate(angle);
-	strokeWeight(sw);
-	stroke(newHue, newSaturation, newBrightness);
-	fill(newHue, newSaturation, newBrightness);
-	const len = map(noiseFactor, 0, 1, 0, basew);
-	line(0, 0, len, 0);
+
+	const len = map(noiseFactor, 0, 1, basew, basew + random(70));
+	const phue = map(noiseFactor, 0, 1, 0, 25);
+	const psaturation = map(noiseFactor, 0.5, 1, 0, 80);
+	const pbrightness = map(noiseFactor, 0, 1, 0, 40);
+	if (noiseFactor < 0.75) {
+		rotate(angle);
+		strokeWeight(sw);
+		stroke(newHue, newSaturation, newBrightness);
+		fill(newHue, newSaturation, newBrightness);
+		line(0, 0, len, 0);
+	} else {
+		stroke(newHue, newSaturation - 50, newBrightness + 30, 10);
+		fill(newHue, psaturation, pbrightness, 100);
+		let elw = len;
+		let elh = len;
+		let elhlimit = random(0, -350);
+		for (let y = 0; y > elhlimit; y -= 1.5) {
+			rect(0, y, elw, elh);
+			elh -= 0.5;
+			if (elh < 0) {
+				noStroke();
+				elh = 0;
+			}
+		}
+	}
 	pop();
 }
 
