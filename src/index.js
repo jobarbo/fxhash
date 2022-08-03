@@ -26,11 +26,11 @@ let modeArr = [
 	['super soft dunes', 0.01, 0.001],
 	['hardcorn', 0.1, 0.08],
 	['popcorn', 0.035, 0.025],
+	['truecorn', 0.05, 0.05],
 	['softcorn', 0.015, 0.01],
 ];
 let modeIndex = Math.floor(fxrand() * modeArr.length);
 let mode = modeArr[modeIndex];
-console.log(`mode: ${mode[0]}`);
 
 let baselenArr = [5, 10, 15, 25, 50, 60, 100];
 let stepArr = [0.75, 1, 2, 3];

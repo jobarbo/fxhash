@@ -25,6 +25,7 @@ function setup() {
 		['popcorn', 0.035, 0.025],
 		['softcorn', 0.015, 0.01],
 	];
+
 	let mode = window.$fxhashFeatures.mode;
 	let modeYnoise = window.$fxhashFeatures.ynoise;
 	let modeXnoise = window.$fxhashFeatures.xnoise;
@@ -36,13 +37,7 @@ function setup() {
 	let baseAngle = window.$fxhashFeatures.base_angle;
 
 	background(50, 5, 15);
-	//
-	// dunes = ynoise(0.05) & xnoise(0.01)
-	// drapes = ynoise(0.001) & xnoise(0.015)
-	// soft drapes = ynoise(0.001) & xnoise(0.01)
-	// soft hills = ynoise(0.02) & xnoise(0.002)
-	// super soft hills = ynoise(0.01) & xnoise(0.001)
-	// popcorn = ynoise(0.05) & xnoise(0.05)
+
 	for (let y = margin; y <= height - margin; y += step) {
 		ynoise += modeYnoise;
 		xnoise = xstart;
@@ -52,15 +47,17 @@ function setup() {
 		}
 	}
 
+	createTexture();
+
+	blendMode(OVERLAY);
 	let bhue = random(360);
 	let bsaturation = random(80, 100);
 	let bbrightness = random(0, 20);
-
-	createTexture();
 	stroke(bhue, bsaturation, bbrightness);
 	strokeWeight(border);
 	noFill();
 	rect(width / 2, height / 2, width, height);
+	blendMode(BLEND);
 }
 
 /* draw line according to the noise factor */
