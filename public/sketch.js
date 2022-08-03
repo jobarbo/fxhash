@@ -7,67 +7,62 @@ function setup() {
 	angleMode(DEGREES);
 	smooth();
 
-	let margin = 0;
+	let margin = -100;
 	let border = width / 20;
 	let xstart = random(1000);
 	let xnoise = xstart;
 	let ynoise = random(1000);
-	let basew = 100;
-	let step = 1;
 
-	let hue = random(360);
-	let hueSteps = random(50, 200);
-
-	let saturation = 100;
-	let brightness = 100;
-	let alpha = 100;
+	//make 2d array with name and double value
+	let modeArr = [
+		['hard dunes', 0.1, 0.01],
+		['dunes', 0.05, 0.01],
+		['drapes', 0.001, 0.015],
+		['soft drapes', 0.001, 0.005],
+		['soft dunes', 0.02, 0.002],
+		['super soft dunes', 0.01, 0.001],
+		['hardcorn', 0.1, 0.08],
+		['popcorn', 0.035, 0.025],
+		['softcorn', 0.015, 0.01],
+	];
+	let mode = window.$fxhashFeatures.mode;
+	let baselen = window.$fxhashFeatures.base_length;
+	let step = window.$fxhashFeatures.step;
+	let hue = window.$fxhashFeatures.hue;
+	let hueSteps = window.$fxhashFeatures.hue_steps;
+	let maxsw = window.$fxhashFeatures.max_stroke_weight;
+	let baseAngle = window.$fxhashFeatures.base_angle;
 
 	background(50, 5, 15);
-
+	//
 	// dunes = ynoise(0.05) & xnoise(0.01)
 	// drapes = ynoise(0.001) & xnoise(0.015)
 	// soft drapes = ynoise(0.001) & xnoise(0.01)
 	// soft hills = ynoise(0.02) & xnoise(0.002)
 	// super soft hills = ynoise(0.01) & xnoise(0.001)
+	// popcorn = ynoise(0.05) & xnoise(0.05)
 	for (let y = margin; y <= height - margin; y += step) {
-		ynoise += 0.05;
+		ynoise += mode[1];
 		xnoise = xstart;
 		for (let x = margin; x <= width - margin; x += step) {
-			xnoise += 0.0005;
-			drawLine(x, y, noise(xnoise, ynoise), basew, hue, hueSteps);
+			xnoise += mode[2];
+			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle);
 		}
 	}
-
-	// random rect in the canvas
-	/* 	fill(hue / 2, 100, 100);
-	let rw = random(width / 3, width / 1.5);
-	noStroke();
-	blendMode(OVERLAY);
-	rect(random(width), random(height), rw, rw);
-	blendMode(BLEND); */
 
 	let bhue = random(360);
 	let bsaturation = random(80, 100);
 	let bbrightness = random(0, 20);
 
-	/* 	blendMode(DODGE);
-	noStroke();
-	fill(bhue, bsaturation, bbrightness);
-	rect(width / 2, height / 2, width, height);
-	blendMode(BLEND); */
-
+	createTexture();
 	stroke(bhue, bsaturation, bbrightness);
 	strokeWeight(border);
 	noFill();
 	rect(width / 2, height / 2, width, height);
-
-	//blendMode(OVERLAY);
-	createTexture();
-	//blendMode(BLEND);
 }
 
 /* draw line according to the noise factor */
-function drawLine(x, y, noiseFactor, basew, hue, hueSteps) {
+function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
 	let newHue = map(noiseFactor, 0, 1, hue - hueSteps, hue + hueSteps);
 
 	// if newHue is out of range, set it to the closest bound
@@ -77,18 +72,18 @@ function drawLine(x, y, noiseFactor, basew, hue, hueSteps) {
 		newHue = newHue - 360; // subtract 360 to make it positive
 	}
 
-	let newSaturation = map(noiseFactor, 0, 1, 100, 20);
-	let newBrightness = map(noiseFactor, 0, 1, 20, 100);
-	let angle = map(noiseFactor, 0, 1, 0, 360);
-	let sw = map(noiseFactor, 0, 1, 50, 0);
+	let newSaturation = map(noiseFactor, 0, 1, 90, 10);
+	let newBrightness = map(noiseFactor, 0, 1, 10, 90);
+	let angle = map(noiseFactor, 0, 1, 0, baseAngle);
+	let sw = map(noiseFactor, 0, 1, maxsw, 0); // stroke weight
 
 	push();
 	translate(x, y);
 	rotate(angle);
 	strokeWeight(sw);
-	stroke(newHue, newSaturation, newBrightness);
-	fill(newHue, newSaturation, newBrightness);
-	const len = map(noiseFactor, 0, 1, 0, basew);
+	stroke(newHue, newSaturation, newBrightness, 100);
+	fill(newHue, newSaturation, newBrightness, 100);
+	const len = map(noiseFactor, 0, 1, 0, baselen);
 	line(0, 0, len, 0);
 	pop();
 }
@@ -103,7 +98,7 @@ function createTexture() {
 		texture[index] = new Smudge(rdnX, rdnY, rdnW1);
 	}
 	for (let index = 0; index < texture.length; index++) {
-		for (let j = 0; j < 1000; j++) {
+		for (let j = 0; j < 500; j++) {
 			texture[index].display();
 		}
 	}
