@@ -18,9 +18,9 @@ window.palettes = palettes;
 // [https://fxhash.xyz/articles/guide-mint-generative-token#features]
 //
 let modeArr = [
-	['hard dunes', 0.1, 0.01],
+	['hard dunes', 0.1, 0.05],
 	['dunes', 0.05, 0.01],
-	['drapes', 0.001, 0.015],
+	['drapes', 0.001, 0.02],
 	['soft drapes', 0.001, 0.005],
 	['soft dunes', 0.02, 0.002],
 	['super soft dunes', 0.01, 0.001],
@@ -32,11 +32,11 @@ let modeArr = [
 let modeIndex = Math.floor(fxrand() * modeArr.length);
 let mode = modeArr[modeIndex];
 
-let baselenArr = [1, 5, 10, 15, 25, 50, 100, 120];
-let stepArr = [0.75, 1, 2, 3];
-let maxswArr = [1, 2, 3, 5, 10, 30, 50, 100];
+let baselenArr = [5, 8, 10, 15, 25, 50, 75];
+let maxswArr = [1, 2, 3, 4, 5, 8, 10, 15, 30, 50, 70, 100];
+let stepArr = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5];
 let angledirArr = [1, -1];
-let hueStepsArr = [20, 50, 80, 120, 150, 200];
+let hueStepsArr = [50, 80, 100, 120, 150, 200];
 
 let baselen = baselenArr[Math.floor(fxrand() * baselenArr.length)];
 

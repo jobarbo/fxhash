@@ -8,7 +8,7 @@ function setup() {
 	smooth();
 
 	let margin = -100;
-	let border = width / 20;
+	let border = width / 30;
 	let xstart = random(1000);
 	let xnoise = xstart;
 	let ynoise = random(1000);
@@ -47,16 +47,17 @@ function setup() {
 		}
 	}
 
-	createTexture();
-
-	blendMode(OVERLAY);
 	let bhue = random(360);
 	let bsaturation = random(80, 100);
 	let bbrightness = random(0, 20);
-	stroke(bhue, bsaturation, bbrightness);
+
+	createTexture(hue);
+
+	blendMode(OVERLAY);
 	strokeWeight(border);
 	noFill();
-	rect(width / 2, height / 2, width, height);
+	stroke(bhue, bsaturation, bbrightness);
+	rect(width / 2, height / 2, width - border, height - border);
 	blendMode(BLEND);
 }
 
@@ -71,10 +72,10 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
 		newHue = newHue - 360; // subtract 360 to make it positive
 	}
 
-	let newSaturation = map(noiseFactor, 0, 1, 90, 10);
-	let newBrightness = map(noiseFactor, 0, 1, 10, 90);
+	let newSaturation = map(noiseFactor, 0, 1, 50, 100);
+	let newBrightness = map(noiseFactor, 0, 1, 95, 20);
 	let angle = map(noiseFactor, 0, 1, 0, baseAngle);
-	let sw = map(noiseFactor, 0, 1, maxsw, 0); // stroke weight
+	let sw = map(noiseFactor, 0, 1, maxsw, 1); // stroke weight
 
 	push();
 	translate(x, y);
@@ -87,24 +88,24 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
 	pop();
 }
 
-function createTexture() {
+function createTexture(hue) {
 	let texture = [];
 
-	for (let index = 0; index < 1000; index++) {
+	for (let index = 0; index < 1500; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
 		const rdnW1 = random(5, 150);
-		texture[index] = new Smudge(rdnX, rdnY, rdnW1);
+		texture[index] = new Smudge(rdnX, rdnY, rdnW1, hue);
 	}
 	for (let index = 0; index < texture.length; index++) {
-		for (let j = 0; j < 500; j++) {
+		for (let j = 0; j < 1000; j++) {
 			texture[index].display();
 		}
 	}
 }
 
 class Smudge {
-	constructor(rdnX, rdnY, w1) {
+	constructor(rdnX, rdnY, w1, hue) {
 		this.xoff = 0;
 		this.yoff = 1;
 		this.woff1 = 0;
@@ -115,6 +116,7 @@ class Smudge {
 		this.mapXHigh = width * 1.5;
 		this.mapYLow = -height / 3;
 		this.mapYHigh = height * 1.5;
+		this.hue = hue;
 		this.alpha = int(random(0, 15));
 	}
 
@@ -127,7 +129,7 @@ class Smudge {
 		const x = map(noise(this.xoff + this.rdnX), 0, 1, this.mapXLow, this.mapXHigh);
 		const y = map(noise(this.yoff + this.rdnY), 0, 1, this.mapYLow, this.mapYHigh);
 
-		fill(207, 0, 100, this.alpha);
+		fill(this.hue, 50, 100, this.alpha);
 		noStroke();
 		ellipse(x, y, w1, w1);
 	}
