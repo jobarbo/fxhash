@@ -26,6 +26,8 @@ function setup() {
 		['softcorn', 0.015, 0.01],
 	];
 	let mode = window.$fxhashFeatures.mode;
+	let modeYnoise = window.$fxhashFeatures.ynoise;
+	let modeXnoise = window.$fxhashFeatures.xnoise;
 	let baselen = window.$fxhashFeatures.base_length;
 	let step = window.$fxhashFeatures.step;
 	let hue = window.$fxhashFeatures.hue;
@@ -42,10 +44,10 @@ function setup() {
 	// super soft hills = ynoise(0.01) & xnoise(0.001)
 	// popcorn = ynoise(0.05) & xnoise(0.05)
 	for (let y = margin; y <= height - margin; y += step) {
-		ynoise += mode[1];
+		ynoise += modeYnoise;
 		xnoise = xstart;
 		for (let x = margin; x <= width - margin; x += step) {
-			xnoise += mode[2];
+			xnoise += modeXnoise;
 			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle);
 		}
 	}

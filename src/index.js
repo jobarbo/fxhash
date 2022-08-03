@@ -51,8 +51,9 @@ let hue = Math.floor(fxrand() * 360);
 let hueSteps = hueStepsArr[Math.floor(fxrand() * hueStepsArr.length)];
 
 window.$fxhashFeatures = {
-	mode: mode,
-	mode_name: mode[0],
+	mode: mode[0],
+	ynoise: mode[1],
+	xnoise: mode[2],
 	base_length: baselen,
 	step: step,
 	max_stroke_weight: maxsw,
