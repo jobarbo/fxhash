@@ -8,17 +8,15 @@ function setup() {
 	smooth();
 
 	let margin = 0;
-	let border = width / 14;
-	let xstart = random(10);
+	let border = width / 20;
+	let xstart = random(1000);
 	let xnoise = xstart;
-	let ynoise = random(10);
+	let ynoise = random(1000);
 	let basew = 100;
-	let step = 2;
+	let step = 1;
 
 	let hue = random(360);
-	let hueSteps = random(20, 200);
-	console.log(hue);
-	console.log(hueSteps);
+	let hueSteps = random(50, 200);
 
 	let saturation = 100;
 	let brightness = 100;
@@ -26,11 +24,16 @@ function setup() {
 
 	background(50, 5, 15);
 
+	// dunes = ynoise(0.05) & xnoise(0.01)
+	// drapes = ynoise(0.001) & xnoise(0.015)
+	// soft drapes = ynoise(0.001) & xnoise(0.01)
+	// soft hills = ynoise(0.02) & xnoise(0.002)
+	// super soft hills = ynoise(0.01) & xnoise(0.001)
 	for (let y = margin; y <= height - margin; y += step) {
 		ynoise += 0.05;
 		xnoise = xstart;
 		for (let x = margin; x <= width - margin; x += step) {
-			xnoise += 0.01;
+			xnoise += 0.0005;
 			drawLine(x, y, noise(xnoise, ynoise), basew, hue, hueSteps);
 		}
 	}
@@ -45,7 +48,7 @@ function setup() {
 
 	let bhue = random(360);
 	let bsaturation = random(80, 100);
-	let bbrightness = random(0, 100);
+	let bbrightness = random(0, 20);
 
 	/* 	blendMode(DODGE);
 	noStroke();
@@ -53,7 +56,7 @@ function setup() {
 	rect(width / 2, height / 2, width, height);
 	blendMode(BLEND); */
 
-	stroke(bhue, bsaturation, 0);
+	stroke(bhue, bsaturation, bbrightness);
 	strokeWeight(border);
 	noFill();
 	rect(width / 2, height / 2, width, height);
@@ -77,7 +80,7 @@ function drawLine(x, y, noiseFactor, basew, hue, hueSteps) {
 	let newSaturation = map(noiseFactor, 0, 1, 100, 20);
 	let newBrightness = map(noiseFactor, 0, 1, 20, 100);
 	let angle = map(noiseFactor, 0, 1, 0, 360);
-	let sw = map(noiseFactor, 0, 1, 20, 0);
+	let sw = map(noiseFactor, 0, 1, 50, 0);
 
 	push();
 	translate(x, y);
@@ -93,7 +96,7 @@ function drawLine(x, y, noiseFactor, basew, hue, hueSteps) {
 function createTexture() {
 	let texture = [];
 
-	for (let index = 0; index < 2000; index++) {
+	for (let index = 0; index < 1000; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
 		const rdnW1 = random(5, 150);
