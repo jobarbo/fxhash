@@ -129,7 +129,7 @@ class Smudge {
 		const x = map(noise(this.xoff + this.rdnX), 0, 1, this.mapXLow, this.mapXHigh);
 		const y = map(noise(this.yoff + this.rdnY), 0, 1, this.mapYLow, this.mapYHigh);
 
-		fill(this.hue, 50, 100, this.alpha);
+		fill(this.hue, 20, 100, this.alpha);
 		noStroke();
 		ellipse(x, y, w1, w1);
 	}
