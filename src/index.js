@@ -32,9 +32,9 @@ let modeArr = [
 let modeIndex = Math.floor(fxrand() * modeArr.length);
 let mode = modeArr[modeIndex];
 
-let baselenArr = [5, 10, 15, 25, 50, 60, 100];
+let baselenArr = [1, 5, 10, 15, 25, 50, 100, 120];
 let stepArr = [0.75, 1, 2, 3];
-let maxswArr = [1, 2, 3, 5, 15, 40, 50, 100, 120];
+let maxswArr = [1, 2, 3, 5, 10, 30, 50, 100];
 let angledirArr = [1, -1];
 let hueStepsArr = [20, 50, 80, 120, 150, 200];
 
@@ -62,4 +62,4 @@ window.$fxhashFeatures = {
 	hue: hue,
 	hue_steps: hueSteps,
 };
-console.log($fxhashFeatures);
+console.log(window.$fxhashFeatures);
