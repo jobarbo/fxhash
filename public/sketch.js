@@ -7,6 +7,8 @@ function setup() {
 	angleMode(DEGREES);
 	smooth();
 
+	let noiseScaleX = random(0.01, 0.1);
+	let noiseScaleY = random(0.01, 0.1);
 	let margin = -100;
 	let border = width / 30;
 	let xstart = random(1000);
@@ -32,7 +34,7 @@ function setup() {
 		xnoise = xstart;
 		for (let x = margin; x <= width - margin; x += step) {
 			xnoise += modeXnoise;
-			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle);
+			drawLine(x, y, noise(xnoise * noiseScaleX, ynoise * noiseScaleY), baselen, hue, hueSteps, maxsw, baseAngle);
 		}
 	}
 
