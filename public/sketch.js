@@ -7,8 +7,6 @@ function setup() {
 	angleMode(DEGREES);
 	smooth();
 
-	let noiseScaleX = random(0.01, 0.1);
-	let noiseScaleY = random(0.01, 0.1);
 	let margin = -100;
 	let border = width / 30;
 	let xstart = random(1000);
@@ -29,12 +27,12 @@ function setup() {
 
 	background(50, 5, 15);
 
-	for (let y = margin; y <= height - margin; y += step) {
+	for (let y = height / 3; y <= height - margin; y += step) {
 		ynoise += modeYnoise;
 		xnoise = xstart;
 		for (let x = margin; x <= width - margin; x += step) {
 			xnoise += modeXnoise;
-			drawLine(x, y, noise(xnoise * noiseScaleX, ynoise * noiseScaleY), baselen, hue, hueSteps, maxsw, baseAngle);
+			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle);
 		}
 	}
 
@@ -66,8 +64,8 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
 	let newSaturation = map(noiseFactor, 0, 1, 100, 20);
 	let newBrightness = map(noiseFactor, 0, 1, 20, 95);
 	let angle = map(noiseFactor, 0, 1, 0, baseAngle);
-	let sw = map(noiseFactor, 0.3, 0.7, maxsw, 0.1);
-	sw = constrain(sw, maxsw, 0.1);
+	let sw = map(noiseFactor, 0, 1, maxsw, 0.1);
+	let len = map(noiseFactor, 0, 1, 0.1, baselen + random(-baselen / 5, baselen / 5));
 
 	push();
 	translate(x, y);
@@ -75,12 +73,23 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
 	strokeWeight(sw);
 	stroke(newHue, newSaturation, newBrightness, 100);
 	fill(newHue, newSaturation, newBrightness, 100);
-	const len = map(noiseFactor, 0, 1, 0, baselen);
+
+	line(0, 0, len, 0);
 	if (noiseFactor > 0.5) {
-		line(0, 0, len, 0);
+		noFill();
+		strokeWeight(1);
+		stroke(newHue, newSaturation, 10, 10);
+		//rect(len, 0, len / 2, len / 2, 50); // draw a rectangle (rounded corners)
+		ellipse(len, 0, len / 2, len / 2); // draw an ellipse
 	} else {
-		line(len, 0, 0, 0);
+		// draw beaches
+		noFill();
+		strokeWeight(5);
+		stroke(newHue, 10, newBrightness, 10);
+		//rect(len, 0, len / 2, len / 2, 50); // draw a rectangle (rounded corners)
+		ellipse(len, 0, len / 2, len / 2); // draw an ellipse
 	}
+
 	pop();
 }
 
