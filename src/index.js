@@ -32,7 +32,7 @@ let modeArr = [
 let modeIndex = Math.floor(fxrand() * modeArr.length);
 let mode = modeArr[modeIndex];
 
-let baselenArr = [5, 8, 10, 15, 25, 50, 75];
+let baselenArr = [10, 15, 25, 50, 75];
 let maxswArr = [1, 2, 3, 4, 5, 8, 10, 15, 30];
 let stepArr = [1, 1.25, 1.5, 1.75, 2];
 let angledirArr = [1];
