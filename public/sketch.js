@@ -14,17 +14,6 @@ function setup() {
 	let ynoise = random(1000);
 
 	//make 2d array with name and double value
-	let modeArr = [
-		['hard dunes', 0.1, 0.01],
-		['dunes', 0.05, 0.01],
-		['drapes', 0.001, 0.015],
-		['soft drapes', 0.001, 0.005],
-		['soft dunes', 0.02, 0.002],
-		['super soft dunes', 0.01, 0.001],
-		['hardcorn', 0.1, 0.08],
-		['popcorn', 0.035, 0.025],
-		['softcorn', 0.015, 0.01],
-	];
 
 	let mode = window.$fxhashFeatures.mode;
 	let modeYnoise = window.$fxhashFeatures.ynoise;
@@ -49,11 +38,11 @@ function setup() {
 
 	let bhue = random(360);
 	let bsaturation = random(80, 100);
-	let bbrightness = random(0, 20);
+	let bbrightness = random(0, 25);
 
 	createTexture(hue);
 
-	blendMode(OVERLAY);
+	blendMode(MULTIPLY);
 	strokeWeight(border);
 	noFill();
 	stroke(bhue, bsaturation, bbrightness);
@@ -72,10 +61,11 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
 		newHue = newHue - 360; // subtract 360 to make it positive
 	}
 
-	let newSaturation = map(noiseFactor, 0, 1, 50, 100);
-	let newBrightness = map(noiseFactor, 0, 1, 95, 20);
+	let newSaturation = map(noiseFactor, 0, 1, 100, 20);
+	let newBrightness = map(noiseFactor, 0, 1, 20, 95);
 	let angle = map(noiseFactor, 0, 1, 0, baseAngle);
-	let sw = map(noiseFactor, 0, 1, maxsw, 1); // stroke weight
+	let sw = map(noiseFactor, 0.3, 0.7, maxsw, 0.1);
+	sw = constrain(sw, maxsw, 0.1);
 
 	push();
 	translate(x, y);
@@ -84,7 +74,11 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
 	stroke(newHue, newSaturation, newBrightness, 100);
 	fill(newHue, newSaturation, newBrightness, 100);
 	const len = map(noiseFactor, 0, 1, 0, baselen);
-	line(0, 0, len, 0);
+	if (noiseFactor > 0.5) {
+		line(0, 0, len, 0);
+	} else {
+		line(len, 0, 0, 0);
+	}
 	pop();
 }
 

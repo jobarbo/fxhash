@@ -20,21 +20,21 @@ window.palettes = palettes;
 let modeArr = [
 	['hard dunes', 0.1, 0.05],
 	['dunes', 0.05, 0.01],
+	['soft dunes', 0.02, 0.002],
+	['hard drapes', 0.01, 0.2],
 	['drapes', 0.001, 0.02],
 	['soft drapes', 0.001, 0.005],
-	['soft dunes', 0.02, 0.002],
-	['super soft dunes', 0.01, 0.001],
-	['hardcorn', 0.1, 0.08],
+	['hardcorn', 0.2, 0.18],
 	['popcorn', 0.035, 0.025],
-	['truecorn', 0.05, 0.05],
+	['truecorn', 0.025, 0.025],
 	['softcorn', 0.015, 0.01],
 ];
 let modeIndex = Math.floor(fxrand() * modeArr.length);
 let mode = modeArr[modeIndex];
 
 let baselenArr = [5, 8, 10, 15, 25, 50, 75];
-let maxswArr = [1, 2, 3, 4, 5, 8, 10, 15, 30, 50, 70, 100];
-let stepArr = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5];
+let maxswArr = [1, 2, 3, 4, 5, 8, 10, 15, 30];
+let stepArr = [0.75, 1, 1.25, 1.5, 1.75, 2];
 let angledirArr = [1, -1];
 let hueStepsArr = [50, 80, 100, 120, 150, 200];
 
