@@ -27,7 +27,7 @@ function setup() {
 
 	background(50, 5, 15);
 
-	for (let y = height / 3; y <= height - margin; y += step) {
+	for (let y = margin; y <= height - margin; y += step) {
 		ynoise += modeYnoise;
 		xnoise = xstart;
 		for (let x = margin; x <= width - margin; x += step) {
@@ -65,7 +65,7 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
 	let newBrightness = map(noiseFactor, 0, 1, 20, 95);
 	let angle = map(noiseFactor, 0, 1, 0, baseAngle);
 	let sw = map(noiseFactor, 0, 1, maxsw, 0.1);
-	let len = map(noiseFactor, 0, 1, 0.1, baselen + random(-baselen / 5, baselen / 5));
+	let len = map(noiseFactor, 0, 1, 0.1, baselen + random(0, baselen / 5));
 
 	push();
 	translate(x, y);
@@ -76,18 +76,17 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
 
 	line(0, 0, len, 0);
 	if (noiseFactor > 0.5) {
-		noFill();
-		strokeWeight(1);
-		stroke(newHue, newSaturation, 10, 10);
-		//rect(len, 0, len / 2, len / 2, 50); // draw a rectangle (rounded corners)
-		ellipse(len, 0, len / 2, len / 2); // draw an ellipse
+		//noFill();
+		strokeWeight(2);
+		//fill(newHue, newSaturation + 15, newBrightness - 35, 15); // fill with a lighter color
+		stroke(newHue, newSaturation + 10, newBrightness - 35, 15); // fill with a Darker color
+		ellipse(len, random(-len / 10, len / 10), len / 5, len / 2); // draw an ellipse
 	} else {
 		// draw beaches
 		noFill();
 		strokeWeight(5);
-		stroke(newHue, 10, newBrightness, 10);
-		//rect(len, 0, len / 2, len / 2, 50); // draw a rectangle (rounded corners)
-		ellipse(len, 0, len / 2, len / 2); // draw an ellipse
+		stroke(newHue, 5, 95, 10);
+		ellipse(len, len / 5, len / 2, len / 5); // draw an ellipse
 	}
 
 	pop();
