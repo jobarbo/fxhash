@@ -30,7 +30,7 @@ let mode = modeArr[modeIndex];
 
 let baselenArr = [10, 15, 20, 25, 30, 35, 50, 65];
 let maxswArr = [1, 2, 3, 4, 5, 8, 10, 12, 15, 23, 30];
-let stepArr = [1, 1.25, 1.5];
+let stepArr = [1, 1.05, 1.1, 1.15, 1.25, 1.5];
 let angledirArr = [1];
 let hueStepsArr = [50, 80, 100, 120, 135];
 let shadowModeArr = ['rocky', 'grass'];
