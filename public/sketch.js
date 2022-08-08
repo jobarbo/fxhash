@@ -24,34 +24,39 @@ function setup() {
 	let hueSteps = window.$fxhashFeatures.hue_steps;
 	let maxsw = window.$fxhashFeatures.max_stroke_weight;
 	let baseAngle = window.$fxhashFeatures.base_angle;
+	let shadowMode = window.$fxhashFeatures.shadow_mode;
 
 	background(50, 5, 15);
-
+	console.time('drawline');
 	for (let y = margin; y <= height - margin; y += step) {
 		ynoise += modeYnoise;
 		xnoise = xstart;
 		for (let x = margin; x <= width - margin; x += step) {
 			xnoise += modeXnoise;
-			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle);
+			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle, shadowMode);
 		}
 	}
+	console.timeEnd('drawline');
 
+	console.time('createTexture');
+	createTexture(hue);
+	console.timeEnd('createTexture');
+
+	console.time('border');
 	let bhue = random(360);
 	let bsaturation = random(80, 100);
 	let bbrightness = random(0, 25);
-
-	createTexture(hue);
-
 	blendMode(MULTIPLY);
 	strokeWeight(border);
 	noFill();
 	stroke(bhue, bsaturation, bbrightness);
 	rect(width / 2, height / 2, width - border, height - border);
 	blendMode(BLEND);
+	console.timeEnd('border');
 }
 
 /* draw line according to the noise factor */
-function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
+function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, shadowMode) {
 	let newHue = map(noiseFactor, 0, 1, hue - hueSteps, hue + hueSteps);
 
 	// if newHue is out of range, set it to the closest bound
@@ -70,25 +75,27 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle) {
 	push();
 	translate(x, y);
 	rotate(angle);
+
 	strokeWeight(sw);
 	stroke(newHue, newSaturation, newBrightness, 100);
 	fill(newHue, newSaturation, newBrightness, 100);
-
 	line(0, 0, len, 0);
+
+	noFill();
 	if (noiseFactor > 0.5) {
-		//noFill();
 		strokeWeight(2);
-		//fill(newHue, newSaturation + 15, newBrightness - 35, 15); // fill with a lighter color
-		stroke(newHue, newSaturation + 10, newBrightness - 35, 15); // fill with a Darker color
-		ellipse(len, random(-len / 10, len / 10), len / 5, len / 2); // draw an ellipse
+		stroke(newHue, newSaturation + 20, newBrightness - 30, 15);
+		if (shadowMode == 'rocky') {
+			ellipse(len, random(-len / 5, len / 5), len / 5, len / 5); // draw an ellipse
+		} else {
+			ellipse(len, random(-len / 5, len / 5), len / 3, len / 5); // draw an ellipse
+		}
 	} else {
 		// draw beaches
-		noFill();
 		strokeWeight(5);
-		stroke(newHue, 5, 95, 10);
+		stroke(newHue, 5, 95, 15);
 		ellipse(len, len / 5, len / 2, len / 5); // draw an ellipse
 	}
-
 	pop();
 }
 
@@ -135,6 +142,6 @@ class Smudge {
 
 		fill(this.hue, 20, 100, this.alpha);
 		noStroke();
-		ellipse(x, y, w1, w1);
+		rect(x, y, w1, w1);
 	}
 }

@@ -18,24 +18,23 @@ window.palettes = palettes;
 // [https://fxhash.xyz/articles/guide-mint-generative-token#features]
 //
 let modeArr = [
-	//['perpective far', 0.1, 0.01],
-	['perspective normal', 0.05, 0.01],
-	//['perspective close', 0.02, 0.002],
+	['perspective far', 0.1, 0.01],
+	['perspective normal', 0.05, 0.005],
+	['perspective close', 0.02, 0.002],
 
-	//['topo far', 0.03, 0.03],
-	//['topo normal', 0.02, 0.02],
-	//['topo close', 0.01, 0.01],
+	['topo far', 0.03, 0.03],
+	['topo normal', 0.02, 0.02],
+	['topo close', 0.005, 0.005],
 ];
 let modeIndex = Math.floor(fxrand() * modeArr.length);
 let mode = modeArr[modeIndex];
 
-//let baselenArr = [10, 15, 25, 50, 75];
-//let maxswArr = [1, 2, 3, 4, 5, 8, 10, 15, 30];
-let baselenArr = [30];
-let maxswArr = [5];
+let baselenArr = [10, 15, 25, 50, 75];
+let maxswArr = [1, 2, 3, 4, 5, 8, 10, 12, 15, 23, 30];
 let stepArr = [1, 1.25, 1.5, 1.75, 2];
 let angledirArr = [1];
 let hueStepsArr = [50, 80, 100, 120, 125];
+let shadowModeArr = ['rocky', 'grass'];
 
 let baselen = baselenArr[Math.floor(fxrand() * baselenArr.length)];
 
@@ -49,6 +48,8 @@ let baseAngle = 360 * angledir;
 let hue = Math.floor(fxrand() * 360);
 let hueSteps = hueStepsArr[Math.floor(fxrand() * hueStepsArr.length)];
 
+let shadowMode = shadowModeArr[Math.floor(fxrand() * shadowModeArr.length)];
+
 window.$fxhashFeatures = {
 	mode: mode[0],
 	ynoise: mode[1],
@@ -60,5 +61,6 @@ window.$fxhashFeatures = {
 	angle_direction: angledir,
 	hue: hue,
 	hue_steps: hueSteps,
+	shadow_mode: shadowMode,
 };
 console.log(window.$fxhashFeatures);
