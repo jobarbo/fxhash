@@ -18,22 +18,21 @@ window.palettes = palettes;
 // [https://fxhash.xyz/articles/guide-mint-generative-token#features]
 //
 let modeArr = [
-	['perspective far', 0.1, 0.01],
-	['perspective normal', 0.05, 0.005],
-	['perspective close', 0.02, 0.002],
-
-	['topo far', 0.03, 0.03],
-	['topo normal', 0.02, 0.02],
+	['perspective far', 0.05, 0.005],
+	['perspective normal', 0.03, 0.003],
+	['perspective close', 0.01, 0.001],
+	['topo far', 0.01, 0.01],
+	['topo normal', 0.007, 0.007],
 	['topo close', 0.005, 0.005],
 ];
 let modeIndex = Math.floor(fxrand() * modeArr.length);
 let mode = modeArr[modeIndex];
 
-let baselenArr = [10, 15, 25, 50, 75];
+let baselenArr = [10, 15, 20, 25, 30, 35, 50, 65];
 let maxswArr = [1, 2, 3, 4, 5, 8, 10, 12, 15, 23, 30];
-let stepArr = [1, 1.25, 1.5, 1.75, 2];
+let stepArr = [1, 1.25, 1.5];
 let angledirArr = [1];
-let hueStepsArr = [50, 80, 100, 120, 125];
+let hueStepsArr = [50, 80, 100, 120, 135];
 let shadowModeArr = ['rocky', 'grass'];
 
 let baselen = baselenArr[Math.floor(fxrand() * baselenArr.length)];
@@ -63,4 +62,3 @@ window.$fxhashFeatures = {
 	hue_steps: hueSteps,
 	shadow_mode: shadowMode,
 };
-console.log(window.$fxhashFeatures);

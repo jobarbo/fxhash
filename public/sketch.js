@@ -25,9 +25,10 @@ function setup() {
 	let maxsw = window.$fxhashFeatures.max_stroke_weight;
 	let baseAngle = window.$fxhashFeatures.base_angle;
 	let shadowMode = window.$fxhashFeatures.shadow_mode;
+	let letterArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-	background(50, 5, 15);
-	console.time('drawline');
+	background(hue, 80, 50);
+
 	for (let y = margin; y <= height - margin; y += step) {
 		ynoise += modeYnoise;
 		xnoise = xstart;
@@ -36,23 +37,29 @@ function setup() {
 			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle, shadowMode);
 		}
 	}
-	console.timeEnd('drawline');
 
-	console.time('createTexture');
-	createTexture(hue);
-	console.timeEnd('createTexture');
-
-	console.time('border');
 	let bhue = random(360);
 	let bsaturation = random(80, 100);
 	let bbrightness = random(0, 25);
-	blendMode(MULTIPLY);
 	strokeWeight(border);
 	noFill();
 	stroke(bhue, bsaturation, bbrightness);
 	rect(width / 2, height / 2, width - border, height - border);
-	blendMode(BLEND);
-	console.timeEnd('border');
+
+	// write name of planet
+	let txt = `Planet ${Math.floor(random(1, 999))}${random(letterArr)}-${Math.floor(random(1, 99))}-${Math.floor(random(1, 9))}${random(letterArr)}`;
+	textSize(20);
+	textFont('Courier');
+	rectMode(CENTER);
+	fill(bhue, bsaturation, bbrightness);
+	noStroke();
+	rect(border + (textWidth(txt) + 19) / 2, border + textAscent(txt) / 2, textWidth(txt) + 20, textAscent(txt) + 10);
+	fill(hue, 10, 100);
+	textAlign(CENTER, CENTER);
+	text(txt, border + (textWidth(txt) + 20) / 2, border + textAscent(txt) / 2);
+
+	// draw texture
+	createTexture(hue);
 }
 
 /* draw line according to the noise factor */
@@ -84,17 +91,18 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, s
 	noFill();
 	if (noiseFactor > 0.5) {
 		strokeWeight(2);
-		stroke(newHue, newSaturation + 20, newBrightness - 30, 15);
+		stroke(newHue, newSaturation + 20, newBrightness - 20, 15);
 		if (shadowMode == 'rocky') {
-			ellipse(len, random(-len / 5, len / 5), len / 5, len / 5); // draw an ellipse
+			rect(len, random(-len / 10, len / 10), sw, sw, 10);
 		} else {
-			ellipse(len, random(-len / 5, len / 5), len / 3, len / 5); // draw an ellipse
+			rect(len, random(-len / 5, len / 5), sw * 2, sw / 2, 10);
 		}
 	} else {
 		// draw beaches
-		strokeWeight(5);
+		strokeWeight(2);
 		stroke(newHue, 5, 95, 15);
-		ellipse(len, len / 5, len / 2, len / 5); // draw an ellipse
+		fill(newHue, 5, 85, 15);
+		rect(len, len / 5, len / 2, len / 5, 10);
 	}
 	pop();
 }
@@ -102,14 +110,14 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, s
 function createTexture(hue) {
 	let texture = [];
 
-	for (let index = 0; index < 1500; index++) {
+	for (let index = 0; index < 2000; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
 		const rdnW1 = random(5, 150);
 		texture[index] = new Smudge(rdnX, rdnY, rdnW1, hue);
 	}
 	for (let index = 0; index < texture.length; index++) {
-		for (let j = 0; j < 1000; j++) {
+		for (let j = 0; j < 1500; j++) {
 			texture[index].display();
 		}
 	}
