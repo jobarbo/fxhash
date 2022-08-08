@@ -47,7 +47,7 @@ let baseAngle = 360 * angledir;
 let hue = Math.floor(fxrand() * 360);
 let hueSteps = hueStepsArr[Math.floor(fxrand() * hueStepsArr.length)];
 
-let shadowMode = shadowModeArr[Math.floor(fxrand() * shadowModeArr.length)];
+let reliefMode = shadowModeArr[Math.floor(fxrand() * shadowModeArr.length)];
 
 window.$fxhashFeatures = {
 	mode: mode[0],
@@ -60,5 +60,5 @@ window.$fxhashFeatures = {
 	angle_direction: angledir,
 	hue: hue,
 	hue_steps: hueSteps,
-	shadow_mode: shadowMode,
+	relief_mode: reliefMode,
 };

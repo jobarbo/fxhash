@@ -24,7 +24,7 @@ function setup() {
 	let hueSteps = window.$fxhashFeatures.hue_steps;
 	let maxsw = window.$fxhashFeatures.max_stroke_weight;
 	let baseAngle = window.$fxhashFeatures.base_angle;
-	let shadowMode = window.$fxhashFeatures.shadow_mode;
+	let reliefMode = window.$fxhashFeatures.shadow_mode;
 	let letterArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
 	background(hue, 80, 50);
@@ -34,7 +34,7 @@ function setup() {
 		xnoise = xstart;
 		for (let x = margin; x <= width - margin; x += step) {
 			xnoise += modeXnoise;
-			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle, shadowMode);
+			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle, reliefMode);
 		}
 	}
 
@@ -63,7 +63,7 @@ function setup() {
 }
 
 /* draw line according to the noise factor */
-function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, shadowMode) {
+function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, reliefMode) {
 	let newHue = map(noiseFactor, 0, 1, hue - hueSteps, hue + hueSteps);
 
 	// if newHue is out of range, set it to the closest bound
@@ -92,7 +92,7 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, s
 	if (noiseFactor > 0.5) {
 		strokeWeight(2);
 		stroke(newHue, newSaturation + 20, newBrightness - 20, 15);
-		if (shadowMode == 'rocky') {
+		if (reliefMode == 'rocky') {
 			rect(len, random(-len / 10, len / 10), sw, sw, 10);
 		} else {
 			rect(len, random(-len / 5, len / 5), sw * 2, sw / 2, 10);
