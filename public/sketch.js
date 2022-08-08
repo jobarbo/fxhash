@@ -1,3 +1,7 @@
+let myFont;
+function preload() {
+	myFont = loadFont('CourierPrime-Bold.ttf');
+}
 function setup() {
 	createCanvas(window.innerHeight, window.innerHeight);
 	colorMode(HSB, 360, 100, 100, 100);
@@ -47,19 +51,21 @@ function setup() {
 	rect(width / 2, height / 2, width - border, height - border);
 
 	// write name of planet
-	let txt = `Planet ${Math.floor(random(1, 999))}${random(letterArr)}-${Math.floor(random(1, 99))}-${Math.floor(random(1, 9))}${random(letterArr)}`;
-	textSize(20);
-	textFont('Courier');
+	let txt = `PLANET ${Math.floor(random(1, 999))}${random(letterArr)}-${Math.floor(random(1, 99))}-${Math.floor(random(1, 9))}${random(letterArr)}`;
+	textSize(18);
+	textFont(myFont);
 	rectMode(CENTER);
 	fill(bhue, bsaturation, bbrightness);
 	noStroke();
-	rect(border + (textWidth(txt) + 19) / 2, border + textAscent(txt) / 2, textWidth(txt) + 20, textAscent(txt) + 10);
+	rect(border + (textWidth(txt) + 19) / 2, border + textAscent(txt) / 2, textWidth(txt) + 20, textAscent(txt) + 20);
 	fill(hue, 10, 100);
 	textAlign(CENTER, CENTER);
-	text(txt, border + (textWidth(txt) + 20) / 2, border + textAscent(txt) / 2);
+	text(txt, border + (textWidth(txt) + 20) / 2, border + textAscent(txt) / 1.5);
 
 	// draw texture
 	createTexture(hue);
+
+	fxpreview();
 }
 
 /* draw line according to the noise factor */
