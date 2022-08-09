@@ -17,17 +17,15 @@ window.palettes = palettes;
 // More about it in the guide, section features:
 // [https://fxhash.xyz/articles/guide-mint-generative-token#features]
 //
-console.log(window.innerHeight);
-console.log(window.innerWidth);
 let winWidth = window.innerWidth;
 let winHeight = window.innerHeight;
 let modeArr = [
 	['perspective far', 0.05, 0.005],
-	['perspective normal', 0.03, 0.003],
-	['perspective close', 0.01, 0.001],
-	['topo far', 0.01, 0.01],
-	['topo normal', 0.007, 0.007],
-	['topo close', 0.005, 0.005],
+	//['perspective normal', 0.03, 0.003],
+	//['perspective close', 0.01, 0.001],
+	//['topo far', 0.01, 0.01],
+	//['topo normal', 0.007, 0.007],
+	//['topo close', 0.005, 0.005],
 ];
 let modeIndex = Math.floor(fxrand() * modeArr.length);
 let mode = modeArr[modeIndex];
