@@ -20,12 +20,12 @@ window.palettes = palettes;
 let winWidth = window.innerWidth;
 let winHeight = window.innerHeight;
 let modeArr = [
-	['perspective far', 0.05, 0.005],
-	['perspective normal', 0.03, 0.003],
-	['perspective close', 0.015, 0.0015],
-	['topo far', 0.01, 0.01],
-	['topo normal', 0.007, 0.007],
-	['topo close', 0.005, 0.005],
+	['perspective far', 0.05, 0.01],
+	['perspective normal', 0.03, 0.008],
+	['perspective close', 0.015, 0.0065],
+	//['topo far', 0.01, 0.01],
+	//['topo normal', 0.007, 0.007],
+	//['topo close', 0.005, 0.005],
 ];
 let modeIndex = Math.floor(fxrand() * modeArr.length);
 let mode = modeArr[modeIndex];
@@ -35,7 +35,7 @@ let maxswArr = [winHeight / 600, winHeight / 400, winHeight / 266, winHeight / 2
 let stepArr = [0.95, 1, 1.05, 1.1, 1.15, 1.2, 1.3];
 let angledirArr = [1];
 let hueStepsArr = [50, 80, 100, 120, 135, 150, 175, 200];
-let shadowModeArr = ['grass'];
+let shadowModeArr = ['rocky'];
 
 let baselen = Math.floor(baselenArr[Math.floor(fxrand() * baselenArr.length)]);
 
