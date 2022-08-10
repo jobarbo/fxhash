@@ -27,7 +27,7 @@ function setup() {
 	let hueSteps = window.$fxhashFeatures.hue_steps;
 	let maxsw = window.$fxhashFeatures.max_stroke_weight;
 	let baseAngle = window.$fxhashFeatures.base_angle;
-	let reliefMode = window.$fxhashFeatures.shadow_mode;
+	let reliefMode = window.$fxhashFeatures.relief_mode;
 	let letterArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
 	background(hue, 80, 50);
@@ -94,12 +94,12 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 	line(0, 0, len, 0);
 
 	if (noiseFactor > 0.5) {
-		strokeWeight(3);
+		strokeWeight(2);
 		stroke(newHue, newSaturation + 10, newBrightness - 35, 15);
 		if (reliefMode == 'rocky') {
-			circle(len, random(-len / 7, len / 7), 10);
+			circle(len, random(-len / 15, len / 15), len / 5);
 		} else {
-			ellipse(len, random(-len / 10, len / 10), len / 5, len / 2); // draw an ellipse
+			ellipse(len, random(-len / 10, len / 10), len / 15, len / 2); // draw an ellipse
 		}
 	} else {
 		// draw beaches
