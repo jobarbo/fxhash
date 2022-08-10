@@ -62,7 +62,7 @@ function setup() {
 	text(txt, border + (textWidth(txt) + width / 40) / 2, border + textAscent(txt) / 1.5);
 
 	// draw texture
-	//createTexture(hue);
+	createTexture(hue);
 
 	fxpreview();
 }
@@ -95,16 +95,16 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 
 	noFill();
 	if (noiseFactor > 0.5) {
-		strokeWeight(width / 400);
+		strokeWeight(5);
 		stroke(newHue, newSaturation + 20, newBrightness - 20, 15);
 		if (reliefMode == 'rocky') {
-			ellipse(len, random(-len / 10, len / 10), len, len);
+			circle(len, random(-len / 7, len / 7), sw, sw);
 		} else {
-			ellipse(len, random(-len / 5, len / 5), sw * 2, sw / 2);
+			ellipse(len, random(-len / 7, len / 7), sw, sw / 2);
 		}
 	} else {
 		// draw beaches
-		strokeWeight(width / 400);
+		strokeWeight(2);
 		stroke(newHue, 5, 95, 15);
 		fill(newHue, 5, 85, 15);
 		ellipse(len, len / 5, len / 5, len / 10);
