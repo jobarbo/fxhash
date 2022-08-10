@@ -31,11 +31,11 @@ let modeIndex = Math.floor(fxrand() * modeArr.length);
 let mode = modeArr[modeIndex];
 
 let baselenArr = [winHeight / 80, winHeight / 50, winHeight / 40, winHeight / 32, winHeight / 27, winHeight / 23, winHeight / 16, winHeight / 12];
-let maxswArr = [winHeight / 800, winHeight / 400, winHeight / 266, winHeight / 200, winHeight / 160, winHeight / 100, winHeight / 80, winHeight / 66, winHeight / 53, winHeight / 32, winHeight / 27];
+let maxswArr = [winHeight / 600, winHeight / 400, winHeight / 266, winHeight / 200, winHeight / 160, winHeight / 100, winHeight / 80, winHeight / 66, winHeight / 53, winHeight / 32, winHeight / 27];
 let stepArr = [0.95, 1, 1.05, 1.1, 1.15, 1.2, 1.3];
 let angledirArr = [1];
 let hueStepsArr = [50, 80, 100, 120, 135, 150, 175, 200];
-let shadowModeArr = ['rocky', 'grass'];
+let shadowModeArr = ['grass'];
 
 let baselen = Math.floor(baselenArr[Math.floor(fxrand() * baselenArr.length)]);
 

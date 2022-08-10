@@ -95,18 +95,17 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 
 	noFill();
 	if (noiseFactor > 0.5) {
-		strokeWeight(5);
-		stroke(newHue, newSaturation + 20, newBrightness - 20, 15);
+		strokeWeight(3);
+		stroke(newHue, newSaturation + 10, newBrightness - 35, 15);
 		if (reliefMode == 'rocky') {
 			circle(len, random(-len / 7, len / 7), sw, sw);
 		} else {
-			ellipse(len, random(-len / 7, len / 7), sw, sw / 2);
+			ellipse(len, random(-len / 10, len / 10), len / 5, len / 2); // draw an ellipse
 		}
 	} else {
 		// draw beaches
-		strokeWeight(2);
-		stroke(newHue, 5, 95, 15);
-		fill(newHue, 5, 85, 15);
+		strokeWeight(5);
+		stroke(newHue, 5, 95, 10);
 		ellipse(len, len / 5, len / 5, len / 10);
 	}
 	pop();
