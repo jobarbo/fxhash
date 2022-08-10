@@ -3,7 +3,7 @@ function preload() {
 	myFont = loadFont('CourierPrime-Bold.ttf');
 }
 function setup() {
-	createCanvas(window.innerHeight, window.innerHeight);
+	createCanvas(1000, 1000);
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 1000);
 	noiseSeed(fxrand() * 1000);
@@ -99,7 +99,7 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 		if (reliefMode == 'rocky') {
 			circle(len, random(-len / 10, len / 10), len / 10);
 		} else {
-			ellipse(len, random(-len / 10, len / 10), len / 15, len / 2); // draw an ellipse
+			ellipse(len, random(-len / 10, len / 10), sw / 3, sw * 3); // draw an ellipse
 		}
 	} else {
 		// draw beaches
