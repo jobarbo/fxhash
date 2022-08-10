@@ -97,7 +97,7 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 		strokeWeight(2);
 		stroke(newHue, newSaturation + 10, newBrightness - 35, 15);
 		if (reliefMode == 'rocky') {
-			circle(len, random(-len / 15, len / 15), len / 5);
+			circle(len, random(-len / 10, len / 10), len / 10);
 		} else {
 			ellipse(len, random(-len / 10, len / 10), len / 15, len / 2); // draw an ellipse
 		}

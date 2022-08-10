@@ -50,7 +50,6 @@ let hue = Math.floor(fxrand() * 360);
 let hueSteps = hueStepsArr[Math.floor(fxrand() * hueStepsArr.length)];
 
 let reliefMode = reliefModeArr[Math.floor(fxrand() * reliefModeArr.length)];
-console.log(reliefMode);
 window.$fxhashFeatures = {
 	mode: mode[0],
 	ynoise: mode[1],
