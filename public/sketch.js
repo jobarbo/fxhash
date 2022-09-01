@@ -6,20 +6,20 @@ function setup() {
 	noiseSeed(fxrand() * 10000);
 	background(60, 5, 5);
 
-	createTexture();
+	createCity();
 }
 
 function draw() {
 	noLoop();
 }
-function createTexture() {
+function createCity() {
 	let texture = [];
 
-	for (let index = 0; index < 50; index++) {
+	for (let index = 0; index < 150; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
 		const rdnW1 = random(width / 200, width / 4);
-		texture[index] = new Smudge(rdnX, rdnY, rdnW1, hue);
+		texture[index] = new Buildings(rdnX, rdnY, rdnW1, hue);
 	}
 	for (let index = 0; index < texture.length; index++) {
 		for (let j = 0; j < 1500; j++) {
@@ -28,7 +28,7 @@ function createTexture() {
 	}
 }
 
-class Smudge {
+class Buildings {
 	constructor(rdnX, rdnY, w1) {
 		this.xoff = 0;
 		this.yoff = 1;
@@ -36,10 +36,10 @@ class Smudge {
 		this.rdnX = rdnX;
 		this.rdnY = rdnY;
 		this.rdnW1 = w1;
-		this.mapXLow = -width / 5;
-		this.mapXHigh = width + width / 4;
-		this.mapYLow = -height / 5;
-		this.mapYHigh = height + height / 4;
+		this.mapXLow = 0;
+		this.mapXHigh = width;
+		this.mapYLow = 0;
+		this.mapYHigh = height / 1.5;
 		this.hue = 0;
 		this.alpha = int(random(0, 10));
 	}
@@ -57,6 +57,6 @@ class Smudge {
 		noStroke();
 		rect(x, y, w1, w1);
 		stroke(this.hue, 0, 100, this.alpha);
-		line(x, y, x, height);
+		line(x, y, x, height / 1.1);
 	}
 }
