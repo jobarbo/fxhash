@@ -21,11 +21,12 @@ body {
 	align-items: center;
 	justify-content: center;
 	--bodymargin: 10px;
-	--min: min(100vh, 100vw);
+	--min: min(95vh, 95vw);
 	--hContent: var(--min);
 	--wContent: var(--min);
 }
 canvas.p5Canvas {
+	border: 1px solid #000;
 	padding-left: 0;
 	padding-right: 0;
 	padding-top: 0;

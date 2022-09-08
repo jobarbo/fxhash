@@ -1,16 +1,47 @@
-function setup() {
-	pixelDensity(3.0);
-	createCanvas(1000, 1000);
-	colorMode(HSB, 360, 100, 100, 100);
-	background(210, 23, 92);
-	randomSeed(fxrand() * 10000);
-	noiseSeed(fxrand() * 10000);
-	console.log(width);
+let swatches = [];
+let swatchesLength = [];
+let playHead = 0;
+let posY = 0;
+let posX = 0;
+let ballW = 0;
+let ballH = 0;
+let ball = [];
+function preload() {
+	for (i = 0; i <= 3; i++) {
+		swatches[i] = loadImage('./assets/grid_' + i + '.jpg');
+	}
 }
 
-function draw() {
-	stroke(0, 0, 0, 10);
-	strokeWeight(width / width);
-	noSmooth();
-	ellipse(width / 2, height / 2, width / 20, width / 20);
+function setup() {
+	pixelDensity(3);
+	createCanvas(1000, 1000);
+	rectMode(CENTER);
+	background(245);
+	for (i = 0; i <= 3; i++) {
+		swatchesLength[i] = swatches[i].height;
+	}
+	for (i = 0; i <= width * 5; i++) {
+		if (i % 5 == 0) {
+			ballW = width / 300;
+			ballH = width / 100;
+			ball[i] = new Walker(swatches[1], swatchesLength[1], ballW, ballH);
+		} else if (i % 6 == 0) {
+			ballW = width / 50;
+			ballH = width / 400;
+			ball[i] = new Walker(swatches[2], swatchesLength[2], ballW, ballH);
+		} else {
+			ballW = width / 100;
+			ballH = width / 100;
+			ball[i] = new Walker(swatches[3], swatchesLength[3], ballW, ballH);
+		}
+	}
+
+	for (i = 0; i < ball.length; i++) {
+		for (step = 0; step < 1000; step++) {
+			ball[i].display();
+			ball[i].move();
+		}
+	}
 }
+
+function draw() {}
