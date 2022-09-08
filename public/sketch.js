@@ -22,8 +22,8 @@ function setup() {
 	}
 	for (i = 0; i <= width * 5; i++) {
 		if (i % 5 == 0) {
-			ballW = width / 300;
-			ballH = width / 100;
+			ballW = width / 400;
+			ballH = width / 50;
 			ball[i] = new Walker(swatches[1], swatchesLength[1], ballW, ballH);
 		} else if (i % 6 == 0) {
 			ballW = width / 50;
