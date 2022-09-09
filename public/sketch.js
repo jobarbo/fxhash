@@ -1,46 +1,37 @@
 let swatches = [];
 let swatchesLength = [];
+let brush;
 let playHead = 0;
 let posY = 0;
 let posX = 0;
-let ballW = 0;
-let ballH = 0;
-let ball = [];
+let walkerW = 0;
+let walkerH = 0;
+let walker = [];
 function preload() {
 	for (i = 0; i <= 3; i++) {
 		swatches[i] = loadImage('./assets/grid_' + i + '.jpg');
 	}
+	brush = loadImage('./assets/brush2.png');
 }
 
 function setup() {
 	pixelDensity(3);
 	createCanvas(1000, 1000);
 	rectMode(CENTER);
-	background(245);
+	imageMode(CENTER);
+	background(255);
+
+	const canvas = document.querySelector('.p5Canvas');
+	const ctx = canvas.getContext('2d');
+
 	for (i = 0; i <= 3; i++) {
 		swatchesLength[i] = swatches[i].height;
 	}
-	for (i = 0; i <= width * 5; i++) {
-		if (i % 5 == 0) {
-			ballW = width / 400;
-			ballH = width / 50;
-			ball[i] = new Walker(swatches[1], swatchesLength[1], ballW, ballH);
-		} else if (i % 6 == 0) {
-			ballW = width / 50;
-			ballH = width / 400;
-			ball[i] = new Walker(swatches[2], swatchesLength[2], ballW, ballH);
-		} else {
-			ballW = width / 100;
-			ballH = width / 100;
-			ball[i] = new Walker(swatches[3], swatchesLength[3], ballW, ballH);
-		}
+	for (i = 0; i <= width * 6; i++) {
+		walker[i] = new Walker(swatches[1], swatchesLength[1], walkerW, walkerH, brush, ctx);
 	}
-
-	for (i = 0; i < ball.length; i++) {
-		for (step = 0; step < 1000; step++) {
-			ball[i].display();
-			ball[i].move();
-		}
+	for (i = 0; i < walker.length; i++) {
+		walker[i].display();
 	}
 }
 
