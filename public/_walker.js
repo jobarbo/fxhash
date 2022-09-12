@@ -20,7 +20,8 @@ class Walker {
 		this.c = color(this.c[0], this.c[1], this.c[2]);
 		this.c.setAlpha(this.a);
 		fill(this.c);
-		stroke(255, 10);
+		//stroke(255, 10);
+		noStroke();
 		rect(this.x, this.y, this.w, this.h);
 	}
 
