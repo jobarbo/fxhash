@@ -17,10 +17,14 @@ function setup() {
 	createCanvas(1000, 1000);
 	rectMode(CENTER);
 	background(245);
+
 	for (i = 0; i <= 6; i++) {
 		swatchesLength[i] = swatches[i].height;
 	}
-	for (i = 0; i <= width * 5; i++) {
+
+	let colors = imgToColorArray(swatches[5]);
+
+	for (i = 0; i <= width; i++) {
 		if (i % 5 == 0) {
 			ballW = width / 400;
 			ballH = width / 50;
@@ -44,4 +48,18 @@ function setup() {
 	}
 }
 
+// take each pixel from the image and make an array of HSB colors from it
+function imgToColorArray(img) {
+	let colors = [];
+	img.loadPixels();
+	for (let i = 0; i < img.pixels.length; i += 4) {
+		let r = img.pixels[i];
+		let g = img.pixels[i + 1];
+		let b = img.pixels[i + 2];
+		let a = img.pixels[i + 3];
+		let c = color(r, g, b, a);
+		colors.push(c.levels);
+	}
+	return colors;
+}
 function draw() {}
