@@ -24,15 +24,15 @@ function setup() {
 		if (i % 5 == 0) {
 			ballW = width / 400;
 			ballH = width / 50;
-			ball[i] = new Walker(swatches[5], swatchesLength[5], ballW, ballH);
+			ball[i] = new Walker(swatches[0], swatchesLength[0], ballW, ballH);
 		} else if (i % 6 == 0) {
 			ballW = width / 50;
 			ballH = width / 400;
-			ball[i] = new Walker(swatches[6], swatchesLength[6], ballW, ballH);
+			ball[i] = new Walker(swatches[1], swatchesLength[1], ballW, ballH);
 		} else {
 			ballW = width / 100;
 			ballH = width / 100;
-			ball[i] = new Walker(swatches[4], swatchesLength[4], ballW, ballH);
+			ball[i] = new Walker(swatches[2], swatchesLength[2], ballW, ballH);
 		}
 	}
 
