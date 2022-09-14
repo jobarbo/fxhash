@@ -14,13 +14,13 @@ function preload() {
 
 function setup() {
 	pixelDensity(3);
-	createCanvas(1000, 1000);
+	createCanvas(300, 1166);
 	rectMode(CENTER);
 	background(245);
 	for (i = 0; i <= 6; i++) {
 		swatchesLength[i] = swatches[i].height;
 	}
-	for (i = 0; i <= width * 5; i++) {
+	for (i = 0; i <= width * 6; i++) {
 		if (i % 5 == 0) {
 			ballW = width / 400;
 			ballH = width / 50;
