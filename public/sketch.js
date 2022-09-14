@@ -14,7 +14,7 @@ function preload() {
 
 function setup() {
 	pixelDensity(3);
-	createCanvas(1000, 1000);
+	createCanvas(12 * 100, 18 * 100);
 	rectMode(CENTER);
 	background(245);
 	for (i = 0; i <= 12; i++) {
@@ -43,13 +43,14 @@ function setup() {
 		}
 	}
 
-	makeScanlines();
+	//makeScanlines();
 }
 
 function makeScanlines() {
 	for (i = 0; i < width; i++) {
-		if (i % 2 == 0) {
-			stroke(0, 0, 100, 100);
+		if (i % 4 == 0) {
+			strokeWeight(2);
+			stroke(0, 0, 100, 50);
 			line(i, 0, i, height);
 		}
 	}
