@@ -10,6 +10,7 @@
     "start": "webpack serve --config ./config/webpack.config.dev.js"
   },
   "dependencies": {
+    "canvas-sketch": "^0.7.6",
     "p5": "^1.4.1"
   },
   "devDependencies": {
