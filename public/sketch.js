@@ -5,7 +5,6 @@ function setup() {
 	background(210, 23, 92);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
-	console.log(width);
 }
 
 function draw() {
