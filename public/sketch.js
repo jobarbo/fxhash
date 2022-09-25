@@ -32,39 +32,39 @@ function setup() {
 
 	background(hue, 80, 50);
 
-	for (let y = margin; y <= height - margin; y += step) {
-		ynoise += modeYnoise;
-		xnoise = xstart;
-		for (let x = margin; x <= width - margin; x += step) {
-			xnoise += modeXnoise;
-			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle, reliefMode);
+	let sketch = drawthings(margin, border, xstart, xnoise, ynoise, mode, modeYnoise, modeXnoise, baselen, step, hue, hueSteps, maxsw, baseAngle, reliefMode);
+
+	let interval = setInterval(() => {
+		let result = sketch.next();
+		if (result.done) {
+			clearInterval(interval);
+
+			let bhue = random(360);
+			let bsaturation = random(80, 100);
+			let bbrightness = random(0, 15);
+			strokeWeight(border);
+			noFill();
+			stroke(hue, bsaturation, bbrightness);
+			rect(width / 2, height / 2, width - border, height - border);
+
+			// write name of planet
+			let txt = `Planet ${Math.floor(random(1, 999))}${random(letterArr)}-${Math.floor(random(1, 99))}-${Math.floor(random(1, 9))}${random(letterArr)}`;
+			textSize(width / 60);
+			textFont(myFont);
+			rectMode(CENTER);
+			fill(hue, bsaturation, bbrightness);
+			noStroke();
+			rect(border + (textWidth(txt) + width / 40 - 1) / 2, border + textAscent(txt), textWidth(txt) + width / 40, textAscent(txt) + width / 53);
+			fill(hue, 10, 100);
+			textAlign(CENTER, CENTER);
+			text(txt, border + (textWidth(txt) + width / 40) / 2, border + textAscent(txt) / 1.5);
+
+			// draw texture
+			createTexture(hue);
+
+			fxpreview();
 		}
-	}
-
-	let bhue = random(360);
-	let bsaturation = random(80, 100);
-	let bbrightness = random(0, 15);
-	strokeWeight(border);
-	noFill();
-	stroke(hue, bsaturation, bbrightness);
-	rect(width / 2, height / 2, width - border, height - border);
-
-	// write name of planet
-	let txt = `Planet ${Math.floor(random(1, 999))}${random(letterArr)}-${Math.floor(random(1, 99))}-${Math.floor(random(1, 9))}${random(letterArr)}`;
-	textSize(width / 60);
-	textFont(myFont);
-	rectMode(CENTER);
-	fill(hue, bsaturation, bbrightness);
-	noStroke();
-	rect(border + (textWidth(txt) + width / 40 - 1) / 2, border + textAscent(txt), textWidth(txt) + width / 40, textAscent(txt) + width / 53);
-	fill(hue, 10, 100);
-	textAlign(CENTER, CENTER);
-	text(txt, border + (textWidth(txt) + width / 40) / 2, border + textAscent(txt) / 1.5);
-
-	// draw texture
-	createTexture(hue);
-
-	fxpreview();
+	}, 0);
 }
 
 /* draw line according to the noise factor */
@@ -109,6 +109,27 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 		ellipse(len, len / 5, len / 5, len / 10);
 	}
 	pop();
+}
+
+function* drawthings(margin, border, xstart, xnoise, ynoise, mode, modeYnoise, modeXnoise, baselen, step, hue, hueSteps, maxsw, baseAngle, reliefMode) {
+	let count = 0;
+	let draw_every = 500;
+	console.log(count);
+
+	for (let y = margin; y <= height - margin; y += step) {
+		ynoise += modeYnoise;
+		xnoise = xstart;
+		for (let x = margin; x <= width - margin; x += step) {
+			xnoise += modeXnoise;
+			drawLine(x, y, noise(xnoise, ynoise), baselen, hue, hueSteps, maxsw, baseAngle, reliefMode);
+			count++;
+			if (count > draw_every) {
+				count = 0;
+				yield;
+			}
+		}
+	}
+	// when the function gets here it returns and done === true
 }
 
 function createTexture(hue) {
