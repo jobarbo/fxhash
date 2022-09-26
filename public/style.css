@@ -26,6 +26,8 @@ body {
 	--wContent: var(--min);
 }
 canvas.p5Canvas {
+	display: block;
+	border: 1px solid #000;
 	padding-left: 0;
 	padding-right: 0;
 	padding-top: 0;
@@ -34,7 +36,9 @@ canvas.p5Canvas {
 	margin-right: auto;
 	margin-top: 0;
 	margin-bottom: 0;
+	height: var(--hContent) !important;
 	max-width: var(--wContent);
 	max-height: var(--hContent);
-	display: block;
+	max-height: 95vh;
+	width: auto !important;
 }
