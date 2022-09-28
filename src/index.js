@@ -14,8 +14,18 @@
 // More about it in the guide, section features:
 // [https://fxhash.xyz/articles/guide-mint-generative-token#features]
 //
-// window.$fxhashFeatures = {
-//   "Background": "Black",
-//   "Number of lines": 10,
-//   "Inverted": true
-// }
+window.$fxhashFeatures = {
+	// create a palette object with multiple palettes to choose from and each palette has a name and an array of colors
+	palettes: {
+		// name of the palette
+		default: [
+			// array of colors
+			'#000000',
+			'#ffffff',
+			'#ff0000',
+			'#00ff00',
+			'#0000ff',
+		],
+		pastel: ['#ff0000', '#00ff00', '#0000ff'],
+	},
+};
