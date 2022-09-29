@@ -1,7 +1,7 @@
 let sky;
 let sun;
 let ground;
-let mountains;
+let mountains = [];
 let clouds;
 let sea;
 let night = false;
@@ -13,35 +13,50 @@ function setup() {
 	background(210, 23, 92);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
+	noLoop();
+
+	pallette = window.$fxhashFeatures.palette;
+	skyColor = color(pallette.sky[0], pallette.sky[1], pallette.sky[2]);
+	sunColor = color(pallette.sun[0], pallette.sun[1], pallette.sun[2]);
+	groundColor = color(pallette.ground[0], pallette.ground[1], pallette.ground[2]);
+	mountainsColor = color(pallette.mountain[0], pallette.mountain[1], pallette.mountain[2]);
+	seaColor = color(pallette.sea[0], pallette.sea[1], pallette.sea[2]);
 
 	// draw the sky
-	sky = new Sky();
+	sky = new Sky(skyColor);
 	sky.draw();
 
 	// draw the sun
-	sun = new Sun();
+	sun = new Sun(sunColor);
 	sun.draw();
 
 	// draw the mountains
-	mountains = new Mountains();
-	mountains.draw();
-	let mtnPos = mountains.getBasePosition();
+	let mtnPos = height * random(0.6, 0.9);
+	let mtnHeight = random(height / 2, height);
+	let mtnNum = 3;
+	let xoff = 0.001;
+	let satOffset = -20;
+	let brightOffset = 20;
+	for (let i = 0; i < mtnNum; i++) {
+		mountains[i] = new Mountains(mountainsColor, mtnPos, mtnHeight, xoff, i, mtnNum, satOffset, brightOffset);
+		mountains[i].draw();
+		brightOffset -= 15;
+		satOffset += 15;
+	}
 
 	// draw the ground
-	ground = new Ground(mtnPos);
+	ground = new Ground(mtnPos, groundColor);
 	ground.draw();
 }
 
 function draw() {}
 
 class Sky {
-	constructor() {
-		this.hueArr = [180, 190, 200, 210, 220];
-		this.satArr = [30, 40, 50, 60];
-		this.briArr = [60, 70, 80, 90, 100];
-		this.hue = this.hueArr[int(random(this.hueArr.length))];
-		this.saturation = this.satArr[int(random(this.satArr.length))];
-		this.brightness = this.briArr[int(random(this.briArr.length))];
+	constructor(color) {
+		this.hue = hue(color);
+		this.saturation = saturation(color);
+		this.brightness = brightness(color);
+		this.alpha = alpha(color);
 		this.x = 0;
 		this.y = 0;
 		this.width = width;
@@ -56,13 +71,10 @@ class Sky {
 }
 
 class Ground {
-	constructor(mtnPos) {
-		this.hueArr = [0, 10, 20, 30, 40, 50];
-		this.satArr = [30, 40, 50, 60, 70, 80];
-		this.briArr = [20, 30, 40, 50, 60];
-		this.hue = this.hueArr[int(random(this.hueArr.length))];
-		this.saturation = this.satArr[int(random(this.satArr.length))];
-		this.brightness = this.briArr[int(random(this.briArr.length))];
+	constructor(mtnPos, color) {
+		this.hue = hue(color);
+		this.saturation = saturation(color);
+		this.brightness = brightness(color);
 		this.widthOffset = width / 10;
 		this.x = -this.widthOffset;
 		this.y = mtnPos;
@@ -71,40 +83,46 @@ class Ground {
 	}
 
 	draw() {
+		strokeWeight(5);
+		stroke(this.hue, this.saturation, this.brightness - 20);
+		//noStroke();
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
 		rect(this.x, this.y, this.width, this.height);
 	}
 }
 
 class Mountains {
-	constructor() {
-		this.hueArr = [0, 10, 20, 30, 40, 50];
-		this.satArr = [30, 40, 50, 60, 70, 80];
-		this.briArr = [20, 30, 40, 50, 60];
-		this.hue = this.hueArr[int(random(this.hueArr.length))];
-		this.saturation = this.satArr[int(random(this.satArr.length))];
-		this.brightness = this.briArr[int(random(this.briArr.length))];
+	constructor(color, position, mountainHeight, offset, index, indexMax, satOffset, brightOffset) {
+		this.satOffset = satOffset;
+		this.brightOffset = brightOffset;
+		this.div = indexMax - index;
+		this.hue = hue(color);
+		this.saturation = saturation(color) + this.satOffset;
+		this.brightness = brightness(color) + this.brightOffset;
+		this.xoff = 0.000000000001;
+		this.yoff = random(10000000);
 		this.x = random(-width / 4, width / 1.3);
-		this.y = height * random(0.6, 0.9);
+		this.y = position;
 		this.width = this.x + random(width / 7, width / 4);
-		this.height = random(height / 4, height / 2);
+		this.height = (mountainHeight * this.div) / 4;
 	}
 
 	draw() {
 		// make a custom shape using beginShape() and endShape() and noise();
 		beginShape();
 		strokeWeight(5);
-		stroke(this.hue, this.saturation, this.brightness - 10);
+		stroke(this.hue, this.saturation + 30, this.brightness - 10);
+		//noStroke();
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
-
 		beginShape();
-		curveVertex(-width / 1.5, this.y);
+		curveVertex(-width * 2, this.y);
 		// use noise to create the mountain shape
-		for (let x = -width / 1.5; x < width * 1.5; x += width / 20) {
-			let y = map(noise(x * 0.001), 0, 1, this.y, this.y - this.height);
+		for (let x = -width * 2; x < width * 2; x += 10) {
+			let y = map(noise(this.xoff, this.yoff), 0, 1, this.y, this.y - this.height);
 			curveVertex(x, y);
+			this.xoff += 0.02;
 		}
-		curveVertex(width * 1.5, this.y);
+		curveVertex(width * 2, this.y);
 		endShape(CLOSE);
 	}
 
@@ -114,13 +132,10 @@ class Mountains {
 }
 
 class Sun {
-	constructor() {
-		this.hueArr = [330, 340, 350, 360, 0, 10, 20, 30, 40, 50];
-		this.satArr = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-		this.briArr = [80, 90, 100];
-		this.hue = this.hueArr[int(random(this.hueArr.length))];
-		this.saturation = this.satArr[int(random(this.satArr.length))];
-		this.brightness = this.briArr[int(random(this.briArr.length))];
+	constructor(color) {
+		this.hue = hue(color);
+		this.saturation = saturation(color);
+		this.brightness = brightness(color);
 		this.radius = random(width / 10, width / 5);
 		this.x = random(this.radius, width - this.radius);
 		this.y = random(this.radius, height / 3 - this.radius);
@@ -131,7 +146,8 @@ class Sun {
 	draw() {
 		strokeWeight(5);
 
-		stroke(this.hue, this.saturation, this.brightness - 10, this.alpha);
+		stroke(this.hue, this.saturation / 2, 100, this.alpha);
+		noStroke();
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
 		ellipse(this.x, this.y, this.radius, this.radius);
 	}
