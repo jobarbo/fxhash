@@ -7,8 +7,8 @@ let sea;
 let night = false;
 
 function setup() {
-	pixelDensity(3.0);
-	createCanvas(1000, 1000);
+	pixelDensity(1.0);
+	createCanvas(1920, 1080);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(210, 23, 92);
 	randomSeed(fxrand() * 10000);
@@ -32,16 +32,17 @@ function setup() {
 
 	// draw the mountains
 	let mtnPos = height * random(0.6, 0.9);
-	let mtnHeight = random(height / 2, height);
-	let mtnNum = 3;
+	let mtnHeight = random(height / 3, height / 1.5);
+	let mtnNum = window.$fxhashFeatures.mountain_num;
 	let xoff = 0.001;
-	let satOffset = -20;
-	let brightOffset = 20;
+	let satOffset = (-mtnNum * mtnNum) / 2;
+	let brightOffset = (mtnNum * mtnNum) / 2;
+	let offsetIterator = map(mtnNum, 1, 5, 10, 2);
 	for (let i = 0; i < mtnNum; i++) {
 		mountains[i] = new Mountains(mountainsColor, mtnPos, mtnHeight, xoff, i, mtnNum, satOffset, brightOffset);
 		mountains[i].draw();
-		brightOffset -= 15;
-		satOffset += 15;
+		satOffset += offsetIterator * mtnNum;
+		brightOffset -= offsetIterator * mtnNum;
 	}
 
 	// draw the ground
@@ -99,12 +100,12 @@ class Mountains {
 		this.hue = hue(color);
 		this.saturation = saturation(color) + this.satOffset;
 		this.brightness = brightness(color) + this.brightOffset;
-		this.xoff = 0.000000000001;
+		this.xoff = 0.01;
 		this.yoff = random(10000000);
 		this.x = random(-width / 4, width / 1.3);
 		this.y = position;
 		this.width = this.x + random(width / 7, width / 4);
-		this.height = (mountainHeight * this.div) / 4;
+		this.height = (mountainHeight * this.div) / indexMax;
 	}
 
 	draw() {
@@ -120,14 +121,10 @@ class Mountains {
 		for (let x = -width * 2; x < width * 2; x += 10) {
 			let y = map(noise(this.xoff, this.yoff), 0, 1, this.y, this.y - this.height);
 			curveVertex(x, y);
-			this.xoff += 0.02;
+			this.xoff += $fxhashFeatures.mountain_softness;
 		}
 		curveVertex(width * 2, this.y);
 		endShape(CLOSE);
-	}
-
-	getBasePosition() {
-		return this.y;
 	}
 }
 
@@ -136,16 +133,14 @@ class Sun {
 		this.hue = hue(color);
 		this.saturation = saturation(color);
 		this.brightness = brightness(color);
-		this.radius = random(width / 10, width / 5);
+		this.radius = random(width / 10, width / 3);
 		this.x = random(this.radius, width - this.radius);
 		this.y = random(this.radius, height / 3 - this.radius);
-
 		this.alpha = 100;
 	}
 
 	draw() {
 		strokeWeight(5);
-
 		stroke(this.hue, this.saturation / 2, 100, this.alpha);
 		noStroke();
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
