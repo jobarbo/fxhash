@@ -7,8 +7,8 @@ let sea;
 let night = false;
 
 function setup() {
-	pixelDensity(1.0);
-	createCanvas(1920, 1080);
+	pixelDensity(3.0);
+	createCanvas(1000, 1000);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(210, 23, 92);
 	randomSeed(fxrand() * 10000);
@@ -98,12 +98,14 @@ class Mountains {
 		this.brightOffset = brightOffset;
 		this.div = indexMax - index;
 		this.hue = hue(color);
-		this.saturation = saturation(color) + this.satOffset;
-		this.brightness = brightness(color) + this.brightOffset;
+		this.saturation = constrain(saturation(color) + this.satOffset, 20, 100);
+		this.brightness = constrain(brightness(color) + this.brightOffset, 20, 100);
 		this.xoff = 0.01;
 		this.yoff = random(10000000);
 		this.x = random(-width / 4, width / 1.3);
 		this.y = position;
+		this.maxY = height;
+		this.maxX = 0;
 		this.width = this.x + random(width / 7, width / 4);
 		this.height = (mountainHeight * this.div) / indexMax;
 	}
@@ -122,6 +124,10 @@ class Mountains {
 			let y = map(noise(this.xoff, this.yoff), 0, 1, this.y, this.y - this.height);
 			curveVertex(x, y);
 			this.xoff += $fxhashFeatures.mountain_softness;
+			if (y < this.maxY && x > 0 && x < width) {
+				this.maxY = y;
+				this.maxX = x;
+			}
 		}
 		curveVertex(width * 2, this.y);
 		endShape(CLOSE);
@@ -135,14 +141,13 @@ class Sun {
 		this.brightness = brightness(color);
 		this.radius = random(width / 10, width / 3);
 		this.x = random(this.radius, width - this.radius);
-		this.y = random(this.radius, height / 3 - this.radius);
+		this.y = random(this.radius, height / 3);
 		this.alpha = 100;
 	}
 
 	draw() {
 		strokeWeight(5);
-		stroke(this.hue, this.saturation / 2, 100, this.alpha);
-		noStroke();
+		stroke(this.hue, this.saturation / 1.5, this.brightness + 10, this.alpha);
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
 		ellipse(this.x, this.y, this.radius, this.radius);
 	}

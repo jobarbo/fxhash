@@ -36,9 +36,8 @@ canvas.p5Canvas {
 	margin-right: auto;
 	margin-top: 0;
 	margin-bottom: 0;
-	height: var(--hContent) !important;
-	max-width: var(--wContent);
-	max-height: var(--hContent);
+	height: auto !important;
+	max-width: 95vw;
 	max-height: 95vh;
 	width: auto !important;
 }
