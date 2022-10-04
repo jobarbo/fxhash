@@ -29,21 +29,23 @@ function setup() {
 	// draw the sun
 	sun = new Sun(sunColor);
 	sun.draw();
+	let sunPosition = sun.getSunPosition();
 
 	// draw the mountains
-	let mtnPos = height * random(0.6, 0.9);
-	let mtnHeight = random(height / 3, height / 1.5);
+	let mtnPos = height * random(0.7, 0.9);
+	let mtnHeight = random(height / 2, height / 1.5);
 	//let mtnNum = window.$fxhashFeatures.mountain_num;
 	let mtnNum = 4;
-	let xoff = 0.001;
+	let mtnID = 1;
 	let satOffset = (-mtnNum * mtnNum) / 2;
 	let brightOffset = (mtnNum * mtnNum) / 2;
-	let offsetIterator = map(mtnNum, 1, 5, 10, 2);
+	let offsetIterator = map(mtnNum, 1, 5, 7, 2);
 	for (let i = 0; i < mtnNum; i++) {
-		mountains[i] = new Mountains(mountainsColor, mtnPos, mtnHeight, xoff, i, mtnNum, satOffset, brightOffset);
+		mountains[i] = new Mountains(mtnID, mountainsColor, mtnPos, mtnHeight, i, mtnNum, satOffset, brightOffset);
 		mountains[i].draw();
 		satOffset += offsetIterator * mtnNum;
 		brightOffset -= offsetIterator * mtnNum;
+		mtnID++;
 	}
 
 	// draw the ground
@@ -52,4 +54,3 @@ function setup() {
 }
 
 function draw() {}
-
