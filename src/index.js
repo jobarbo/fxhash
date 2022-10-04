@@ -86,7 +86,7 @@ let chosenPalette = palettes[randomKey];
 // chose a random number of mountains between 1 and 5
 let mountainNum = Math.floor(Math.random() * 5) + 1;
 // chose a between 0.009 and 0.03
-let mountainXoffIterator = Math.random() * 0.02 + 0.006;
+let mountainXoffIterator = Math.random() * 0.02 + 0.005;
 
 window.$fxhashFeatures = {
 	// chose a random palette from the palettes object in vanilla JS

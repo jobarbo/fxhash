@@ -1,5 +1,5 @@
 class Mountains {
-	constructor(ID, color, position, mountainHeight, index, indexMax, satOffset, brightOffset) {
+	constructor(ID, color, position, mountainHeight, index, indexMax, satOffset, brightOffset, skyColor, skySatOffset, skyBrightOffset, sunPos) {
 		this.mtnID = ID;
 		this.mtnTotal = indexMax;
 		this.satOffset = satOffset;
@@ -16,8 +16,23 @@ class Mountains {
 		this.minY = 0;
 		this.maxX = 0;
 		this.height = (mountainHeight * this.div) / indexMax;
-		this.textureNum = 20000;
+		this.textureNum = 50000;
 		this.mask = '';
+
+		// sun position
+		this.sunPosX = sunPos[0];
+		this.sunPosY = sunPos[1];
+
+		// sky color
+		this.skySatOffset = skySatOffset;
+		this.skyBrightOffset = skyBrightOffset;
+		this.skyHue = hue(skyColor);
+		this.skySaturation = constrain(saturation(skyColor) + this.skySatOffset, 10, 100);
+		this.skyBrightness = constrain(brightness(skyColor) + this.skyBrightOffset, 10, 100);
+		this.skyAlpha = 10;
+		this.reflectionAngle = 0;
+		this.rYoff = random(10000);
+		this.rXoff = random(10000);
 	}
 
 	draw() {
@@ -58,26 +73,44 @@ class Mountains {
 		for (let i = 0; i < currentVertexArr.length; i++) {
 			let x1 = currentVertexArr[i][0];
 			let y1 = currentVertexArr[i][1];
-			let density = map(y1, y1, this.baseY, 0.1, 1);
-			let yBleed = random(-500, 500);
-			let xBleed = random(-100, 100);
-			if (yBleed < 20 && yBleed > -20) {
-				yBleed = 20;
+			let density = map(this.mtnID, 1, 5, 0.1, 0.01);
+
+			// change the value of yBleed to change the height of the texture with perlins noise
+			let yBleed = map(noise(this.rYoff), 0, 1, 20, 300);
+			let xBleed = map(noise(this.rXoff), 0, 1, 20, 30);
+			this.rYoff += 0.1;
+			this.rXoff += 0.1;
+			if (yBleed < 0 && yBleed > -0) {
+				yBleed = 0;
 			}
-			if (xBleed < 20 && xBleed > -20) {
-				xBleed = 20;
+			if (xBleed < 0 && xBleed > -0) {
+				xBleed = 0;
 			}
 			let textureNum = this.textureNum * density;
+			// calculate the difference between the current X vertex and the sun x position
+			let xDiff = this.sunPosX - x1;
+			this.reflectionAngle = xDiff / 10;
+			if (this.reflectionAngle < 3 && this.reflectionAngle > -3) {
+				this.reflectionAngle = 0;
+			}
+			// do not draw the texture if the currentVertexArr X position outside the canvas
+			if (x1 > 0 && x1 < width) {
+				for (let j = 0; j < textureNum; j++) {
+					this.mask.push();
+					this.mask.translate(x1, y1);
+					this.mask.angleMode(DEGREES);
+					this.mask.rotate(this.reflectionAngle);
+					let xoff = random(100000);
+					let yoff = random(100000);
 
-			for (let j = 0; j < textureNum; j++) {
-				let xoff = random(100000);
-				let yoff = random(100000);
-
-				let x2 = map(noise(xoff), 0, 1, x1 - xBleed, x1 + xBleed);
-				let y2 = map(noise(yoff), 0, 1, y1 - yBleed, y1 + yBleed);
-				this.mask.strokeWeight(1);
-				this.mask.stroke(this.hue, this.saturation, this.brightness - 10, 100);
-				this.mask.point(x2, y2);
+					let x2 = map(noise(xoff), 0, 1, 0 - xBleed, 0 + xBleed);
+					let y2 = map(noise(yoff), 0, 1, 0 - yBleed, 0 + yBleed);
+					let strokeWeigh = map(y2, 0, this.baseY, 2, 0.3);
+					this.mask.strokeWeight(strokeWeigh);
+					this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness, this.skyAlpha);
+					this.mask.point(x2, y2);
+					this.mask.pop();
+				}
 			}
 		}
 
@@ -86,7 +119,7 @@ class Mountains {
 			let x = random(width);
 			let y = random(this.maxY, this.baseY);
 			this.mask.strokeWeight(1);
-			this.mask.stroke(this.hue, this.saturation, this.brightness - 5, 100);
+			this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness - 10, this.skyAlpha);
 			this.mask.point(x, y);
 		}
 		this.mask.drawingContext.globalCompositeOperation = 'destination-in';
