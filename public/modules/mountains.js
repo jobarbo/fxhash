@@ -76,7 +76,7 @@ class Mountains {
 			let density = map(this.mtnID, 1, 5, 0.2, 0.05);
 
 			// change the value of yBleed to change the height of the texture with perlins noise
-			let yBleed = map(noise(this.rYoff), 0, 1, 20, 500);
+			let yBleed = map(noise(this.rYoff), 0, 1, 20, this.height);
 			let xBleed = map(noise(this.rXoff), 0, 1, 5, 12);
 			this.rYoff += 0.1;
 			this.rXoff += 0.1;
@@ -84,7 +84,7 @@ class Mountains {
 			let textureNum = this.textureNum * density;
 			// calculate the difference between the current X vertex and the sun x position
 			let xDiff = this.sunPosX - x1;
-			this.reflectionAngle = xDiff / 10;
+			this.reflectionAngle = xDiff / 15;
 			// do not draw the texture if the currentVertexArr X position outside the canvas
 			if (x1 > 0 && x1 < width) {
 				for (let j = 0; j < textureNum; j++) {
