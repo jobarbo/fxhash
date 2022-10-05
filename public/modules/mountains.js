@@ -77,7 +77,7 @@ class Mountains {
 
 			// change the value of yBleed to change the height of the texture with perlins noise
 			let yBleed = map(noise(this.rYoff), 0, 1, 20, 500);
-			let xBleed = 5;
+			let xBleed = map(noise(this.rXoff), 0, 1, 5, 12);
 			this.rYoff += 0.1;
 			this.rXoff += 0.1;
 
