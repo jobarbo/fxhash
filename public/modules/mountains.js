@@ -86,7 +86,7 @@ class Mountains {
 			let xDiff = this.sunPosX - x1;
 			this.reflectionAngle = xDiff / 15;
 			// do not draw the texture if the currentVertexArr X position outside the canvas
-			if (x1 > 0 && x1 < width) {
+			if (x1 > -100 && x1 < width + 100) {
 				for (let j = 0; j < textureNum; j++) {
 					this.mask.push();
 					this.mask.translate(x1, y1);
