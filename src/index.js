@@ -76,23 +76,48 @@ let palettes = {
 		ground: [138, 27, 58],
 	},
 };
+let MountainTextureStyle = {
+	// name of the texture
+	'Smooth Shading': {
+		xBleedMin: 20,
+		xBleedMax: 40,
+		count: 50000,
+	},
+	'Corduroy Insanity': {
+		xBleedMin: 6,
+		xBleedMax: 14,
+		count: 50000,
+	},
+	'Basic Shading': {
+		xBleedMin: 20,
+		xBleedMax: 40,
+		count: 10000,
+	},
+};
+
 // choose a random key from the palettes object
-let key = Object.keys(palettes);
 // chose a random key from the key array using math.random
-let randomKey = key[Math.floor(Math.random() * key.length)];
+let themeArray = Object.keys(palettes);
+let randomThemeKey = themeArray[Math.floor(Math.random() * themeArray.length)];
 
 // chose a palette randomly from the palettes object
-let chosenPalette = palettes[randomKey];
+let chosenPalette = palettes[randomThemeKey];
 // chose a random number of mountains between 1 and 5
-let mountainNum = Math.floor(Math.random() * 5) + 1;
+let mountainNum = Math.floor(Math.random() * 5) + 2;
 // chose a between 0.009 and 0.03
 let mountainXoffIterator = Math.random() * 0.02 + 0.005;
+
+let mountainTextureNameArray = Object.keys(MountainTextureStyle);
+let randomMountainTextureKey = mountainTextureNameArray[Math.floor(Math.random() * mountainTextureNameArray.length)];
+let chosenMountainTexture = MountainTextureStyle[randomMountainTextureKey];
 
 window.$fxhashFeatures = {
 	// chose a random palette from the palettes object in vanilla JS
 	palette: chosenPalette,
-	theme: randomKey,
+	theme: randomThemeKey,
 	mountain_num: mountainNum,
 	mountain_softness: mountainXoffIterator,
+	mountain_texture_type: randomMountainTextureKey,
+	mountain_texture: chosenMountainTexture,
 };
 console.log(window.$fxhashFeatures);

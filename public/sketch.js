@@ -34,8 +34,8 @@ function setup() {
 	// draw the mountains
 	let mtnPos = height * random(0.7, 0.9);
 	let mtnHeight = random(height / 2, height / 1.1);
-	//let mtnNum = window.$fxhashFeatures.mountain_num;
-	let mtnNum = 5;
+	let mtnNum = window.$fxhashFeatures.mountain_num;
+	//let mtnNum = 5;
 	let mtnID = 1;
 	let satOffset = (-mtnNum * mtnNum) / 2;
 	let brightOffset = (mtnNum * mtnNum) / 2;
