@@ -76,9 +76,9 @@ class Mountains {
 			let density = map(this.mtnID, 1, 5, 0.1, 0.08);
 
 			// change the value of yBleed to change the height of the texture with perlins noise
-			let yBleed = map(noise(this.rYoff), 0, 1, 60, 500);
-			let xBleed = 10;
-			this.rYoff += 0.05;
+			let yBleed = map(noise(this.rYoff), 0, 1, 20, this.height);
+			let xBleed = map(noise(this.rXoff), 0, 1, 5, 12);
+			this.rYoff += 0.1;
 			this.rXoff += 0.1;
 
 			let textureNum = this.textureNum * density;
@@ -97,7 +97,7 @@ class Mountains {
 
 					let x2 = map(noise(xoff), 0, 1, 0 - xBleed, 0 + xBleed);
 					let y2 = map(noise(yoff), 0, 1, 0 - yBleed, 0 + yBleed);
-					let strokeWeight = map(y2, 0, this.baseY, 2, 0.3);
+					let strokeWeight = map(y2, 0, this.baseY, 2, 0.1);
 					this.mask.strokeWeight(strokeWeight);
 					this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness, this.skyAlpha);
 					this.mask.point(x2, y2);
