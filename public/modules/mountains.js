@@ -26,9 +26,9 @@ class Mountains {
 		// sky color
 		this.skySatOffset = skySatOffset;
 		this.skyBrightOffset = skyBrightOffset;
-		this.skyHue = hue(skyColor);
-		this.skySaturation = constrain(saturation(skyColor) + this.skySatOffset, 10, 100);
-		this.skyBrightness = constrain(brightness(skyColor) + this.skyBrightOffset, 10, 100);
+		this.skyHue = hue(color);
+		this.skySaturation = constrain(saturation(color) + this.skySatOffset, 10, 100);
+		this.skyBrightness = constrain(brightness(color) + this.skyBrightOffset, 10, 100);
 		this.skyAlpha = 10;
 		this.reflectionAngle = 0;
 		this.rYoff = random(10000);
@@ -73,26 +73,18 @@ class Mountains {
 		for (let i = 0; i < currentVertexArr.length; i++) {
 			let x1 = currentVertexArr[i][0];
 			let y1 = currentVertexArr[i][1];
-			let density = map(this.mtnID, 1, 5, 0.1, 0.01);
+			let density = map(this.mtnID, 1, 5, 0.2, 0.05);
 
 			// change the value of yBleed to change the height of the texture with perlins noise
-			let yBleed = map(noise(this.rYoff), 0, 1, 20, 300);
-			let xBleed = map(noise(this.rXoff), 0, 1, 20, 30);
+			let yBleed = map(noise(this.rYoff), 0, 1, 20, 500);
+			let xBleed = 5;
 			this.rYoff += 0.1;
 			this.rXoff += 0.1;
-			if (yBleed < 0 && yBleed > -0) {
-				yBleed = 0;
-			}
-			if (xBleed < 0 && xBleed > -0) {
-				xBleed = 0;
-			}
+
 			let textureNum = this.textureNum * density;
 			// calculate the difference between the current X vertex and the sun x position
 			let xDiff = this.sunPosX - x1;
 			this.reflectionAngle = xDiff / 10;
-			if (this.reflectionAngle < 3 && this.reflectionAngle > -3) {
-				this.reflectionAngle = 0;
-			}
 			// do not draw the texture if the currentVertexArr X position outside the canvas
 			if (x1 > 0 && x1 < width) {
 				for (let j = 0; j < textureNum; j++) {
@@ -115,13 +107,13 @@ class Mountains {
 		}
 
 		// draw texture on the mountain but evenly distributed
-		for (let i = 0; i < this.textureNum * 3; i++) {
+		/* 		for (let i = 0; i < this.textureNum * 3; i++) {
 			let x = random(width);
 			let y = random(this.maxY, this.baseY);
 			this.mask.strokeWeight(1);
 			this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness - 10, this.skyAlpha);
 			this.mask.point(x, y);
-		}
+		} */
 		this.mask.drawingContext.globalCompositeOperation = 'destination-in';
 
 		this.mask.noStroke();
