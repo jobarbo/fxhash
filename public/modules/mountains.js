@@ -26,9 +26,9 @@ class Mountains {
 		// sky color
 		this.skySatOffset = skySatOffset;
 		this.skyBrightOffset = skyBrightOffset;
-		this.skyHue = hue(color);
-		this.skySaturation = constrain(saturation(color) + this.skySatOffset, 10, 100);
-		this.skyBrightness = constrain(brightness(color) + this.skyBrightOffset, 10, 100);
+		this.skyHue = hue(skyColor);
+		this.skySaturation = constrain(saturation(skyColor) + this.skySatOffset, 10, 100);
+		this.skyBrightness = constrain(brightness(skyColor) + this.skyBrightOffset, 10, 100);
 		this.skyAlpha = 10;
 		this.reflectionAngle = 0;
 		this.rYoff = random(10000);
@@ -73,20 +73,20 @@ class Mountains {
 		for (let i = 0; i < currentVertexArr.length; i++) {
 			let x1 = currentVertexArr[i][0];
 			let y1 = currentVertexArr[i][1];
-			let density = map(this.mtnID, 1, 5, 0.2, 0.05);
+			let density = map(this.mtnID, 1, 5, 0.1, 0.08);
 
 			// change the value of yBleed to change the height of the texture with perlins noise
-			let yBleed = map(noise(this.rYoff), 0, 1, 20, 500);
-			let xBleed = 5;
-			this.rYoff += 0.1;
+			let yBleed = map(noise(this.rYoff), 0, 1, 60, 500);
+			let xBleed = 10;
+			this.rYoff += 0.05;
 			this.rXoff += 0.1;
 
 			let textureNum = this.textureNum * density;
 			// calculate the difference between the current X vertex and the sun x position
 			let xDiff = this.sunPosX - x1;
-			this.reflectionAngle = xDiff / 10;
+			this.reflectionAngle = xDiff / 15;
 			// do not draw the texture if the currentVertexArr X position outside the canvas
-			if (x1 > 0 && x1 < width) {
+			if (x1 > -100 && x1 < width + 100) {
 				for (let j = 0; j < textureNum; j++) {
 					this.mask.push();
 					this.mask.translate(x1, y1);
@@ -97,8 +97,8 @@ class Mountains {
 
 					let x2 = map(noise(xoff), 0, 1, 0 - xBleed, 0 + xBleed);
 					let y2 = map(noise(yoff), 0, 1, 0 - yBleed, 0 + yBleed);
-					let strokeWeigh = map(y2, 0, this.baseY, 2, 0.3);
-					this.mask.strokeWeight(strokeWeigh);
+					let strokeWeight = map(y2, 0, this.baseY, 2, 0.3);
+					this.mask.strokeWeight(strokeWeight);
 					this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness, this.skyAlpha);
 					this.mask.point(x2, y2);
 					this.mask.pop();

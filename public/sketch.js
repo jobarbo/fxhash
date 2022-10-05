@@ -41,8 +41,8 @@ function setup() {
 	let brightOffset = (mtnNum * mtnNum) / 2;
 	let offsetIterator = map(mtnNum, 1, 5, 7, 2);
 
-	let skySatOffset = -25;
-	let skyBrightOffset = +30;
+	let skySatOffset = -15;
+	let skyBrightOffset = +10;
 	for (let i = 0; i < mtnNum; i++) {
 		console.log(`brightOffset: ${brightOffset}`);
 		console.log(`satOffset: ${satOffset}`);
