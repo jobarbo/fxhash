@@ -17,6 +17,7 @@ class Mountains {
 		this.maxX = 0;
 		this.height = (mountainHeight * this.div) / indexMax;
 		this.textureNum = $fxhashFeatures.mountain_texture.count;
+		this.backgroundTextureNum = this.textureNum * 5;
 		this.mask = '';
 
 		// sun position
@@ -68,8 +69,24 @@ class Mountains {
 		this.mask.colorMode(HSB, 360, 100, 100, 100);
 		this.mask.background(this.hue, this.saturation, this.brightness, this.alpha);
 
-		// draw the texture on the mask with a higher density near the currentVertexArr Y position
+		// draw base background texture on the mountain but evenly distributed
+		let density = map(this.mtnID, 1, 5, 0.2, 0.05);
+		let textureMult = 60 / this.mtnID;
+		let bgTextureNum = this.backgroundTextureNum * density * textureMult;
+		console.log(bgTextureNum);
 
+		for (let i = 0; i < bgTextureNum; i++) {
+			let x = random(width);
+			let y = random(this.maxY, this.baseY);
+			let alpha = map(y, this.maxY, this.baseY, 70, 100);
+			let weight = map(y, this.maxY, this.baseY, 1, 1.5);
+			//this.mask.strokeWeight(weight);
+			this.mask.noStroke();
+			this.mask.fill(this.hue, this.saturation + random(-5, 5), this.brightness + random(-5, 5), alpha);
+			this.mask.rect(x, y, weight);
+		}
+
+		// draw the texture on the mask with a higher density near the currentVertexArr Y position
 		for (let i = 0; i < currentVertexArr.length; i++) {
 			// get the previous x point and y point in the for loop but if it's the first point, get the first point
 			let prevX1 = currentVertexArr[i - 1] ? currentVertexArr[i - 1][0] : currentVertexArr[0][0];
@@ -84,14 +101,14 @@ class Mountains {
 			this.rYoff += 0.2;
 			this.rXoff += 0.1;
 			let density = map(this.mtnID, 1, 5, 0.2, 0.05);
-			let textureNum = this.textureNum * density;
+			let fgTextureNum = this.textureNum * density;
 			// calculate the difference between the current X vertex and the sun x position
 			let xDiff = this.sunPosX - x1;
 			this.reflectionAngle = xDiff / 10;
 
 			// do not draw the texture if the currentVertexArr X position outside the canvas
 			if (x1 > -100 && x1 < width + 100) {
-				for (let j = 0; j < textureNum; j++) {
+				for (let j = 0; j < fgTextureNum; j++) {
 					this.mask.push();
 					this.mask.translate(x1, y1);
 					this.mask.angleMode(DEGREES);
@@ -108,19 +125,6 @@ class Mountains {
 					this.mask.pop();
 				}
 			}
-		}
-
-		// draw texture on the mountain but evenly distributed
-		let density = map(this.mtnID, 1, 5, 0.2, 0.05);
-		let textureNum = this.textureNum * density;
-		for (let i = 0; i < textureNum; i++) {
-			let x = random(width);
-			let y = random(this.maxY, this.baseY);
-			let alpha = map(y, this.maxY / 1.5, this.baseY, 0, 20);
-			let weight = constrain(map(y, this.maxY / 1.5, this.baseY, 0, 2), 1, 2);
-			this.mask.strokeWeight(weight);
-			this.mask.stroke(this.hue + random(-10, 10), this.saturation + random(-10, 10), this.brightness + random(-10, 10), alpha);
-			this.mask.point(x, y);
 		}
 
 		let lineAlpha = 100;
