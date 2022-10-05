@@ -15,7 +15,11 @@ class Mountains {
 		this.maxY = height;
 		this.minY = 0;
 		this.maxX = 0;
+		console.log(`mountainHeight: ${mountainHeight}`);
+		console.log(`this.div: ${this.div}`);
+		console.log(`ths.mtnTotal: ${this.mtnTotal}`);
 		this.height = (mountainHeight * this.div) / indexMax;
+		console.log(`this.height: ${this.height}`);
 		this.textureNum = 50000;
 		this.mask = '';
 
@@ -44,7 +48,7 @@ class Mountains {
 		// make an array to store each current x and y position in the loop
 		let currentVertexArr = [];
 		let i = 0;
-		for (let x = -width * 2; x <= width * 2; x += 10) {
+		for (let x = -width * 1.1; x <= width * 1.1; x += 10) {
 			let y = map(noise(this.xoff, this.yoff), 0, 1, this.y, this.y - this.height);
 
 			// /point(x, y);
@@ -71,30 +75,26 @@ class Mountains {
 		// draw the texture on the mask with a higher density near the currentVertexArr Y position
 
 		for (let i = 0; i < currentVertexArr.length; i++) {
+			// get the previous x point and y point in the for loop but if it's the first point, get the first point
+			let prevX1 = currentVertexArr[i - 1] ? currentVertexArr[i - 1][0] : currentVertexArr[0][0];
+			let prevY1 = currentVertexArr[i - 1] ? currentVertexArr[i - 1][1] : currentVertexArr[0][1];
+
 			let x1 = currentVertexArr[i][0];
 			let y1 = currentVertexArr[i][1];
-			let density = map(this.mtnID, 1, 5, 0.1, 0.01);
 
 			// change the value of yBleed to change the height of the texture with perlins noise
-			let yBleed = map(noise(this.rYoff), 0, 1, 20, 300);
-			let xBleed = map(noise(this.rXoff), 0, 1, 20, 30);
-			this.rYoff += 0.1;
+			let yBleed = map(noise(this.rYoff), 0, 1, 20, this.height);
+			let xBleed = map(noise(this.rXoff), 0, 1, 20, 40);
+			this.rYoff += 0.15;
 			this.rXoff += 0.1;
-			if (yBleed < 0 && yBleed > -0) {
-				yBleed = 0;
-			}
-			if (xBleed < 0 && xBleed > -0) {
-				xBleed = 0;
-			}
+			let density = map(this.mtnID, 1, 5, 0.2, 0.05);
 			let textureNum = this.textureNum * density;
 			// calculate the difference between the current X vertex and the sun x position
 			let xDiff = this.sunPosX - x1;
-			this.reflectionAngle = xDiff / 10;
-			if (this.reflectionAngle < 3 && this.reflectionAngle > -3) {
-				this.reflectionAngle = 0;
-			}
+			this.reflectionAngle = xDiff / 15;
+
 			// do not draw the texture if the currentVertexArr X position outside the canvas
-			if (x1 > 0 && x1 < width) {
+			if (x1 > -100 && x1 < width + 100) {
 				for (let j = 0; j < textureNum; j++) {
 					this.mask.push();
 					this.mask.translate(x1, y1);
@@ -105,12 +105,20 @@ class Mountains {
 
 					let x2 = map(noise(xoff), 0, 1, 0 - xBleed, 0 + xBleed);
 					let y2 = map(noise(yoff), 0, 1, 0 - yBleed, 0 + yBleed);
-					let strokeWeigh = map(y2, 0, this.baseY, 2, 0.3);
+					let strokeWeigh = map(y2, 0, this.height, 2, 0.1);
 					this.mask.strokeWeight(strokeWeigh);
 					this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness, this.skyAlpha);
+					this.mask.point(x1, y1);
 					this.mask.point(x2, y2);
 					this.mask.pop();
 				}
+			}
+			let lineAlpha = 100;
+			for (let j = 0; j < 20; j++) {
+				this.mask.strokeWeight(1);
+				this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness, lineAlpha);
+				this.mask.line(prevX1, prevY1 + j, x1 - 0.5, y1 + j);
+				lineAlpha -= 5;
 			}
 		}
 
@@ -127,13 +135,13 @@ class Mountains {
 		this.mask.noStroke();
 		this.mask.fill(this.hue, this.saturation, this.brightness, this.alpha);
 		this.mask.beginShape();
-		this.mask.vertex(-width * 2, this.y);
+		this.mask.vertex(-width * 1.1, this.y);
 		// use noise to create the mountain shape
 		for (let index = 0; index < currentVertexArr.length; index++) {
 			this.mask.vertex(currentVertexArr[index][0], currentVertexArr[index][1]);
 			this.xoff += $fxhashFeatures.mountain_softness;
 		}
-		this.mask.vertex(width * 2, this.y);
+		this.mask.vertex(width * 1.1, this.y);
 		this.mask.endShape(CLOSE);
 		image(this.mask, 0, 0);
 	}
