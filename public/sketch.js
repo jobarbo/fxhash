@@ -33,9 +33,9 @@ function setup() {
 
 	// draw the mountains
 	let mtnPos = height * random(0.7, 0.9);
-	let mtnHeight = random(height / 2, height / 1.25);
-	//let mtnNum = window.$fxhashFeatures.mountain_num;
-	let mtnNum = 5;
+	let mtnHeight = random(height / 2, height / 1.1);
+	let mtnNum = window.$fxhashFeatures.mountain_num;
+	//let mtnNum = 5;
 	let mtnID = 1;
 	let satOffset = (-mtnNum * mtnNum) / 2;
 	let brightOffset = (mtnNum * mtnNum) / 2;
@@ -44,16 +44,13 @@ function setup() {
 	let skySatOffset = -15;
 	let skyBrightOffset = 0;
 	for (let i = 0; i < mtnNum; i++) {
-		console.log(`brightOffset: ${brightOffset}`);
-		console.log(`satOffset: ${satOffset}`);
-		console.log(`skyBrightOffset: ${skyBrightOffset}`);
-		console.log(`skySatOffset: ${skySatOffset}`);
 		mountains[i] = new Mountains(mtnID, mountainsColor, mtnPos, mtnHeight, i, mtnNum, satOffset, brightOffset, skyColor, skySatOffset, skyBrightOffset, sunPosition);
 		mountains[i].draw();
 		satOffset += offsetIterator * mtnNum;
 		brightOffset -= offsetIterator * mtnNum;
 		skySatOffset += mtnNum / 2;
 		skyBrightOffset -= mtnNum / 2;
+		mtnHeight -= 50;
 		mtnID++;
 	}
 
