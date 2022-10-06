@@ -88,11 +88,11 @@ let MountainTextureStyle = {
 		xBleedMax: 14,
 		count: 50000,
 	},
-	'Basic Shading': {
+	/* 'Basic Shading': {
 		xBleedMin: 20,
 		xBleedMax: 40,
 		count: 10000,
-	},
+	}, */
 };
 
 // choose a random key from the palettes object
