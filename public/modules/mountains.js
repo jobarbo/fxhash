@@ -20,6 +20,8 @@ class Mountains {
 		this.backgroundTextureNum = this.textureNum * 5;
 		this.mask = '';
 
+		this.currentVertexArr = [];
+
 		// sun position
 		this.sunPosX = sunPos[0];
 		this.sunPosY = sunPos[1];
@@ -43,14 +45,45 @@ class Mountains {
 		stroke(this.hue, this.saturation + 30, this.brightness - 10);
 
 		// make an array to store each current x and y position in the loop
-		let currentVertexArr = [];
+		this.createVertexArr();
+
+		// create a mask for the mountain
+		this.mask = createGraphics(1000, 1000);
+		this.mask.pixelDensity(3);
+		this.mask.colorMode(HSB, 360, 100, 100, 100);
+		this.mask.background(this.hue, this.saturation, this.brightness, this.alpha);
+
+		// draw base background texture on the mountain but evenly distributed
+		let bgTextures = this.drawBackgroundTexture();
+		console.log(`bgTextures: ${bgTextures}`);
+		let bgTexturesInterval = setInterval(() => {
+			let result = bgTextures.next();
+			console.log(`result: ${result.done}`);
+			if (result.done) {
+				clearInterval(bgTexturesInterval);
+			}
+		}, 0);
+
+		// draw the texture on the mask with a higher density near the currentVertexArr Y position
+		//this.drawForegroundTexture();
+
+		// draw an outline on top of the mountain
+		//this.drawOutline();
+
+		//this.mask.drawingContext.globalCompositeOperation = 'destination-in';
+
+		// draw the mask on the mountain
+		//this.drawMask();
+	}
+
+	createVertexArr() {
 		let i = 0;
 		for (let x = -width * 1.1; x <= width * 1.1; x += 10) {
 			let y = map(noise(this.xoff, this.yoff), 0, 1, this.y, this.y - this.height);
 
 			// /point(x, y);
 			// store the current x and y position in the array
-			currentVertexArr[i] = [x, y];
+			this.currentVertexArr[i] = [x, y];
 			this.xoff += $fxhashFeatures.mountain_softness;
 			if (y < this.maxY && x > 0 && x < width) {
 				// highest point of the mountain
@@ -63,17 +96,17 @@ class Mountains {
 			}
 			i++;
 		}
-		// create a mask for the mountain
-		this.mask = createGraphics(1000, 1000);
-		this.mask.pixelDensity(3);
-		this.mask.colorMode(HSB, 360, 100, 100, 100);
-		this.mask.background(this.hue, this.saturation, this.brightness, this.alpha);
+	}
 
-		// draw base background texture on the mountain but evenly distributed
+	*drawBackgroundTexture() {
+		console.log('drawBackgroundTexture');
+		let count = 0;
+		let draw_every = 500;
+		console.log(`count: ${count}, draw_every: ${draw_every}`);
+
 		let density = map(this.mtnID, 1, 5, 0.2, 0.05);
 		let textureMult = 60 / this.mtnID;
 		let bgTextureNum = this.backgroundTextureNum * density * textureMult;
-		console.log(bgTextureNum);
 
 		for (let i = 0; i < bgTextureNum; i++) {
 			let x = random(width);
@@ -84,16 +117,19 @@ class Mountains {
 			this.mask.noStroke();
 			this.mask.fill(this.hue, this.saturation + random(-5, 5), this.brightness + random(-5, 5), alpha);
 			this.mask.rect(x, y, weight);
+			count++;
+			if (count > draw_every) {
+				console.log(`yielding`);
+				count = 0;
+				yield;
+			}
 		}
+	}
 
-		// draw the texture on the mask with a higher density near the currentVertexArr Y position
-		for (let i = 0; i < currentVertexArr.length; i++) {
-			// get the previous x point and y point in the for loop but if it's the first point, get the first point
-			let prevX1 = currentVertexArr[i - 1] ? currentVertexArr[i - 1][0] : currentVertexArr[0][0];
-			let prevY1 = currentVertexArr[i - 1] ? currentVertexArr[i - 1][1] : currentVertexArr[0][1];
-
-			let x1 = currentVertexArr[i][0];
-			let y1 = currentVertexArr[i][1];
+	drawForegroundTexture() {
+		for (let i = 0; i < this.currentVertexArr.length; i++) {
+			let x1 = this.currentVertexArr[i][0];
+			let y1 = this.currentVertexArr[i][1];
 
 			// change the value of yBleed to change the height of the texture with perlins noise
 			let yBleed = map(noise(this.rYoff), 0, 1, 20, this.height * 1.5);
@@ -126,15 +162,16 @@ class Mountains {
 				}
 			}
 		}
-
+	}
+	drawOutline() {
 		let lineAlpha = 100;
 		for (let j = 0; j < 20; j++) {
-			for (let i = 0; i < currentVertexArr.length; i++) {
-				let prevX1 = currentVertexArr[i - 1] ? currentVertexArr[i - 1][0] : currentVertexArr[0][0];
-				let prevY1 = currentVertexArr[i - 1] ? currentVertexArr[i - 1][1] : currentVertexArr[0][1];
+			for (let i = 0; i < this.currentVertexArr.length; i++) {
+				let prevX1 = this.currentVertexArr[i - 1] ? this.currentVertexArr[i - 1][0] : this.currentVertexArr[0][0];
+				let prevY1 = this.currentVertexArr[i - 1] ? this.currentVertexArr[i - 1][1] : this.currentVertexArr[0][1];
 
-				let x1 = currentVertexArr[i][0];
-				let y1 = currentVertexArr[i][1];
+				let x1 = this.currentVertexArr[i][0];
+				let y1 = this.currentVertexArr[i][1];
 				let lineBrightOffset = map(j, 0, 20, 10, 0);
 				this.mask.strokeWeight(1);
 				this.mask.strokeCap(SQUARE);
@@ -144,16 +181,15 @@ class Mountains {
 			}
 			lineAlpha -= 5;
 		}
-
-		this.mask.drawingContext.globalCompositeOperation = 'destination-in';
-
+	}
+	drawMask() {
 		this.mask.noStroke();
 		this.mask.fill(this.hue, this.saturation, this.brightness, this.alpha);
 		this.mask.beginShape();
 		this.mask.vertex(-width * 1.1, this.y);
 		// use noise to create the mountain shape
-		for (let index = 0; index < currentVertexArr.length; index++) {
-			this.mask.vertex(currentVertexArr[index][0], currentVertexArr[index][1]);
+		for (let index = 0; index < this.currentVertexArr.length; index++) {
+			this.mask.vertex(this.currentVertexArr[index][0], this.currentVertexArr[index][1]);
 			this.xoff += $fxhashFeatures.mountain_softness;
 		}
 		this.mask.vertex(width * 1.1, this.y);
