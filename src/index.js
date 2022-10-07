@@ -79,8 +79,8 @@ let palettes = {
 let MountainTextureStyle = {
 	// name of the texture
 	'Smooth Shading': {
-		xBleedMin: 20,
-		xBleedMax: 40,
+		xBleedMin: 15,
+		xBleedMax: 25,
 		count: 50000,
 	},
 	'Corduroy Insanity': {

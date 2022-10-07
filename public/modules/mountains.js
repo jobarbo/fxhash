@@ -89,8 +89,6 @@ class Mountains {
 		// draw the texture on the mask with a higher density near the currentVertexArr Y position
 		for (let i = 0; i < currentVertexArr.length; i++) {
 			// get the previous x point and y point in the for loop but if it's the first point, get the first point
-			let prevX1 = currentVertexArr[i - 1] ? currentVertexArr[i - 1][0] : currentVertexArr[0][0];
-			let prevY1 = currentVertexArr[i - 1] ? currentVertexArr[i - 1][1] : currentVertexArr[0][1];
 
 			let x1 = currentVertexArr[i][0];
 			let y1 = currentVertexArr[i][1];
@@ -104,7 +102,7 @@ class Mountains {
 			let fgTextureNum = this.textureNum * density;
 			// calculate the difference between the current X vertex and the sun x position
 			let xDiff = this.sunPosX - x1;
-			this.reflectionAngle = xDiff / 10;
+			this.reflectionAngle = xDiff / 12;
 
 			// do not draw the texture if the currentVertexArr X position outside the canvas
 			if (x1 > -100 && x1 < width + 100) {
@@ -135,11 +133,12 @@ class Mountains {
 
 				let x1 = currentVertexArr[i][0];
 				let y1 = currentVertexArr[i][1];
-				let lineBrightOffset = map(j, 0, 20, 10, 0);
+				let lineBrightOffset = map(j, 0, 20, 5, 0);
+				let lineSaturationOffset = map(j, 0, 20, 5, 0);
 				this.mask.strokeWeight(1);
 				this.mask.strokeCap(SQUARE);
 				this.mask.strokeJoin(MITER);
-				this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness + lineBrightOffset, lineAlpha);
+				this.mask.stroke(this.skyHue, this.skySaturation + lineSaturationOffset, this.skyBrightness + lineBrightOffset, lineAlpha);
 				this.mask.line(prevX1, prevY1 + j, x1, y1 + j);
 			}
 			lineAlpha -= 5;
