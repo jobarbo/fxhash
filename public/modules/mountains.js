@@ -17,7 +17,7 @@ class Mountains {
 		this.maxX = 0;
 		this.height = (mountainHeight * this.div) / indexMax;
 		this.textureNum = $fxhashFeatures.mountain_texture.count;
-		this.backgroundTextureNum = this.textureNum * 5;
+		this.backgroundTextureNum = this.textureNum;
 		this.mask = '';
 
 		// sun position
