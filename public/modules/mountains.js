@@ -19,6 +19,7 @@ class Mountains {
 		this.textureNum = $fxhashFeatures.mountain_texture.count;
 		this.backgroundTextureNum = this.textureNum * 1;
 		this.mask = '';
+		this.done = false;
 
 		this.currentVertexArr = [];
 
@@ -49,7 +50,7 @@ class Mountains {
 
 		// create a mask for the mountain
 		this.mask = createGraphics(1000, 1000);
-		this.mask.pixelDensity(3);
+		this.mask.pixelDensity(1);
 		this.mask.colorMode(HSB, 360, 100, 100, 100);
 		this.mask.background(this.hue, this.saturation, this.brightness, this.alpha);
 
@@ -64,6 +65,7 @@ class Mountains {
 
 		// draw the mask on the mountain
 		this.drawMask();
+		this.done = true;
 	}
 
 	createVertexArr() {
