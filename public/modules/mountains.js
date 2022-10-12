@@ -54,59 +54,16 @@ class Mountains {
 		this.mask.background(this.hue, this.saturation, this.brightness, this.alpha);
 
 		// draw base background texture on the mountain but evenly distributed
-		let bgTextures = this.drawBackgroundTexture();
-		let bgTexturesResult;
-		let foregroundTexture = this.drawForegroundTexture();
-		let foregroundTextureResult;
-		let outline = this.drawOutline();
-		let outlineResult;
-		let masking = this.drawMask();
-		/*let maskingResult = masking.next(); */
-
-		console.log(`bgTextures: ${bgTextures}`);
-		let bgInterval = setInterval(() => {
-			console.log('bgTexturesinterval');
-			bgTexturesResult = bgTextures.next();
-			if (bgTexturesResult.done) {
-				console.log('bgTexturesinterval done');
-				clearInterval(bgInterval);
-			}
-		}, 0);
-		let fgInterval = setInterval(() => {
-			console.log('fgTexturesinterval');
-			foregroundTextureResult = foregroundTexture.next();
-			if (foregroundTextureResult.done) {
-				console.log('fgTexturesinterval done');
-				clearInterval(fgInterval);
-			}
-		}, 0);
-
-		let outlineInterval = setInterval(() => {
-			console.log('outlineInterval');
-			outlineResult = outline.next();
-			if (outlineResult.done) {
-				console.log('outlineInterval done');
-				clearInterval(outlineInterval);
-			}
-		}, 0);
-
-		let maskingInterval = setInterval(() => {
-			console.log('maskingInterval');
-			maskingResult = masking.next();
-			if (maskingResult.done) {
-				console.log('maskingInterval done');
-				clearInterval(maskingInterval);
-			}
-		}, 0);
+		this.drawBackgroundTexture();
 
 		// draw the texture on the mask with a higher density near the currentVertexArr Y position
-		//this.drawForegroundTexture();
+		this.drawForegroundTexture();
 
 		// draw an outline on top of the mountain
-		//this.drawOutline();
+		this.drawOutline();
 
 		// draw the mask on the mountain
-		//this.drawMask();
+		this.drawMask();
 	}
 
 	createVertexArr() {
@@ -131,17 +88,10 @@ class Mountains {
 		}
 	}
 
-	*drawBackgroundTexture() {
-		console.log('drawBackgroundTexture');
-		let count = 0;
-		let draw_every = 50000;
-
-		console.log(`count: ${count}, draw_every: ${draw_every}`);
-
+	drawBackgroundTexture() {
 		let density = map(this.mtnID, 1, 5, 0.2, 0.05);
 		let textureMult = 60 / this.mtnID;
 		let bgTextureNum = this.backgroundTextureNum * density * textureMult;
-		console.log(`bgTextureNum: ${bgTextureNum}`);
 
 		for (let i = 0; i < bgTextureNum; i++) {
 			let x = random(width);
@@ -152,17 +102,10 @@ class Mountains {
 			this.mask.noStroke();
 			this.mask.fill(this.hue, this.saturation + random(-5, 5), this.brightness + random(-5, 5), alpha);
 			this.mask.rect(x, y, weight);
-			count++;
-			if (count > draw_every) {
-				count = 0;
-				yield;
-			}
 		}
 	}
 
-	*drawForegroundTexture() {
-		let count = 0;
-		let draw_every = 50000;
+	drawForegroundTexture() {
 		for (let i = 0; i < this.currentVertexArr.length; i++) {
 			let x1 = this.currentVertexArr[i][0];
 			let y1 = this.currentVertexArr[i][1];
@@ -185,28 +128,23 @@ class Mountains {
 					this.mask.translate(x1, y1);
 					this.mask.angleMode(DEGREES);
 					this.mask.rotate(this.reflectionAngle);
-					let xoff = random(100000);
-					let yoff = random(100000);
+					let xoff = random(100);
+					let yoff = random(100);
 
 					let x2 = map(noise(xoff), 0, 1, 0 - xBleed, 0 + xBleed);
 					let y2 = map(noise(yoff), 0, 1, 0 - yBleed, 0 + yBleed);
-					let strokeWeigh = map(y2, 0, this.height, 2, 0.1);
+					let strokeWeigh = map(y2, 0, this.height, 10, 0.1);
 					this.mask.strokeWeight(strokeWeigh);
 					this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness, this.skyAlpha);
 					this.mask.point(x2, y2);
 					this.mask.pop();
-					count++;
-					if (count > draw_every) {
-						count = 0;
-						yield;
-					}
 				}
 			}
 		}
 	}
-	*drawOutline() {
+	drawOutline() {
 		let count = 0;
-		let draw_every = 500;
+		let draw_every = 5000;
 		let lineAlpha = 100;
 		for (let j = 0; j < 20; j++) {
 			for (let i = 0; i < this.currentVertexArr.length; i++) {
@@ -221,18 +159,13 @@ class Mountains {
 				this.mask.strokeJoin(MITER);
 				this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness + lineBrightOffset, lineAlpha);
 				this.mask.line(prevX1, prevY1 + j, x1, y1 + j);
-				count++;
-				if (count > draw_every) {
-					count = 0;
-					yield;
-				}
 			}
 			lineAlpha -= 5;
 		}
 	}
-	*drawMask() {
+	drawMask() {
 		let count = 0;
-		let draw_every = 500;
+		let draw_every = 5000;
 		this.mask.drawingContext.globalCompositeOperation = 'destination-in';
 
 		this.mask.noStroke();
@@ -243,11 +176,6 @@ class Mountains {
 		for (let index = 0; index < this.currentVertexArr.length; index++) {
 			this.mask.vertex(this.currentVertexArr[index][0], this.currentVertexArr[index][1]);
 			this.xoff += $fxhashFeatures.mountain_softness;
-			count++;
-			if (count > draw_every) {
-				count = 0;
-				yield;
-			}
 		}
 		this.mask.vertex(width * 1.1, this.y);
 		this.mask.endShape(CLOSE);
