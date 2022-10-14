@@ -97,8 +97,7 @@ class Rect_mc {
 		this.y += map(noise(this.yoff, this.x), 0, 1, -this.size, this.size);
 
 		//this.xoff += 0.01;
-		//
-		this.yoff += 0.3;
+		//this.yoff += 0.002;
 
 		if (this.hue <= 0) {
 			this.hue = 359;
