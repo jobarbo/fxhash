@@ -1,6 +1,6 @@
 let xoffStart = 0;
 
-let xoffInc = 0.003;
+let xoffInc = 0.006;
 
 function setup() {
 	pixelDensity(3.0);
@@ -18,7 +18,7 @@ function draw() {
 	strokeWeight(1);
 	let xoff = xoffStart;
 	for (let x = -100; x <= width + 100; x++) {
-		let n = map(noise(xoff), 0, 1, -400, 400);
+		let n = map(noise(xoff), 0, 1, -20, 20);
 		let s = map(sin(xoff), -1, 1, 400, height - 400);
 		let y = s + n;
 		vertex(x, y);
