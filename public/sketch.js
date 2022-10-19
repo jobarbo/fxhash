@@ -92,9 +92,9 @@ class Rect_mc {
 	}
 
 	move() {
-		this.hue += map(noise(this.xoff, this.yoff), 0, 1, -0.23, 0.23);
-		this.x += map(noise(this.xoff, this.y), 0, 1, -this.size, this.size);
-		this.y += map(noise(this.yoff, this.x), 0, 1, -this.size, this.size);
+		this.hue += map(noise(this.xoff, this.yoff), 0, 1, -0.1, 0.1);
+		this.x += map(noise(this.xoff, this.y), 0, 1, -0.5, 0.5);
+		this.y += map(noise(this.yoff, this.x), 0, 1, -0.5, 0.5);
 
 		//this.xoff += 0.01;
 		//this.yoff += 0.002;
