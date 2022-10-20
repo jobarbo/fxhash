@@ -81,12 +81,12 @@ let MountainTextureStyle = {
 	'Smooth Shading': {
 		xBleedMin: 20,
 		xBleedMax: 40,
-		count: 500,
+		count: 5000,
 	},
 	'Corduroy Insanity': {
 		xBleedMin: 6,
 		xBleedMax: 14,
-		count: 500,
+		count: 5000,
 	},
 	/* 'Basic Shading': {
 		xBleedMin: 20,
