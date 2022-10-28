@@ -21,6 +21,8 @@ class Mountains {
 		this.mask = '';
 
 		this.bgTextureDone = false;
+		this.started = false;
+		this.done = false;
 
 		this.currentVertexArr = [];
 
@@ -41,6 +43,8 @@ class Mountains {
 	}
 
 	draw() {
+		this.started = true;
+		console.log(`'draw' started for mtnID: ${this.mtnID}`);
 		// make a custom shape using beginShape() and endShape() and noise();
 		beginShape();
 		strokeWeight(5);
@@ -58,8 +62,9 @@ class Mountains {
 			drawBackgroundTexture.next();
 			if (this.bgTextureDone) {
 				clearInterval(drawBackgroundTextureInterval);
-				console.log('done');
+				console.log(`mountain Id: ${this.mtnID} bgTextureDone`);
 				this.drawMask();
+				this.done = true;
 			}
 		}, 0);
 
@@ -103,7 +108,7 @@ class Mountains {
 
 	*drawBackgroundTexture() {
 		let count = 0;
-		let draw_every = 40;
+		let draw_every = 4000;
 		let density = map(this.mtnID, 1, 5, 0.2, 0.05);
 		let textureMult = 60 / this.mtnID;
 		let bgTextureNum = this.backgroundTextureNum * density * textureMult;

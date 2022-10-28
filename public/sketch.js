@@ -24,11 +24,11 @@ function setup() {
 
 	// draw the sky
 	sky = new Sky(skyColor);
-	sky.draw();
+	//sky.draw();
 
 	// draw the sun
 	sun = new Sun(sunColor);
-	sun.draw();
+	//sun.draw();
 	let sunPosition = sun.getSunPosition();
 
 	// draw the mountains
@@ -55,13 +55,30 @@ function setup() {
 		mtnID++;
 	}
 
-	for (let i = 0; i < mountains.length; i++) {
+	// draw a mountain and wait for mountain.done to be true before drawing the next one
+	let i = 0;
+	let drawMountainInterval = setInterval(() => {
+		if (mountains[i].done) {
+			i++;
+			if (i < mountains.length) {
+				drawMountain = mountains[i].draw();
+			} else {
+				clearInterval(drawMountainInterval);
+			}
+		} else {
+			if (!mountains[i].started) {
+				mountains[i].draw();
+			}
+		}
+	}, 100);
+
+	/* 	for (let i = 0; i < mountains.length; i++) {
 		mountains[i].draw();
-	}
+	} */
 
 	// draw the ground
 	ground = new Ground(mtnPos, groundColor);
-	ground.draw();
+	//ground.draw();
 }
 
 function draw() {}
