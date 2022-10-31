@@ -187,7 +187,7 @@ class Mountains {
 					let xoff = random(100000);
 					let yoff = random(100000);
 					let ry = random();
-					let skewed = this.easeInExpo(ry);
+					let skewed = this.easeInCirc(ry);
 					let yEnd = map(noise(yoff), 0, 1, yBleed / 4, yBleed);
 
 					let x2 = map(noise(xoff), 0, 1, 0 - xBleed, 0 + xBleed);
@@ -262,7 +262,7 @@ class Mountains {
 		image(this.mask, 0, 0);
 	}
 
-	easeInExpo(y) {
-		return y === 0 ? 0 : pow(2, 10 * y - 10);
+	easeInCirc(y) {
+		return 1 - sqrt(1 - pow(y, 2));
 	}
 }
