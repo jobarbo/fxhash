@@ -24,22 +24,22 @@ function setup() {
 
 	// draw the sky
 	sky = new Sky(skyColor);
-	//sky.draw();
+	sky.draw();
 
 	// draw the sun
 	sun = new Sun(sunColor);
-	//sun.draw();
+	sun.draw();
 	let sunPosition = sun.getSunPosition();
 
 	// draw the mountains
 	let mtnPos = height * random(0.7, 0.9);
 	let mtnHeight = random(height / 2, height / 1.1);
-	//let mtnNum = window.$fxhashFeatures.mountain_num;
-	let mtnNum = 5;
+	let mtnNum = window.$fxhashFeatures.mountain_num;
 	let mtnID = 1;
 	let satOffset = (-mtnNum * mtnNum) / 2;
 	let brightOffset = (mtnNum * mtnNum) / 2;
 	let offsetIterator = map(mtnNum, 1, 5, 7, 2);
+	let mtnDone = false;
 
 	let skySatOffset = -15;
 	let skyBrightOffset = 0;
@@ -54,7 +54,7 @@ function setup() {
 		mtnHeight -= 50;
 		mtnID++;
 	}
-
+	var startTime = performance.now();
 	// draw a mountain and wait for mountain.done to be true before drawing the next one
 	let i = 0;
 	let drawMountainInterval = setInterval(() => {
@@ -64,6 +64,9 @@ function setup() {
 				drawMountain = mountains[i].draw();
 			} else {
 				clearInterval(drawMountainInterval);
+				mtnDone = true;
+				var endTime = performance.now();
+				console.log('mountain draw time: ' + (endTime - startTime) + 'ms');
 			}
 		} else {
 			if (!mountains[i].started) {
@@ -72,13 +75,9 @@ function setup() {
 		}
 	}, 100);
 
-	/* 	for (let i = 0; i < mountains.length; i++) {
-		mountains[i].draw();
-	} */
-
 	// draw the ground
 	ground = new Ground(mtnPos, groundColor);
-	//ground.draw();
+	ground.draw();
 }
 
 function draw() {}
