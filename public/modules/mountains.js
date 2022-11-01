@@ -38,7 +38,7 @@ class Mountains {
 		this.skyHue = hue(skyColor);
 		this.skySaturation = constrain(saturation(skyColor) + this.skySatOffset, 10, 100);
 		this.skyBrightness = constrain(brightness(skyColor) + this.skyBrightOffset, 10, 100);
-		this.skyAlpha = 20;
+		this.skyAlpha = 10;
 		this.reflectionAngle = 0;
 		this.rYoff = random(10000);
 		this.rXoff = random(10000);
@@ -176,14 +176,13 @@ class Mountains {
 			// calculate the difference between the current X vertex and the sun x position
 			let xDiff = this.sunPosX - x1;
 			this.reflectionAngle = xDiff / 15;
-
+			this.mask.push();
+			this.mask.translate(x1, y1);
+			this.mask.angleMode(DEGREES);
+			this.mask.rotate(this.reflectionAngle);
 			// do not draw the texture if the currentVertexArr X position outside the canvas
 			if (x1 > -100 && x1 < width + 100) {
 				for (let j = 0; j < fgTextureNum; j++) {
-					this.mask.push();
-					this.mask.translate(x1, y1);
-					this.mask.angleMode(DEGREES);
-					this.mask.rotate(this.reflectionAngle);
 					let xoff = random(100000);
 					let yoff = random(100000);
 					let ry = random();
@@ -201,7 +200,6 @@ class Mountains {
 					this.mask.noStroke();
 					this.mask.fill(this.skyHue, this.skySaturation, this.skyBrightness, this.skyAlpha);
 					this.mask.rect(x2, y2, sw);
-					this.mask.pop();
 					if (count >= draw_every) {
 						//console.log('yield');
 						count = 0;
@@ -210,6 +208,7 @@ class Mountains {
 					count++;
 				}
 			}
+			this.mask.pop();
 		}
 		this.fgTextureDone = true;
 		console.log('fgTextureDone');
