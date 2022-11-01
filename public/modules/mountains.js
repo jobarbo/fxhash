@@ -232,7 +232,6 @@ class Mountains {
 				this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness + lineBrightOffset, lineAlpha);
 				this.mask.line(prevX1, prevY1 + j, x1, y1 + j);
 				if (count >= draw_every) {
-					console.log('yield');
 					count = 0;
 					yield;
 				}

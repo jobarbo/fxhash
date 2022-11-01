@@ -15,12 +15,12 @@ function setup() {
 	noiseSeed(fxrand() * 10000);
 	noLoop();
 
-	pallette = window.$fxhashFeatures.palette;
-	skyColor = color(pallette.sky[0], pallette.sky[1], pallette.sky[2]);
-	sunColor = color(pallette.sun[0], pallette.sun[1], pallette.sun[2]);
-	groundColor = color(pallette.ground[0], pallette.ground[1], pallette.ground[2]);
-	mountainsColor = color(pallette.mountain[0], pallette.mountain[1], pallette.mountain[2]);
-	seaColor = color(pallette.sea[0], pallette.sea[1], pallette.sea[2]);
+	let pallette = window.$fxhashFeatures.palette;
+	let skyColor = color(pallette.sky[0], pallette.sky[1], pallette.sky[2]);
+	let sunColor = color(pallette.sun[0], pallette.sun[1], pallette.sun[2]);
+	let groundColor = color(pallette.ground[0], pallette.ground[1], pallette.ground[2]);
+	let mountainsColor = color(pallette.mountain[0], pallette.mountain[1], pallette.mountain[2]);
+	let seaColor = color(pallette.sea[0], pallette.sea[1], pallette.sea[2]);
 
 	// draw the sky
 	sky = new Sky(skyColor);
