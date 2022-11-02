@@ -7,8 +7,8 @@ let sea;
 let night = false;
 
 function setup() {
-	pixelDensity(1.0);
-	createCanvas(1000, 1200);
+	pixelDensity(3.0);
+	createCanvas(1200, 1000);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(210, 23, 92);
 	randomSeed(fxrand() * 10000);
