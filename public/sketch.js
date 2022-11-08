@@ -1,11 +1,17 @@
+let gui = '';
+
 let balles = [];
 let rectangles = [];
 let ballesNum = 2000;
 let rectNum = 500;
+
 function setup() {
 	createCanvas(1280, 1920);
 	pixelDensity(3);
 	colorMode(HSB, 360, 100, 100, 100);
+
+	gui = new dat.GUI();
+	console.log(gui);
 
 	let bgHue = random(360);
 	background(bgHue, 10, 10);
@@ -13,6 +19,14 @@ function setup() {
 	for (i = 0; i < ballesNum; i++) {
 		balles[i] = new Balle_mc(ballHue, i);
 	}
+
+	// add Balle_mc to gui
+	let ballFolder = gui.addFolder('Balle_mc');
+
+	ballFolder.add(balles[0], 'size', 0, 100);
+	ballFolder.add(balles[0], 'hue', 0, 360);
+	ballFolder.add(balles[0], 'speed', 0, 10);
+
 	let rectHue = random(360);
 	for (i = 0; i < rectNum; i++) {
 		rectangles[i] = new Rect_mc(rectHue);
@@ -34,10 +48,11 @@ class Balle_mc {
 	constructor(hue, id) {
 		this.yoff = random(0.001);
 		this.xoff = random(0.001);
-		this.x = random(width);
 
+		this.x = random(width);
 		this.y = random(height);
 
+		this.speed = 1;
 		this.size = 1;
 		this.hue = hue;
 	}
@@ -49,8 +64,8 @@ class Balle_mc {
 	}
 
 	move() {
-		this.x += map(noise(this.xoff, this.y), 0, 1, -1, 1);
-		this.y += map(noise(this.yoff, this.x), 0, 1, -1, 1);
+		this.x += map(noise(this.xoff, this.y), 0, 1, -this.speed, this.speed);
+		this.y += map(noise(this.yoff, this.x), 0, 1, -this.speed, this.speed);
 
 		//this.xoff += 0.01
 		//this.yoff += 0.002
