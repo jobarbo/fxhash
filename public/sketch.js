@@ -31,34 +31,42 @@ function setup() {
 		alpha: 10,
 		xoffIteration: 0,
 		yoffIteration: 0,
+		range: balls.length,
 	};
+	let ballRange = ballDynamicVar.range;
+	ballFolder.add(ballDynamicVar, 'range', 0, balls.length).onChange(function (value) {
+		ballRange = value;
+	});
 	ballFolder.add(ballDynamicVar, 'size', 0, 10).onFinishChange(function (value) {
-		for (i = 0; i < balls.length; i++) {
+		for (i = 0; i < ballRange; i++) {
 			balls[i].size = value;
 		}
 	});
-	ballFolder.add(ballDynamicVar, 'speed', 0, 100).onFinishChange(function (value) {
-		for (i = 0; i < balls.length; i++) {
-			balls[i].speed = value;
-		}
-	});
+	ballFolder
+		.add(ballDynamicVar, 'speed', 0, 10)
+		.step(0.1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < ballRange; i++) {
+				balls[i].speed = value;
+			}
+		});
 	ballFolder.add(ballDynamicVar, 'hue', 0, 360).onFinishChange(function (value) {
-		for (i = 0; i < balls.length; i++) {
+		for (i = 0; i < ballRange; i++) {
 			balls[i].hue = value;
 		}
 	});
 	ballFolder.add(ballDynamicVar, 'saturation', 0, 100).onFinishChange(function (value) {
-		for (i = 0; i < balls.length; i++) {
+		for (i = 0; i < ballRange; i++) {
 			balls[i].saturation = value;
 		}
 	});
 	ballFolder.add(ballDynamicVar, 'brightness', 0, 100).onFinishChange(function (value) {
-		for (i = 0; i < balls.length; i++) {
+		for (i = 0; i < ballRange; i++) {
 			balls[i].brightness = value;
 		}
 	});
 	ballFolder.add(ballDynamicVar, 'alpha', 0, 100).onFinishChange(function (value) {
-		for (i = 0; i < balls.length; i++) {
+		for (i = 0; i < ballRange; i++) {
 			balls[i].alpha = value;
 		}
 	});
@@ -66,7 +74,7 @@ function setup() {
 		.add(ballDynamicVar, 'xoffIteration', -1, 1)
 		.step(0.0001)
 		.onFinishChange(function (value) {
-			for (i = 0; i < balls.length; i++) {
+			for (i = 0; i < ballRange; i++) {
 				balls[i].xoffIteration = value;
 			}
 		});
@@ -74,7 +82,7 @@ function setup() {
 		.add(ballDynamicVar, 'yoffIteration', -1, 1)
 		.step(0.0001)
 		.onFinishChange(function (value) {
-			for (i = 0; i < balls.length; i++) {
+			for (i = 0; i < ballRange; i++) {
 				balls[i].yoffIteration = value;
 			}
 		});
