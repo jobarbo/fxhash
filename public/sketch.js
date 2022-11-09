@@ -140,8 +140,8 @@ class Ball_mc {
 	}
 
 	move() {
-		let xIteration = map(noise(this.xoff, this.yoff + this.y), 0, 1, -this.speed, this.speed, true);
-		let yIteration = map(noise(this.yoff, this.xoff + this.x), 0, 1, -this.speed, this.speed, true);
+		let xIteration = map(noise(this.xoff), 0, 1, -this.speed, this.speed, true);
+		let yIteration = map(noise(this.yoff), 0, 1, -this.speed, this.speed, true);
 
 		this.x += xIteration;
 		this.y += yIteration;
