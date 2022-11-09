@@ -24,7 +24,7 @@ function setup() {
 	let ballFolder = gui.addFolder('Ball_mc');
 	let ballDynamicVar = {
 		size: 1,
-		speed: 1,
+		speed: 0,
 		hue: 1,
 		saturation: 10,
 		brightness: 80,
@@ -50,28 +50,40 @@ function setup() {
 				balls[i].speed = value;
 			}
 		});
-	ballFolder.add(ballDynamicVar, 'hue', 0, 360).onFinishChange(function (value) {
-		for (i = 0; i < ballRange; i++) {
-			balls[i].hue = value;
-		}
-	});
-	ballFolder.add(ballDynamicVar, 'saturation', 0, 100).onFinishChange(function (value) {
-		for (i = 0; i < ballRange; i++) {
-			balls[i].saturation = value;
-		}
-	});
-	ballFolder.add(ballDynamicVar, 'brightness', 0, 100).onFinishChange(function (value) {
-		for (i = 0; i < ballRange; i++) {
-			balls[i].brightness = value;
-		}
-	});
-	ballFolder.add(ballDynamicVar, 'alpha', 0, 100).onFinishChange(function (value) {
-		for (i = 0; i < ballRange; i++) {
-			balls[i].alpha = value;
-		}
-	});
 	ballFolder
-		.add(ballDynamicVar, 'xoffIteration', -1, 1)
+		.add(ballDynamicVar, 'hue', 0, 360)
+		.step(1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < ballRange; i++) {
+				balls[i].hue = value;
+			}
+		});
+	ballFolder
+		.add(ballDynamicVar, 'saturation', 0, 100)
+		.step(1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < ballRange; i++) {
+				balls[i].saturation = value;
+			}
+		});
+	ballFolder
+		.add(ballDynamicVar, 'brightness', 0, 100)
+		.step(1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < ballRange; i++) {
+				balls[i].brightness = value;
+			}
+		});
+	ballFolder
+		.add(ballDynamicVar, 'alpha', 0, 100)
+		.step(0.1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < ballRange; i++) {
+				balls[i].alpha = value;
+			}
+		});
+	ballFolder
+		.add(ballDynamicVar, 'xoffIteration', -0.2, 0.2)
 		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -79,7 +91,7 @@ function setup() {
 			}
 		});
 	ballFolder
-		.add(ballDynamicVar, 'yoffIteration', -1, 1)
+		.add(ballDynamicVar, 'yoffIteration', -0.2, 0.2)
 		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -106,14 +118,14 @@ function draw() {
 
 class Ball_mc {
 	constructor(hue, id) {
-		this.yoff = random(1);
-		this.xoff = random(1);
 		this.xoffIteration = random(0.0001);
 		this.yoffIteration = random(0.0001);
 		this.x = random(width);
 		this.y = random(height);
+		this.yoff = random(100000);
+		this.xoff = id;
 
-		this.speed = 0.1;
+		this.speed = 0;
 		this.size = 1;
 		this.hue = hue;
 		this.saturation = 10;
@@ -128,8 +140,8 @@ class Ball_mc {
 	}
 
 	move() {
-		let xIteration = map(noise(this.xoff, this.yoff), 0, 1, -this.speed, this.speed, true);
-		let yIteration = map(noise(this.yoff, this.xoff), 0, 1, -this.speed, this.speed, true);
+		let xIteration = map(noise(this.xoff, this.yoff + this.y), 0, 1, -this.speed, this.speed, true);
+		let yIteration = map(noise(this.yoff, this.xoff + this.x), 0, 1, -this.speed, this.speed, true);
 
 		this.x += xIteration;
 		this.y += yIteration;
@@ -153,8 +165,6 @@ class Ball_mc {
 			this.y = 0;
 		}
 	}
-
-	update() {}
 }
 
 class Rect_mc {
