@@ -28,7 +28,7 @@ function setup() {
 		hue: 1,
 		saturation: 10,
 		brightness: 80,
-		alpha: 10,
+		alpha: 0,
 		xoffIteration: 0,
 		yoffIteration: 0,
 		range: balls.length,
@@ -37,13 +37,16 @@ function setup() {
 	ballFolder.add(ballDynamicVar, 'range', 0, balls.length).onChange(function (value) {
 		ballRange = value;
 	});
-	ballFolder.add(ballDynamicVar, 'size', 0, 10).onFinishChange(function (value) {
+	ballFolder.add(ballDynamicVar, 'size', -10, 10).onFinishChange(function (value) {
 		for (i = 0; i < ballRange; i++) {
-			balls[i].size = value;
+			balls[i].size += value;
+			if (balls[i].size < 0) {
+				balls[i].size = 0;
+			}
 		}
 	});
 	ballFolder
-		.add(ballDynamicVar, 'speed', 0, 10)
+		.add(ballDynamicVar, 'speed', 0, 50)
 		.step(0.1)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -83,7 +86,7 @@ function setup() {
 			}
 		});
 	ballFolder
-		.add(ballDynamicVar, 'xoffIteration', -0.2, 0.2)
+		.add(ballDynamicVar, 'xoffIteration', -0.1, 0.1)
 		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -91,7 +94,7 @@ function setup() {
 			}
 		});
 	ballFolder
-		.add(ballDynamicVar, 'yoffIteration', -0.2, 0.2)
+		.add(ballDynamicVar, 'yoffIteration', -0.1, 0.1)
 		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -126,11 +129,11 @@ class Ball_mc {
 		this.xoff = id;
 
 		this.speed = 0;
-		this.size = 1;
+		this.size = random(1, 3);
 		this.hue = hue;
 		this.saturation = 10;
 		this.brightness = 80;
-		this.alpha = 10;
+		this.alpha = 0;
 	}
 
 	display() {
@@ -173,7 +176,7 @@ class Rect_mc {
 		this.xoff = random(0.00001);
 		this.x = random(width);
 		this.y = random(height);
-		this.size = random(1, 2);
+		this.size = random(0, 5);
 		this.hue = hue;
 	}
 
