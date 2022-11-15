@@ -120,7 +120,8 @@ function setup() {
 	let rectFolder = gui.addFolder('Rect_mc');
 	let rectDynamicVar = {
 		size: 1,
-		speed: 0,
+		speedX: 0,
+		speedY: 0,
 		hue: rectHue,
 		saturation: 70,
 		brightness: 70,
@@ -163,9 +164,14 @@ function setup() {
 			rectangles[i].alpha = value;
 		}
 	});
-	rectFolder.add(rectDynamicVar, 'speed', 0, 50).onFinishChange(function (value) {
+	rectFolder.add(rectDynamicVar, 'speedX', 0, 50).onFinishChange(function (value) {
 		for (i = 0; i < rectangles.length; i++) {
-			rectangles[i].speed = value;
+			rectangles[i].speedX = value;
+		}
+	});
+	rectFolder.add(rectDynamicVar, 'speedY', 0, 50).onFinishChange(function (value) {
+		for (i = 0; i < rectangles.length; i++) {
+			rectangles[i].speedY = value;
 		}
 	});
 	rectFolder
@@ -262,7 +268,8 @@ class Rect_mc {
 		this.saturation = 70;
 		this.brightness = 70;
 		this.alpha = 0;
-		this.speed = 0;
+		this.speedX = 0;
+		this.speedY = 0;
 	}
 
 	display() {
