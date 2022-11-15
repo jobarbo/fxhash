@@ -168,6 +168,22 @@ function setup() {
 			rectangles[i].speed = value;
 		}
 	});
+	rectFolder
+		.add(rectDynamicVar, 'xoffIteration', -0.1, 0.1)
+		.steps(0.0001)
+		.onFinishChange(function (value) {
+			for (i = 0; i < rectangles.length; i++) {
+				rectangles[i].xoffIteration = value;
+			}
+		});
+	rectFolder
+		.add(rectDynamicVar, 'yoffIteration', -0.1, 0.1)
+		.steps(0.0001)
+		.onFinishChange(function (value) {
+			for (i = 0; i < rectangles.length; i++) {
+				rectangles[i].yoffIteration = value;
+			}
+		});
 }
 
 function draw() {
@@ -239,6 +255,8 @@ class Rect_mc {
 		this.xoff = random(0.00001);
 		this.x = random(width);
 		this.y = random(height);
+		this.xoffIteration = 0;
+		this.yoffIteration = 0;
 		this.size = random(0, 5);
 		this.hue = hue;
 		this.saturation = 70;
