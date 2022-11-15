@@ -170,7 +170,7 @@ function setup() {
 	});
 	rectFolder
 		.add(rectDynamicVar, 'xoffIteration', -0.1, 0.1)
-		.steps(0.0001)
+		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < rectangles.length; i++) {
 				rectangles[i].xoffIteration = value;
@@ -178,7 +178,7 @@ function setup() {
 		});
 	rectFolder
 		.add(rectDynamicVar, 'yoffIteration', -0.1, 0.1)
-		.steps(0.0001)
+		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < rectangles.length; i++) {
 				rectangles[i].yoffIteration = value;
