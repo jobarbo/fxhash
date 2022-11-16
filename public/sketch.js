@@ -1,4 +1,29 @@
 // import p5 sound
+
+// Blocky mode
+// xoff = random(500, 500.2);
+// yoff = random(600, 600.5);
+// this.elx = map(noise(this.xoff), 0, 1, 0, width);
+// this.ely = map(noise(this.yoff), 0, 1, 0, height);
+
+// concrete Mode
+// xoff = random(500, 500.2);
+// yoff = random(600, 600.2);
+// this.elx = map(noise(this.xoff, this.yoff), 0, 1, 0, width);
+// this.ely = map(noise(this.yoff, this.yoff), 0, 1, 0, height);
+
+// monument Mode
+// this.elx = map(noise(this.xoff, this.yoff), 0, 1, 0, width);
+// this.ely = map(noise(this.yoff, this.yoff), 0, 1, 0, height);
+// xoff = random(501, 502);
+// yoff = random(100, 101);
+
+// flower Mode
+// xoff = random(501, 502);
+// yoff = random(100, 101);
+// this.elx = map(noise(this.xoff, this.yoff), 0, 1, 0, width);
+// this.ely = map(noise(this.yoff, this.xoff), 0, 1, 0, height);
+
 let mic;
 let xoff;
 let yoff;
@@ -23,8 +48,8 @@ function setup() {
 	// create agents
 	hue = random(360);
 	for (let i = 0; i < agentsNumber; i++) {
-		xoff = random(1);
-		yoff = random(1);
+		xoff = random(501, 501.1);
+		yoff = random(101, 101.1);
 		woff = random(1);
 		hoff = random(1);
 
@@ -58,7 +83,7 @@ class Agent {
 
 	display() {
 		noStroke();
-		fill(this.elh, 100, 100, 10);
+		fill(this.elh, 0, 100, 10);
 		ellipse(this.elx, this.ely, this.elw, this.elw);
 	}
 
