@@ -53,7 +53,12 @@ function addRectFolder(rectHue) {
 		alpha: 0,
 		xoffIteration: 0,
 		yoffIteration: 0,
+		range: balls.length,
 	};
+	let rectRange = rectDynamicVar.range;
+	rectFolder.add(rectDynamicVar, 'range', 0, rectangles.length).onChange(function (value) {
+		rectRange = value;
+	});
 	rectFolder.add(rectDynamicVar, 'size', 0, 10).onFinishChange(function (value) {
 		for (i = 0; i < rectangles.length; i++) {
 			rectangles[i].size = value;
@@ -62,7 +67,22 @@ function addRectFolder(rectHue) {
 			}
 		}
 	});
-
+	rectFolder
+		.add(rectDynamicVar, 'speedX', 0, 10)
+		.step(0.1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < rectangles.length; i++) {
+				rectangles[i].speedX = value;
+			}
+		});
+	rectFolder
+		.add(rectDynamicVar, 'speedY', 0, 10)
+		.step(0.1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < rectangles.length; i++) {
+				rectangles[i].speedY = value;
+			}
+		});
 	rectFolder
 		.add(rectDynamicVar, 'hue', 0, 360)
 		.step(1)
@@ -89,22 +109,7 @@ function addRectFolder(rectHue) {
 			rectangles[i].alpha = value;
 		}
 	});
-	rectFolder
-		.add(rectDynamicVar, 'speedX', 0, 10)
-		.step(0.1)
-		.onFinishChange(function (value) {
-			for (i = 0; i < rectangles.length; i++) {
-				rectangles[i].speedX = value;
-			}
-		});
-	rectFolder
-		.add(rectDynamicVar, 'speedY', 0, 10)
-		.step(0.1)
-		.onFinishChange(function (value) {
-			for (i = 0; i < rectangles.length; i++) {
-				rectangles[i].speedY = value;
-			}
-		});
+
 	rectFolder
 		.add(rectDynamicVar, 'xoffIteration', -0.1, 0.1)
 		.step(0.0001)
@@ -223,7 +228,7 @@ class Ball_mc {
 		this.x = random(width);
 		this.y = random(height);
 		this.yoff = random(100000);
-		this.xoff = id;
+		this.xoff = random(100000);
 
 		this.speedX = 0;
 		this.speedY = 0;
@@ -289,17 +294,18 @@ class Rect_mc {
 
 	display() {
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
-		stroke(255);
 		noStroke();
 		rect(this.x, this.y, this.size);
 	}
 
 	move() {
-		this.x += map(noise(this.xoff), 0, 1, -this.speedX, this.speedX);
-		this.y += map(noise(this.yoff), 0, 1, -this.speedY, this.speedY);
+		this.x += map(noise(this.xoff, this.yoff2), 0, 1, -this.speedX, this.speedX);
+		this.y += map(noise(this.yoff, this.xoff2), 0, 1, -this.speedY, this.speedY);
 
 		this.xoff += this.xoffIteration;
 		this.yoff += this.yoffIteration;
+		this.xoff2 += this.xoffIteration;
+		this.yoff2 += this.yoffIteration;
 
 		if (this.hue <= 0) {
 			this.hue = 359;
