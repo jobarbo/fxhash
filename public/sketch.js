@@ -2,8 +2,8 @@ let gui = '';
 
 let balls = [];
 let rectangles = [];
-let ballsNum = 2000;
-let rectNum = 500;
+let ballsNum = 1000;
+let rectNum = 1000;
 
 function setup() {
 	createCanvas(864, 1080);
@@ -54,13 +54,45 @@ function addRectFolder(rectHue) {
 		xoffIteration: 0,
 		yoffIteration: 0,
 		range: balls.length,
+		xWidthMax: width,
+		xWidthMin: 0,
+		yHeightMax: height,
+		yHeightMin: 0,
 	};
 	let rectRange = rectDynamicVar.range;
 	rectFolder.add(rectDynamicVar, 'range', 0, rectangles.length).onChange(function (value) {
 		rectRange = value;
 	});
+
+	let rectMaxWidth = rectDynamicVar.xWidthMax;
+	rectFolder.add(rectDynamicVar, 'xWidthMax', 0, width).onFinishChange(function (value) {
+		for (i = 0; i < rectRange; i++) {
+			rectangles[i].xWidthMax = value;
+		}
+	});
+
+	let rectMinWidth = rectDynamicVar.xWidthMin;
+	rectFolder.add(rectDynamicVar, 'xWidthMin', 0, width).onFinishChange(function (value) {
+		for (i = 0; i < rectRange; i++) {
+			rectangles[i].xWidthMin = value;
+		}
+	});
+
+	let rectMaxHeight = rectDynamicVar.yHeightMax;
+	rectFolder.add(rectDynamicVar, 'yHeightMax', 0, height).onFinishChange(function (value) {
+		for (i = 0; i < rectRange; i++) {
+			rectangles[i].yHeightMax = value;
+		}
+	});
+
+	let rectMinHeight = rectDynamicVar.yHeightMin;
+	rectFolder.add(rectDynamicVar, 'yHeightMin', 0, height).onFinishChange(function (value) {
+		for (i = 0; i < rectRange; i++) {
+			rectangles[i].yHeightMin = value;
+		}
+	});
 	rectFolder.add(rectDynamicVar, 'size', 0, 10).onFinishChange(function (value) {
-		for (i = 0; i < rectangles.length; i++) {
+		for (i = 0; i < rectRange; i++) {
 			rectangles[i].size = value;
 			if (rectangles[i].size < 0) {
 				rectangles[i].size = 0;
@@ -71,7 +103,7 @@ function addRectFolder(rectHue) {
 		.add(rectDynamicVar, 'speedX', 0, 10)
 		.step(0.1)
 		.onFinishChange(function (value) {
-			for (i = 0; i < rectangles.length; i++) {
+			for (i = 0; i < rectRange; i++) {
 				rectangles[i].speedX = value;
 			}
 		});
@@ -79,7 +111,7 @@ function addRectFolder(rectHue) {
 		.add(rectDynamicVar, 'speedY', 0, 10)
 		.step(0.1)
 		.onFinishChange(function (value) {
-			for (i = 0; i < rectangles.length; i++) {
+			for (i = 0; i < rectRange; i++) {
 				rectangles[i].speedY = value;
 			}
 		});
@@ -87,7 +119,7 @@ function addRectFolder(rectHue) {
 		.add(rectDynamicVar, 'hue', 0, 360)
 		.step(1)
 		.onFinishChange(function (value) {
-			for (i = 0; i < rectangles.length; i++) {
+			for (i = 0; i < rectRange; i++) {
 				rectangles[i].hue = value;
 			}
 		});
@@ -95,17 +127,17 @@ function addRectFolder(rectHue) {
 		.add(rectDynamicVar, 'saturation', 0, 100)
 		.step(1)
 		.onFinishChange(function (value) {
-			for (i = 0; i < rectangles.length; i++) {
+			for (i = 0; i < rectRange; i++) {
 				rectangles[i].saturation = value;
 			}
 		});
 	rectFolder.add(rectDynamicVar, 'brightness', 0, 100).onFinishChange(function (value) {
-		for (i = 0; i < rectangles.length; i++) {
+		for (i = 0; i < rectRange; i++) {
 			rectangles[i].brightness = value;
 		}
 	});
 	rectFolder.add(rectDynamicVar, 'alpha', 0, 100).onFinishChange(function (value) {
-		for (i = 0; i < rectangles.length; i++) {
+		for (i = 0; i < rectRange; i++) {
 			rectangles[i].alpha = value;
 		}
 	});
@@ -114,7 +146,7 @@ function addRectFolder(rectHue) {
 		.add(rectDynamicVar, 'xoffIteration', -0.1, 0.1)
 		.step(0.0001)
 		.onFinishChange(function (value) {
-			for (i = 0; i < rectangles.length; i++) {
+			for (i = 0; i < rectRange; i++) {
 				rectangles[i].xoffIteration = value;
 			}
 		});
@@ -122,7 +154,7 @@ function addRectFolder(rectHue) {
 		.add(rectDynamicVar, 'yoffIteration', -0.1, 0.1)
 		.step(0.0001)
 		.onFinishChange(function (value) {
-			for (i = 0; i < rectangles.length; i++) {
+			for (i = 0; i < rectRange; i++) {
 				rectangles[i].yoffIteration = value;
 			}
 		});
@@ -142,11 +174,44 @@ function addBallFolder(ballHue) {
 		xoffIteration: 0,
 		yoffIteration: 0,
 		range: balls.length,
+		xWidthMax: width,
+		xWidthMin: 0,
+		yHeightMax: height,
+		yHeightMin: 0,
 	};
 	let ballRange = ballDynamicVar.range;
 	ballFolder.add(ballDynamicVar, 'range', 0, balls.length).onChange(function (value) {
 		ballRange = value;
 	});
+
+	let ballMaxWidth = ballDynamicVar.xWidthMax;
+	ballFolder.add(ballDynamicVar, 'xWidthMax', 0, width).onFinishChange(function (value) {
+		for (i = 0; i < ballRange; i++) {
+			balls[i].xWidthMax = value;
+		}
+	});
+
+	let ballMinWidth = ballDynamicVar.xWidthMin;
+	ballFolder.add(ballDynamicVar, 'xWidthMin', 0, width).onFinishChange(function (value) {
+		for (i = 0; i < ballRange; i++) {
+			balls[i].xWidthMin = value;
+		}
+	});
+
+	let ballMaxHeight = ballDynamicVar.yHeightMax;
+	ballFolder.add(ballDynamicVar, 'yHeightMax', 0, height).onFinishChange(function (value) {
+		for (i = 0; i < ballRange; i++) {
+			balls[i].yHeightMax = value;
+		}
+	});
+
+	let ballMinHeight = ballDynamicVar.yHeightMin;
+	ballFolder.add(ballDynamicVar, 'yHeightMin', 0, height).onFinishChange(function (value) {
+		for (i = 0; i < ballRange; i++) {
+			balls[i].yHeightMin = value;
+		}
+	});
+
 	ballFolder.add(ballDynamicVar, 'size', -10, 10).onFinishChange(function (value) {
 		for (i = 0; i < ballRange; i++) {
 			balls[i].size = value;
@@ -229,6 +294,10 @@ class Ball_mc {
 		this.y = random(height);
 		this.yoff = random(100000);
 		this.xoff = random(100000);
+		this.xWidthMax = width;
+		this.xWidthMin = 0;
+		this.yHeightMax = height;
+		this.yHeightMin = 0;
 
 		this.speedX = 0;
 		this.speedY = 0;
@@ -260,15 +329,15 @@ class Ball_mc {
 			this.hue = 1;
 		}
 
-		if (this.x <= 0) {
-			this.x = width;
-		} else if (this.x >= width) {
-			this.x = 0;
+		if (this.x <= this.xWidthMin) {
+			this.x = this.xWidthMax;
+		} else if (this.x >= this.xWidthMax) {
+			this.x = this.xWidthMin;
 		}
-		if (this.y <= 0) {
-			this.y = height;
-		} else if (this.y >= height) {
-			this.y = 0;
+		if (this.y <= this.yHeightMin) {
+			this.y = this.yHeightMax;
+		} else if (this.y >= this.yHeightMax) {
+			this.y = this.yHeightMin;
 		}
 	}
 }
@@ -283,6 +352,10 @@ class Rect_mc {
 		this.xoff2 = random(100000);
 		this.x = random(width);
 		this.y = random(height);
+		this.xWidthMax = width;
+		this.xWidthMin = 0;
+		this.yHeightMax = height;
+		this.yHeightMin = 0;
 		this.size = 1;
 		this.hue = hue;
 		this.saturation = 0;
@@ -313,15 +386,15 @@ class Rect_mc {
 			this.hue = 1;
 		}
 
-		if (this.x <= 0) {
-			this.x = width;
-		} else if (this.x >= width) {
-			this.x = 0;
+		if (this.x <= this.xWidthMin) {
+			this.x = this.xWidthMax;
+		} else if (this.x >= this.xWidthMax) {
+			this.x = this.xWidthMin;
 		}
-		if (this.y <= 0) {
-			this.y = height;
-		} else if (this.y >= height) {
-			this.y = 0;
+		if (this.y <= this.yHeightMin) {
+			this.y = this.yHeightMax;
+		} else if (this.y >= this.yHeightMax) {
+			this.y = this.yHeightMin;
 		}
 	}
 }
