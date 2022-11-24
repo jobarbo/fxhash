@@ -6,7 +6,7 @@ let ballsNum = 2000;
 let rectNum = 500;
 
 function setup() {
-	createCanvas(1280, 1920);
+	createCanvas(864, 1080);
 	pixelDensity(3);
 	colorMode(HSB, 360, 100, 100, 100);
 	rectMode(CENTER);
