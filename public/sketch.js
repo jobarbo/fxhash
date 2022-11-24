@@ -94,8 +94,8 @@ class Agent {
 		this.ely = map(noise(this.yoff), 0, 1, 0, height);
 		this.elw = map(noise(this.woff), 0, 1, 0.1, 2);
 		this.elh = this.elhInit + map(noise(this.hoff), 0, 1, -15, 15);
-		this.xoff += map(vol, 0.01, 0.4, 0.001, 0.4, true);
-		this.yoff += map(vol, 0.01, 0.4, 0.001, 0.4, true);
+		this.xoff += map(vol, 0.03, 0.4, 0.001, 0.4, true);
+		this.yoff += map(vol, 0.03, 0.4, 0.001, 0.4, true);
 		this.woff += map(vol, 0.01, 0.4, 0.001, 10, true);
 		this.hoff += map(vol, 0, 1, 0.0001, 0.4);
 	}
