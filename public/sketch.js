@@ -48,8 +48,8 @@ function setup() {
 	// create agents
 	hue = random(360);
 	for (let i = 0; i < agentsNumber; i++) {
-		xoff = random(501, 501.1);
-		yoff = random(101, 101.1);
+		xoff = random(500, 500.2);
+		yoff = random(100, 100.5);
 		woff = random(1);
 		hoff = random(1);
 
@@ -58,6 +58,8 @@ function setup() {
 }
 
 function draw() {
+	// at each second, draw the background
+	//background(210, 23, 12, 90);
 	vol = mic.getLevel();
 	for (let i = 0; i < agentsNumber; i++) {
 		agentsArray[i].display();
@@ -83,7 +85,7 @@ class Agent {
 
 	display() {
 		noStroke();
-		fill(this.elh, 0, 100, 10);
+		fill(this.elh, 0, 100, 15);
 		ellipse(this.elx, this.ely, this.elw, this.elw);
 	}
 
