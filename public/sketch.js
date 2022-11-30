@@ -115,7 +115,6 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 function* drawthings(margin, border, xstart, xnoise, ynoise, mode, modeYnoise, modeXnoise, baselen, step, hue, hueSteps, maxsw, baseAngle, reliefMode) {
 	let count = 0;
 	let draw_every = 500;
-	console.log(count);
 
 	for (let y = margin; y <= height - margin; y += step) {
 		ynoise += modeYnoise;
