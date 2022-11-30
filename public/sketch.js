@@ -4,6 +4,7 @@ function preload() {
 }
 function setup() {
 	createCanvas(1000, 1000);
+	pixelDensity(3);
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 1000);
 	noiseSeed(fxrand() * 1000);
