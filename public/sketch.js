@@ -3,6 +3,9 @@ let inc = 0.05;
 let cells = [];
 let w = Math.floor(22 * 200);
 let h = Math.floor(20 * 200);
+
+let palette = window.$fxhashFeatures.palette;
+
 function setup() {
 	createCanvas(w, h);
 	pixelDensity(1);
@@ -11,7 +14,7 @@ function setup() {
 	rectMode(CENTER);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
-
+	console.log('palette', palette);
 	// canvas bleed for printing
 	bleed = width / 30;
 
