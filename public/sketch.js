@@ -1,5 +1,5 @@
 let bleed = 0;
-let inc = 0.005;
+let inc = 0.02;
 let cells = [];
 let w = Math.floor(20 * 300);
 let h = Math.floor(20 * 300);
@@ -19,7 +19,7 @@ function setup() {
 	bleed = 0;
 
 	// number of columns and rows
-	let cellCountX = 2000;
+	let cellCountX = 250;
 	let cellCountY = int(cellCountX * (height / width));
 	let cellCount = cellCountX * cellCountY;
 
