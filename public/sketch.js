@@ -1,11 +1,11 @@
 let bleed = 0;
-let inc = 0.02;
+let inc = 0.005;
 let cells = [];
 let w = Math.floor(20 * 300);
 let h = Math.floor(20 * 300);
 
 function setup() {
-	createCanvas(11012, 1080);
+	createCanvas(2000, 2000);
 	pixelDensity(2);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(10, 10, 0, 100);
@@ -16,10 +16,10 @@ function setup() {
 	let palette = window.$fxhashFeatures.biomeColorList;
 
 	// canvas bleed for printing
-	bleed = w * 0.02;
+	bleed = 0;
 
 	// number of columns and rows
-	let cellCountX = 500;
+	let cellCountX = 2000;
 	let cellCountY = int(cellCountX * (height / width));
 	let cellCount = cellCountX * cellCountY;
 
@@ -45,12 +45,15 @@ function setup() {
 		}
 		yoff += inc;
 	}
-}
-
-function draw() {
-	inc = 0.005;
-
 	for (let i = 0; i < cells.length; i++) {
 		cells[i].display(inc);
 	}
+}
+
+function draw() {
+	/* 	inc = 0.002;
+
+	for (let i = 0; i < cells.length; i++) {
+		cells[i].display(inc);
+	} */
 }
