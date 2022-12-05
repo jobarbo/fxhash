@@ -4,13 +4,12 @@ class Cell {
 		this.x = x + w / 2;
 		this.y = y + h / 2;
 
-		this.w = int(w - margin);
-		this.h = int(h - margin);
+		this.w = w - margin;
+		this.h = h - margin;
 		this.xoff = xoff;
 		this.yoff = yoff;
 
 		this.biomes = palette;
-		console.log(this.biomes.length);
 		// chose a rondom biome from the palette array according to the noise value
 		this.noise = noise(this.xoff, this.yoff);
 		this.index = int(map(this.noise, 0.2, 0.8, 0, this.biomes.length - 1, true));
