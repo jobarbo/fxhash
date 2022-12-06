@@ -10,27 +10,57 @@ class Cell {
 		this.yoff = yoff;
 
 		this.biomes = palette;
-		// chose a rondom biome from the palette array according to the noise value
-		this.noise = noise(this.xoff, this.yoff);
-		this.index = int(map(this.noise, 0.2, 0.8, 0, this.biomes.length - 1, true));
+		this.index = 0;
+		this.hue = 0;
+		this.sat = 0;
+		this.bright = 0;
 
-		this.hue = this.biomes[this.index][0];
-		this.sat = this.biomes[this.index][1];
-		this.bright = this.biomes[this.index][2];
+		this.createNoise();
 	}
 	display(inc) {
 		// Module ready to be built
 
-		this.noise = noise(this.xoff, this.yoff);
-		this.index = int(map(this.noise, 0.2, 0.8, 0, this.biomes.length - 1, true));
-		this.hue = this.biomes[this.index][0];
-		this.sat = this.biomes[this.index][1];
-		this.bright = this.biomes[this.index][2];
+		this.createNoise();
+
 		fill(this.hue, this.sat, this.bright);
 		noStroke();
 		rect(this.x, this.y, this.w, this.h);
 
-		this.xoff += inc;
+		//this.xoff += inc;
 		//this.yoff += inc;
+	}
+
+	createNoise() {
+		let nx = this.x,
+			ny = this.y,
+			a = 9.5,
+			sc = 0.02,
+			dx,
+			dy;
+
+		dx = n3(nx, ny, sc, 0);
+		dy = n3(nx, ny, sc, 1);
+		nx += dx * a;
+		ny += dy * a;
+
+		dx = n3(nx, ny, sc, 0);
+		dy = n3(nx, ny, sc, 1);
+		nx += dx * a;
+		ny += dy * a;
+
+		dx = n3(nx, ny, sc, 0);
+		dy = n3(nx, ny, sc, 1);
+		nx += dx * a;
+		ny += dy * a;
+
+		//this.noise = noise(this.xoff, this.yoff);
+		//this.index = int(map(this.noise, 0.2, 0.8, 0, this.biomes.length - 1, true));
+
+		this.noise = n3(nx, ny, 0.03, 2);
+		this.index = int(map(this.noise, -0.4, 0.4, 0, this.biomes.length - 1, true));
+
+		this.hue = this.biomes[this.index][0];
+		this.sat = this.biomes[this.index][1];
+		this.bright = this.biomes[this.index][2];
 	}
 }

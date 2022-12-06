@@ -19,7 +19,7 @@ function setup() {
 	bleed = 0;
 
 	// number of columns and rows
-	let cellCountX = 250;
+	let cellCountX = 500;
 	let cellCountY = int(cellCountX * (height / width));
 	let cellCount = cellCountX * cellCountY;
 
@@ -31,8 +31,10 @@ function setup() {
 	console.log(margin);
 
 	// create a grid of cells that fill the sreen and is relative to the width and height of the screen
-	noiseDetail(5, 0.55);
+	//noiseDetail(5, 0.55);
 
+	// calculate the time it takes to create the grid
+	let t0 = performance.now();
 	let yoff = 0;
 	for (let gridY = 0; gridY < cellCountY; gridY++) {
 		let xoff = 110;
@@ -48,6 +50,8 @@ function setup() {
 	for (let i = 0; i < cells.length; i++) {
 		cells[i].display(inc);
 	}
+	let t1 = performance.now();
+	console.log('Call to doSomething took ' + (t1 - t0) + ' milliseconds.');
 }
 
 function draw() {
@@ -56,4 +60,6 @@ function draw() {
 	for (let i = 0; i < cells.length; i++) {
 		cells[i].display(inc);
 	} */
+
+	noLoop();
 }
