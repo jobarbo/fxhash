@@ -6,6 +6,10 @@ class Cell {
 
 		this.w = w - margin;
 		this.h = h - margin;
+
+		//console.log(`this.w: ${this.w}`);
+		//console.log(`this.h: ${this.h}`);
+
 		this.xoff = xoff;
 		this.yoff = yoff;
 
@@ -34,7 +38,7 @@ class Cell {
 		let nx = this.x,
 			ny = this.y,
 			a = 9.5,
-			sc = 0.02,
+			sc = 0.002,
 			dx,
 			dy;
 
@@ -56,8 +60,8 @@ class Cell {
 		//this.noise = noise(this.xoff, this.yoff);
 		//this.index = int(map(this.noise, 0.2, 0.8, 0, this.biomes.length - 1, true));
 
-		this.noise = n3(nx, ny, 0.03, 2);
-		this.index = int(map(this.noise, -0.4, 0.4, 0, this.biomes.length - 1, true));
+		this.noise = n3(nx, ny, 0.003, 2);
+		this.index = int(map(this.noise, -0.5, 0.5, 0, this.biomes.length - 1, true));
 
 		this.hue = this.biomes[this.index][0];
 		this.sat = this.biomes[this.index][1];

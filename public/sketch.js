@@ -1,11 +1,11 @@
 let bleed = 0;
 let inc = 0.02;
 let cells = [];
-let w = Math.floor(20 * 300);
-let h = Math.floor(20 * 300);
+let w = Math.floor(12 * 300);
+let h = Math.floor(18 * 300);
 
 function setup() {
-	createCanvas(2000, 2000);
+	createCanvas(w, h);
 	pixelDensity(2);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(10, 10, 0, 100);
@@ -15,17 +15,18 @@ function setup() {
 
 	let palette = window.$fxhashFeatures.biomeColorList;
 
-	// canvas bleed for printing
-	bleed = 0;
-
-	// number of columns and rows
-	let cellCountX = 500;
-	let cellCountY = int(cellCountX * (height / width));
-	let cellCount = cellCountX * cellCountY;
-
 	// calculate the width and height of the cells to always be 1:1 ratio
-	let cellWidth = int(width - bleed * 2) / cellCountX;
-	let cellHeight = int(height - bleed * 2) / cellCountY;
+	let cellWidth = 2;
+	let cellHeight = cellWidth;
+	console.log('cellWidth: ' + cellWidth);
+	console.log('cellHeight: ' + cellHeight);
+
+	//	calculates the number of cells that can fit in the screen according to cellWidth and cellHeight
+	let cellCountX = width / cellWidth;
+	let cellCountY = height / cellHeight;
+
+	console.log('cellCountX: ' + cellCountX);
+	console.log('cellCountY: ' + cellCountY);
 
 	let margin = cellWidth * 0;
 	console.log(margin);
@@ -39,8 +40,8 @@ function setup() {
 	for (let gridY = 0; gridY < cellCountY; gridY++) {
 		let xoff = 110;
 		for (let gridX = 0; gridX < cellCountX; gridX++) {
-			let posX = bleed + cellWidth * gridX;
-			let posY = bleed + cellHeight * gridY;
+			let posX = cellWidth * gridX;
+			let posY = cellHeight * gridY;
 			let cell = new Cell(posX, posY, cellWidth, cellHeight, margin, xoff, yoff, inc, palette);
 			cells.push(cell);
 			xoff += inc;
@@ -52,6 +53,13 @@ function setup() {
 	}
 	let t1 = performance.now();
 	console.log('Call to doSomething took ' + (t1 - t0) + ' milliseconds.');
+
+	// make a bleed around the canvas that match the cellWidth and cellHeight
+	let bleed = cellWidth * 0;
+	noFill();
+	stroke(0, 0, 10, 100);
+	strokeWeight(bleed);
+	rect(width / 2, height / 2, width - bleed, height - bleed);
 }
 
 function draw() {
