@@ -42,12 +42,36 @@ let palettes = {
 		mountain_high: [15, 15, 50],
 		mountain_top: [10, 0, 100],
 	},
+	new_palette: {
+		black: [0, 0, 10],
+		white: [30, 10, 100],
+		black2: [0, 0, 10],
+		white2: [30, 10, 100],
+		black3: [0, 60, 100],
+		white3: [30, 10, 100],
+		black4: [0, 0, 10],
+		white4: [30, 10, 100],
+		black5: [0, 0, 10],
+		white5: [30, 10, 100],
+	},
+	new_palette2: {
+		black5: [0, 0, 0],
+		white5: [0, 0, 100],
+		white: [211, 100, 24],
+		black2: [209, 100, 40],
+		white2: [46, 100, 100],
+		black5: [0, 0, 0],
+		white5: [0, 0, 100],
+		black3: [50, 96, 100],
+		black5: [0, 0, 0],
+		white5: [0, 0, 100],
+	},
 };
 
 // choose a random key from the palettes object
 // chose a random key from the key array using math.random
 let themeArray = Object.keys(palettes);
-let randomThemeKey = themeArray[Math.floor(Math.random() * themeArray.length)];
+let randomThemeKey = themeArray[2];
 
 // chose a palette randomly from the palettes object
 let chosenPalette = palettes[randomThemeKey];

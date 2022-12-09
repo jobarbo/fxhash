@@ -1,22 +1,23 @@
 let bleed = 0;
 let inc = 0.02;
 let cells = [];
-let w = Math.floor(12 * 300);
-let h = Math.floor(18 * 300);
+let w = Math.floor(15 * 100);
+let h = Math.floor(15 * 100);
 
 function setup() {
 	createCanvas(w, h);
-	pixelDensity(2);
+	pixelDensity(1);
 	colorMode(HSB, 360, 100, 100, 100);
-	background(10, 10, 0, 100);
+	background(10, 0, 10, 100);
 	rectMode(CENTER);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
 
 	let palette = window.$fxhashFeatures.biomeColorList;
 
-	// calculate the width and height of the cells to always be 1:1 ratio
-	let cellWidth = 2;
+	// have a cell width unit that is relative to the width of the screen
+
+	let cellWidth = 1;
 	let cellHeight = cellWidth;
 	console.log('cellWidth: ' + cellWidth);
 	console.log('cellHeight: ' + cellHeight);
