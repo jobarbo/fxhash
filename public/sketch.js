@@ -1,5 +1,5 @@
 function setup() {
-	pixelDensity(2.0);
+	pixelDensity(1);
 	createCanvas(1000, 1000);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(210, 23, 92);
@@ -8,8 +8,8 @@ function setup() {
 }
 
 function draw() {
-	stroke(0, 0, 0, 10);
+	stroke(0, 0, 0, 100);
 	strokeWeight(width / width);
 	noSmooth();
-	ellipse(width / 2, height / 2, width / 20, width / 20);
+	ellipse(width / 2, height / 2, width / 10, width / 10);
 }
