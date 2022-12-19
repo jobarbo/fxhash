@@ -21,11 +21,19 @@ const example_type = [
 	['station_d', 2],
 ];
 
+const left_type = [
+	[true, 50],
+	[false, 50],
+];
+
 // all input parameters are optional, they will be chosen at random if not passed into the function
-function generate_composition_params(center_piece_type) {
+function generate_composition_params(center_piece_type, left_piece_type) {
 	// SET DEFAULTS IF NOT PASSED IN
 	if (center_piece_type === undefined) {
 		center_piece_type = weighted_choice(example_type);
+	}
+	if (left_piece_type === undefined) {
+		left_piece_type = weighted_choice(left_type);
 	}
 
 	//* EXCEPTIONS AND OVER-RIDES *//
@@ -34,6 +42,7 @@ function generate_composition_params(center_piece_type) {
 	//* PACK PARAMETERS INTO OBJECT *//
 	var composition_params = {
 		center_piece_type: center_piece_type,
+		left_piece_type: left_piece_type,
 	};
 
 	//* RETURN PARAMETERS *//
