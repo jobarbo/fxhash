@@ -1,13 +1,15 @@
 class Aura {
-	constructor(aura_type, bgSpriteJSON, bgSpriteSheets) {
+	constructor(aura_type, bgSpriteJSON, bgSpriteSheets, pp_offset_x, pp_offset_y) {
 		this.type = aura_type;
 		this.sprite_json = bgSpriteJSON.frames;
 		this.sprite_sheets = bgSpriteSheets;
+		console.log(pp_offset_x, pp_offset_y);
 		this.chosen_sprite = this.chooseSprite();
+
 		this.img = this.sprite_sheets.get(this.chosen_sprite.position.x, this.chosen_sprite.position.y, this.chosen_sprite.position.w, this.chosen_sprite.position.h);
 
-		this.offset_x = random(-4, 4);
-		this.offset_y = random(-4, 4);
+		this.offset_x = pp_offset_x;
+		this.offset_y = pp_offset_y;
 
 		//is post processing on or off?
 		this.post_processing = post_processing;

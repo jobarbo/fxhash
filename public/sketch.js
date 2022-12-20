@@ -1,5 +1,6 @@
 //! MAKE POST PROCESSING OFFSET GLOBAL
-
+let pp_offset_x = 0;
+let pp_offset_y = 0;
 function setup() {
 	pixelDensity(2);
 	createCanvas(1000, 1000);
@@ -9,10 +10,13 @@ function setup() {
 	noiseSeed(fxrand() * 10000);
 	rectMode(CENTER);
 
-	let aura = new Aura(aura_type, bgSpriteJSON, bgSpriteSheets);
+	pp_offset_x = random(-4, 4);
+	pp_offset_y = random(-4, 4);
+
+	let aura = new Aura(aura_type, bgSpriteJSON, bgSpriteSheets, pp_offset_x, pp_offset_y);
 	aura.drawAura();
 
-	let shape = new Shape(shape_type);
+	let shape = new Shape(shape_type, pp_offset_x, pp_offset_y);
 	shape.drawShape();
 }
 
