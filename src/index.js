@@ -34,7 +34,7 @@ generateConsoleLogs(composition_params);
 
 //* FXHASH FEATURES DEFINITION *//
 window.$fxhashFeatures = {
-	'Center piece type': center_piece_type,
+	background: background_type,
 };
 
 //* VIEWPORT SETUP *//

@@ -4,7 +4,7 @@
 //* COMPOSITION TYPE DEFINITION *//
 // CATEGORISE VARIABILITY INSIDE ARRAYS //
 
-const background_type = [
+const backgroundArr = [
 	// name, probability(0-100)
 	['angle', 16.66],
 	['hazy', 16.66],
@@ -20,7 +20,7 @@ function generate_composition_params(background_type) {
 	if (background_type === undefined) {
 		console.log('background_type not passed in, choosing at random');
 		console.log(background_type);
-		background_type = weighted_choice(background_type);
+		background_type = weighted_choice(backgroundArr);
 	}
 
 	console.log('background_type: ' + background_type);
@@ -30,8 +30,7 @@ function generate_composition_params(background_type) {
 
 	//* PACK PARAMETERS INTO OBJECT *//
 	var composition_params = {
-		center_piece_type: center_piece_type,
-		left_piece_type: left_piece_type,
+		background_type: background_type,
 	};
 
 	//* RETURN PARAMETERS *//
