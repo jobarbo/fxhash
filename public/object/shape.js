@@ -6,7 +6,6 @@ class Shape {
 		this.offset_x = random(-3, 3);
 		this.offset_y = random(-3, 3);
 		this.position_vector_array = [];
-		console.log(this.post_processing);
 	}
 
 	drawShape() {
@@ -31,7 +30,6 @@ class Shape {
 
 	drawCircle() {
 		if (this.post_processing) {
-			console.log('circle post processing is on');
 			fill(0, 100, 100, 100);
 			ellipse(width / 2, height / 2, width / 3 + this.offset_x, height / 3 + this.offset_y);
 			fill(200, 100, 100, 100);
@@ -46,7 +44,6 @@ class Shape {
 
 	drawSquare() {
 		if (this.post_processing) {
-			console.log('square post processing is on');
 			fill(0, 100, 100, 100);
 			rect(width / 2, height / 2, width / 3 + this.offset_x, height / 3 + this.offset_y);
 			fill(200, 100, 100, 100);
@@ -60,7 +57,6 @@ class Shape {
 	}
 
 	drawTriangle() {
-		console.log('triangle post processing is on');
 		let v1 = createVector(width / 2 - 200, 600);
 		let v2 = createVector(width / 2, 300);
 		let v3 = createVector(width / 2 + 200, 600);
