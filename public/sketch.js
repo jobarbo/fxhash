@@ -1,3 +1,5 @@
+//! MAKE POST PROCESSING OFFSET GLOBAL
+
 function setup() {
 	pixelDensity(2);
 	createCanvas(1000, 1000);

@@ -1,5 +1,6 @@
 class Shape {
 	constructor(shape_type) {
+		//! GET THE SHAPE WITH DISTANCE MAYBE SO WE CAN DRAW DOTS FOR POST PROCESSING
 		this.type = shape_type;
 		this.post_processing = post_processing;
 		this.offset_x = random(-3, 3);
