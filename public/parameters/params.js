@@ -14,13 +14,25 @@ const aura_array = [
 	['confused', 16.66],
 ];
 
+const post_processing_array = [
+	// name, probability(0-100)
+	[true, 50],
+	[false, 50],
+];
+
 // all input parameters are optional, they will be chosen at random if not passed into the function
-function generate_composition_params(aura_type) {
+function generate_composition_params(aura_type, post_processing) {
 	// SET DEFAULTS IF NOT PASSED IN
 	if (aura_type === undefined) {
 		console.log('aura_type not passed in, choosing at random');
 		console.log(aura_type);
 		aura_type = weighted_choice(aura_array);
+	}
+
+	if (post_processing === undefined) {
+		console.log('post_processing not passed in, choosing at random');
+		console.log(post_processing);
+		post_processing = weighted_choice(post_processing_array);
 	}
 
 	console.log('aura_type: ' + aura_type);
@@ -31,6 +43,7 @@ function generate_composition_params(aura_type) {
 	//* PACK PARAMETERS INTO OBJECT *//
 	var composition_params = {
 		aura_type: aura_type,
+		post_processing: post_processing,
 	};
 
 	//* RETURN PARAMETERS *//

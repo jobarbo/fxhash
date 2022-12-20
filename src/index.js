@@ -34,6 +34,7 @@ generateConsoleLogs(composition_params);
 
 //* FXHASH FEATURES DEFINITION *//
 window.$fxhashFeatures = {
+	post_processing: post_processing,
 	aura: aura_type,
 };
 
