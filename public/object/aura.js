@@ -6,8 +6,8 @@ class Aura {
 		this.chosen_sprite = this.chooseSprite();
 		this.img = this.sprite_sheets.get(this.chosen_sprite.position.x, this.chosen_sprite.position.y, this.chosen_sprite.position.w, this.chosen_sprite.position.h);
 
-		this.offset_x = random(-3, 3);
-		this.offset_y = random(-3, 3);
+		this.offset_x = random(-4, 4);
+		this.offset_y = random(-4, 4);
 
 		//is post processing on or off?
 		this.post_processing = post_processing;

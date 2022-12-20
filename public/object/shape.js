@@ -3,8 +3,8 @@ class Shape {
 		//! GET THE SHAPE WITH DISTANCE MAYBE SO WE CAN DRAW DOTS FOR POST PROCESSING
 		this.type = shape_type;
 		this.post_processing = post_processing;
-		this.offset_x = random(-3, 3);
-		this.offset_y = random(-3, 3);
+		this.offset_x = random(-4, 4);
+		this.offset_y = random(-4, 4);
 		this.position_vector_array = [];
 	}
 
@@ -57,9 +57,9 @@ class Shape {
 	}
 
 	drawTriangle() {
-		let v1 = createVector(width / 2 - 200, 600);
-		let v2 = createVector(width / 2, 300);
-		let v3 = createVector(width / 2 + 200, 600);
+		let v1 = createVector(width / 2 - 250, 650);
+		let v2 = createVector(width / 2, 250);
+		let v3 = createVector(width / 2 + 250, 650);
 		if (this.post_processing) {
 			fill(0, 100, 100, 100);
 			triangle(v1.x + this.offset_x, v1.y + this.offset_y, v2.x + this.offset_x, v2.y + this.offset_y, v3.x + this.offset_x, v3.y + this.offset_y);
