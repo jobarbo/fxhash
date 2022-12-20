@@ -4,37 +4,26 @@
 //* COMPOSITION TYPE DEFINITION *//
 // CATEGORISE VARIABILITY INSIDE ARRAYS //
 
-const example_type = [
+const background_type = [
 	// name, probability(0-100)
-	['none', 10],
-	['plane', 15],
-	['triangle', 15],
-	['double_triangle', 5],
-	['tetrahedron', 5],
-	['pentagon', 10],
-	['octahedron', 10],
-	['hexahedron', 10],
-	['dodecahedron', 10],
-	['station_h', 3],
-	['station_t', 3],
-	['station_o', 2],
-	['station_d', 2],
-];
-
-const left_type = [
-	[true, 50],
-	[false, 50],
+	['angle', 16.66],
+	['hazy', 16.66],
+	['rebel', 16.66],
+	['grassy', 16.66],
+	['crossy', 16.66],
+	['confused', 16.66],
 ];
 
 // all input parameters are optional, they will be chosen at random if not passed into the function
-function generate_composition_params(center_piece_type, left_piece_type) {
+function generate_composition_params(background_type) {
 	// SET DEFAULTS IF NOT PASSED IN
-	if (center_piece_type === undefined) {
-		center_piece_type = weighted_choice(example_type);
+	if (background_type === undefined) {
+		console.log('background_type not passed in, choosing at random');
+		console.log(background_type);
+		background_type = weighted_choice(background_type);
 	}
-	if (left_piece_type === undefined) {
-		left_piece_type = weighted_choice(left_type);
-	}
+
+	console.log('background_type: ' + background_type);
 
 	//* EXCEPTIONS AND OVER-RIDES *//
 	// if necessary, add exceptions and over-rides here
@@ -47,4 +36,11 @@ function generate_composition_params(center_piece_type, left_piece_type) {
 
 	//* RETURN PARAMETERS *//
 	return composition_params;
+}
+
+function preload() {
+	bgSpriteJSON = loadJSON('assets/json/background.json');
+	bgSpriteSheets = loadImage('assets/spritesheets/background.png');
+
+	console.log(bgSpriteJSON);
 }
