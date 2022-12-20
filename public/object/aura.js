@@ -42,8 +42,6 @@ class Aura {
 		//resize the image to the canvas size
 		this.img.resize(width, height);
 
-		// make a small offset so the dots are slightly off the edge of the sprite
-
 		for (var i = 0; i < this.img.width; i += 2) {
 			for (var j = 0; j < this.img.height; j += 2) {
 				var index = (j * this.img.width + i) * 4;
