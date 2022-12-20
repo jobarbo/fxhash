@@ -34,7 +34,7 @@ generateConsoleLogs(composition_params);
 
 //* FXHASH FEATURES DEFINITION *//
 window.$fxhashFeatures = {
-	background: background_type,
+	aura: aura_type,
 };
 
 //* VIEWPORT SETUP *//

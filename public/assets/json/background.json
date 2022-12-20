@@ -2,126 +2,94 @@
 	"frames": [
 		{
 			"name": "angle",
-			"frame": {
+			"position": {
 				"x": 1,
 				"y": 1,
 				"w": 2000,
 				"h": 2000
 			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
+			"size": {
 				"x": 0,
 				"y": 0,
-				"w": 2000,
-				"h": 2000
-			},
-			"sourceSize": {
 				"w": 2000,
 				"h": 2000
 			}
 		},
 		{
-			"filename": "hazy",
-			"frame": {
+			"name": "hazy",
+			"position": {
 				"x": 2003,
 				"y": 1,
 				"w": 2000,
 				"h": 2000
 			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
+
+			"size": {
 				"x": 0,
 				"y": 0,
-				"w": 2000,
-				"h": 2000
-			},
-			"sourceSize": {
 				"w": 2000,
 				"h": 2000
 			}
 		},
 		{
-			"filename": "rebel",
-			"frame": {
+			"name": "rebel",
+			"position": {
+				"x": 4005,
+				"y": 1,
+				"w": 2000,
+				"h": 2000
+			},
+
+			"size": {
+				"x": 0,
+				"y": 0,
+				"w": 2000,
+				"h": 2000
+			}
+		},
+		{
+			"name": "grassy",
+			"position": {
 				"x": 1,
 				"y": 2003,
 				"w": 2000,
 				"h": 2000
 			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
+
+			"size": {
 				"x": 0,
 				"y": 0,
-				"w": 2000,
-				"h": 2000
-			},
-			"sourceSize": {
 				"w": 2000,
 				"h": 2000
 			}
 		},
 		{
-			"filename": "grassy",
-			"frame": {
+			"name": "crossy",
+			"position": {
 				"x": 2003,
 				"y": 2003,
 				"w": 2000,
 				"h": 2000
 			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
+			"size": {
 				"x": 0,
 				"y": 0,
-				"w": 2000,
-				"h": 2000
-			},
-			"sourceSize": {
 				"w": 2000,
 				"h": 2000
 			}
 		},
 		{
-			"filename": "crossy",
-			"frame": {
-				"x": 4005,
-				"y": 1,
-				"w": 2000,
-				"h": 2000
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 2000,
-				"h": 2000
-			},
-			"sourceSize": {
-				"w": 2000,
-				"h": 2000
-			}
-		},
-		{
-			"filename": "confused ",
-			"frame": {
+			"name": "confused",
+			"position": {
 				"x": 4005,
 				"y": 2003,
 				"w": 2000,
 				"h": 2000
 			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
+
+			"size": {
 				"x": 0,
 				"y": 0,
-				"w": 2000,
-				"h": 2000
-			},
-			"sourceSize": {
 				"w": 2000,
 				"h": 2000
 			}

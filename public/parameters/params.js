@@ -4,7 +4,7 @@
 //* COMPOSITION TYPE DEFINITION *//
 // CATEGORISE VARIABILITY INSIDE ARRAYS //
 
-const backgroundArr = [
+const aura_array = [
 	// name, probability(0-100)
 	['angle', 16.66],
 	['hazy', 16.66],
@@ -15,22 +15,22 @@ const backgroundArr = [
 ];
 
 // all input parameters are optional, they will be chosen at random if not passed into the function
-function generate_composition_params(background_type) {
+function generate_composition_params(aura_type) {
 	// SET DEFAULTS IF NOT PASSED IN
-	if (background_type === undefined) {
-		console.log('background_type not passed in, choosing at random');
-		console.log(background_type);
-		background_type = weighted_choice(backgroundArr);
+	if (aura_type === undefined) {
+		console.log('aura_type not passed in, choosing at random');
+		console.log(aura_type);
+		aura_type = weighted_choice(aura_array);
 	}
 
-	console.log('background_type: ' + background_type);
+	console.log('aura_type: ' + aura_type);
 
 	//* EXCEPTIONS AND OVER-RIDES *//
 	// if necessary, add exceptions and over-rides here
 
 	//* PACK PARAMETERS INTO OBJECT *//
 	var composition_params = {
-		background_type: background_type,
+		aura_type: aura_type,
 	};
 
 	//* RETURN PARAMETERS *//
@@ -40,6 +40,4 @@ function generate_composition_params(background_type) {
 function preload() {
 	bgSpriteJSON = loadJSON('assets/json/background.json');
 	bgSpriteSheets = loadImage('assets/spritesheets/background.png');
-
-	console.log(bgSpriteJSON);
 }
