@@ -29,47 +29,21 @@ class Shape {
 	}
 
 	drawCircle() {
-		if (this.post_processing) {
-			fill(200, 100, 100, 100);
-			ellipse(width / 2 + this.offset_x, height / 2 + this.offset_y, width / 3, height / 3);
-			fill(0, 100, 100, 100);
-			ellipse(width / 2 - this.offset_x, height / 2 - this.offset_y, width / 3, height / 3);
-			fill(0, 0, 0, 100);
-			ellipse(width / 2, height / 2, width / 3, height / 3);
-		} else {
-			fill(0, 0, 0, 100);
-			ellipse(width / 2, height / 2, width / 3, height / 3);
-		}
+		fill(0, 0, 0, 100);
+		ellipse(width / 2, height / 2, width / 2.5, height / 2.5);
 	}
 
 	drawSquare() {
-		if (this.post_processing) {
-			fill(200, 100, 100, 100);
-			rect(width / 2 + this.offset_x, height / 2 + this.offset_y, width / 3, height / 3);
-			fill(0, 100, 100, 100);
-			rect(width / 2 - this.offset_x, height / 2 - this.offset_y, width / 3, height / 3);
-			fill(0, 0, 0, 100);
-			rect(width / 2, height / 2, width / 3, height / 3);
-		} else {
-			fill(0, 0, 0, 100);
-			rect(width / 2, height / 2, width / 3, height / 3);
-		}
+		fill(0, 0, 0, 100);
+		rect(width / 2, height / 2, width / 2.5, height / 2.5);
 	}
 
 	drawTriangle() {
-		let v1 = createVector(width / 2 - 250, 650);
-		let v2 = createVector(width / 2, 250);
-		let v3 = createVector(width / 2 + 250, 650);
-		if (this.post_processing) {
-			fill(200, 100, 100, 100);
-			triangle(v1.x + this.offset_x, v1.y + this.offset_y, v2.x + this.offset_x, v2.y + this.offset_y, v3.x + this.offset_x, v3.y + this.offset_y);
-			fill(0, 100, 100, 100);
-			triangle(v1.x - this.offset_x, v1.y - this.offset_y, v2.x - this.offset_x, v2.y - this.offset_y, v3.x - this.offset_x, v3.y - this.offset_y);
-			fill(0, 0, 0, 100);
-			triangle(v1.x, v1.y, v2.x, v2.y, v3.x, v3.y);
-		} else {
-			fill(0, 0, 0, 100);
-			triangle(v1.x, v1.y, v2.x, v2.y, v3.x, v3.y);
-		}
+		let v1 = createVector(width / 2 - 250, 700);
+		let v2 = createVector(width / 2, 300);
+		let v3 = createVector(width / 2 + 250, 700);
+
+		fill(0, 0, 0, 100);
+		triangle(v1.x, v1.y, v2.x, v2.y, v3.x, v3.y);
 	}
 }

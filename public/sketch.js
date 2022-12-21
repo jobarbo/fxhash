@@ -18,6 +18,13 @@ function setup() {
 
 	let shape = new Shape(shape_type, pp_offset_x, pp_offset_y);
 	shape.drawShape();
+	console.log(outlineSpriteJSON);
+
+	let outline = new Outline(outline_type, outlineSpriteJSON, outlineSpriteSheets, pp_offset_x, pp_offset_y);
+	outline.drawOutline();
+
+	let nose = new Nose(nose_type, noseSpriteJSON, noseSpriteSheets, pp_offset_x, pp_offset_y);
+	nose.drawNose();
 }
 
 function draw() {}

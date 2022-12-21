@@ -21,6 +21,22 @@ const shape_array = [
 	['triangle', 33.33],
 ];
 
+const outline_array = [
+	['circle', 33.33],
+	['square', 33.33],
+	['triangle', 33.33],
+];
+
+const nose_array = [
+	// name, probability(0-100)
+	['pointy', 33.33],
+	['long', 33.33],
+	['square', 33.33],
+	['bubbly', 33.33],
+	['snoby', 33.33],
+	['angular', 33.33],
+];
+
 const post_processing_array = [
 	// name, probability(0-100)
 	[true, 50],
@@ -28,7 +44,7 @@ const post_processing_array = [
 ];
 
 // all input parameters are optional, they will be chosen at random if not passed into the function
-function generate_composition_params(aura_type, shape_type, post_processing) {
+function generate_composition_params(aura_type, shape_type, outline_type, nose_type, post_processing) {
 	// SET DEFAULTS IF NOT PASSED IN
 	if (aura_type === undefined) {
 		aura_type = weighted_choice(aura_array);
@@ -36,6 +52,15 @@ function generate_composition_params(aura_type, shape_type, post_processing) {
 	if (shape_type === undefined) {
 		shape_type = weighted_choice(shape_array);
 	}
+
+	if (outline_type === undefined) {
+		outline_type = shape_type;
+	}
+
+	if (nose_type === undefined) {
+		nose_type = weighted_choice(nose_array);
+	}
+
 	if (post_processing === undefined) {
 		post_processing = weighted_choice(post_processing_array);
 	}
@@ -46,8 +71,10 @@ function generate_composition_params(aura_type, shape_type, post_processing) {
 	//* PACK PARAMETERS INTO OBJECT *//
 	var composition_params = {
 		aura_type: aura_type,
-		post_processing: post_processing,
 		shape_type: shape_type,
+		outline_type: outline_type,
+		nose_type: nose_type,
+		post_processing: post_processing,
 	};
 
 	//* RETURN PARAMETERS *//
@@ -57,4 +84,10 @@ function generate_composition_params(aura_type, shape_type, post_processing) {
 function preload() {
 	bgSpriteJSON = loadJSON('assets/json/background.json');
 	bgSpriteSheets = loadImage('assets/spritesheets/background.png');
+
+	outlineSpriteJSON = loadJSON('assets/json/outline.json');
+	outlineSpriteSheets = loadImage('assets/spritesheets/outline.png');
+
+	noseSpriteJSON = loadJSON('assets/json/nose.json');
+	noseSpriteSheets = loadImage('assets/spritesheets/nose.png');
 }

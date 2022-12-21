@@ -1,0 +1,60 @@
+{
+	"frames": [
+		{
+			"name": "circle",
+			"position": {
+				"x": 1,
+				"y": 1,
+				"w": 2000,
+				"h": 2000
+			},
+			"size": {
+				"x": 0,
+				"y": 0,
+				"w": 2000,
+				"h": 2000
+			}
+		},
+		{
+			"name": "square",
+			"position": {
+				"x": 2003,
+				"y": 1,
+				"w": 2000,
+				"h": 2000
+			},
+			"size": {
+				"x": 0,
+				"y": 0,
+				"w": 2000,
+				"h": 2000
+			}
+		},
+		{
+			"name": "triangle",
+			"position": {
+				"x": 4005,
+				"y": 1,
+				"w": 2000,
+				"h": 2000
+			},
+			"size": {
+				"x": 0,
+				"y": 0,
+				"w": 2000,
+				"h": 2000
+			}
+		}
+	],
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 6006,
+			"h": 2002
+		},
+		"scale": "1"
+	}
+}
