@@ -43,8 +43,8 @@ class Nose {
 		//resize the image to the canvas size
 		this.img.resize(200, 200);
 
-		for (var i = 0; i < this.img.width; i += 1) {
-			for (var j = 0; j < this.img.height; j += 1) {
+		for (var i = 0; i < this.img.width; i += 2) {
+			for (var j = 0; j < this.img.height; j += 2) {
 				var index = (j * this.img.width + i) * 4;
 				if (this.img.pixels[index + 3] > 0) {
 					//if the pixel is not transparent
