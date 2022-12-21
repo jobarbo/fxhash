@@ -3,7 +3,6 @@ class Aura {
 		this.type = aura_type;
 		this.sprite_json = bgSpriteJSON.frames;
 		this.sprite_sheets = bgSpriteSheets;
-		console.log(pp_offset_x, pp_offset_y);
 		this.chosen_sprite = this.chooseSprite();
 
 		this.img = this.sprite_sheets.get(this.chosen_sprite.position.x, this.chosen_sprite.position.y, this.chosen_sprite.position.w, this.chosen_sprite.position.h);
