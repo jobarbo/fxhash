@@ -29,14 +29,13 @@ class Nose {
 
 	drawNose() {
 		// draw the sprite
-		//blendMode(OVERLAY);
 		push();
 		translate(width / 2 - 100, height / 2 - 100);
 		this.drawDots();
 		//image(this.img, 0, 0, 200, 200);
-
 		pop();
 	}
+
 	//draw dots where the sprite is not transparent
 	drawDots() {
 		this.img.loadPixels();
@@ -48,9 +47,8 @@ class Nose {
 				var index = (j * this.img.width + i) * 4;
 				if (this.img.pixels[index + 3] > 0) {
 					//if the pixel is not transparent
-
 					stroke(0, 0, 100, 100);
-					strokeWeight(1.2);
+					strokeWeight(1.8);
 					point(i, j);
 				}
 			}
