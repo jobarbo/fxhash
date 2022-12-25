@@ -37,7 +37,7 @@ class Cell {
 	createNoise() {
 		let nx = this.x,
 			ny = this.y,
-			a = 9.5,
+			a = 900.5,
 			sc = 0.002,
 			dx,
 			dy;

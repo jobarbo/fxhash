@@ -42,7 +42,7 @@ let palettes = {
 		mountain_high: [15, 15, 50],
 		mountain_top: [10, 0, 100],
 	},
-	new_palette: {
+	redblack: {
 		black: [0, 0, 10],
 		white: [30, 10, 100],
 		black2: [0, 0, 10],

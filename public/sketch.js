@@ -6,6 +6,7 @@ let h = Math.floor(15 * 100);
 
 function setup() {
 	createCanvas(w, h);
+	noLoop();
 	pixelDensity(1);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(10, 0, 10, 100);
@@ -37,21 +38,18 @@ function setup() {
 
 	// calculate the time it takes to create the grid
 	let t0 = performance.now();
-	let yoff = 0;
-	for (let gridY = 0; gridY < cellCountY; gridY++) {
-		let xoff = 110;
-		for (let gridX = 0; gridX < cellCountX; gridX++) {
-			let posX = cellWidth * gridX;
-			let posY = cellHeight * gridY;
-			let cell = new Cell(posX, posY, cellWidth, cellHeight, margin, xoff, yoff, inc, palette);
-			cells.push(cell);
-			xoff += inc;
+
+	let grid = drawNoise(cellCountX, cellCountY, cellWidth, cellHeight, margin, inc, palette);
+
+	let interval = setInterval(() => {
+		let result = grid.next();
+		if (result.done) {
+			console.log('done');
+			// stop the interval
+			clearInterval(interval);
 		}
-		yoff += inc;
-	}
-	for (let i = 0; i < cells.length; i++) {
-		cells[i].display(inc);
-	}
+	}, 0);
+
 	let t1 = performance.now();
 	console.log('Call to doSomething took ' + (t1 - t0) + ' milliseconds.');
 
@@ -61,6 +59,28 @@ function setup() {
 	stroke(0, 0, 10, 100);
 	strokeWeight(bleed);
 	rect(width / 2, height / 2, width - bleed, height - bleed);
+}
+function* drawNoise(cellCountX, cellCountY, cellWidth, cellHeight, margin, inc, palette) {
+	let count = 0;
+	let draw_every = 1;
+	let yoff = 0;
+	for (let gridY = 0; gridY < cellCountY; gridY++) {
+		let xoff = 110;
+		count += 1;
+		for (let gridX = 0; gridX < cellCountX; gridX++) {
+			let posX = cellWidth * gridX;
+			let posY = cellHeight * gridY;
+			let cell = new Cell(posX, posY, cellWidth, cellHeight, margin, xoff, yoff, inc, palette);
+			cells.push(cell);
+			cell.display(inc);
+			xoff += inc;
+			if (count >= draw_every) {
+				count = 0;
+				yield;
+			}
+		}
+		yoff += inc;
+	}
 }
 
 function draw() {
