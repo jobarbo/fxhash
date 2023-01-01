@@ -3,11 +3,12 @@ let inc = 0.02;
 let cells = [];
 let w = Math.floor(15 * 100);
 let h = Math.floor(15 * 100);
+let p_d = 3;
 
 function setup() {
 	createCanvas(w, h);
 	noLoop();
-	pixelDensity(1);
+	pixelDensity(3);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(10, 0, 10, 100);
 	rectMode(CENTER);
@@ -17,8 +18,8 @@ function setup() {
 	let palette = window.$fxhashFeatures.biomeColorList;
 
 	// have a cell width unit that is relative to the width of the screen
-
-	let cellWidth = 1;
+	// cellWidth is always equal to 1 pixel relative to the width of the screen
+	let cellWidth = 2;
 	let cellHeight = cellWidth;
 	console.log('cellWidth: ' + cellWidth);
 	console.log('cellHeight: ' + cellHeight);
@@ -62,23 +63,25 @@ function setup() {
 }
 function* drawNoise(cellCountX, cellCountY, cellWidth, cellHeight, margin, inc, palette) {
 	let count = 0;
-	let draw_every = 1;
+	let draw_every = 3;
 	let yoff = 0;
 	for (let gridY = 0; gridY < cellCountY; gridY++) {
 		let xoff = 110;
-		count += 1;
+
 		for (let gridX = 0; gridX < cellCountX; gridX++) {
 			let posX = cellWidth * gridX;
 			let posY = cellHeight * gridY;
 			let cell = new Cell(posX, posY, cellWidth, cellHeight, margin, xoff, yoff, inc, palette);
 			cells.push(cell);
 			cell.display(inc);
+
 			xoff += inc;
 			if (count >= draw_every) {
 				count = 0;
 				yield;
 			}
 		}
+		count++;
 		yoff += inc;
 	}
 }
