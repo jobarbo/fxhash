@@ -1,8 +1,8 @@
 let bleed = 0;
 let inc = 0.02;
 let cells = [];
-let w = Math.floor(15 * 100);
-let h = Math.floor(15 * 100);
+let w = Math.floor(15 * 300);
+let h = Math.floor(15 * 300);
 let p_d = 3;
 
 function setup() {
@@ -19,7 +19,7 @@ function setup() {
 
 	// have a cell width unit that is relative to the width of the screen
 	// cellWidth is always equal to 1 pixel relative to the width of the screen
-	let cellWidth = 2;
+	let cellWidth = 3;
 	let cellHeight = cellWidth;
 	console.log('cellWidth: ' + cellWidth);
 	console.log('cellHeight: ' + cellHeight);
