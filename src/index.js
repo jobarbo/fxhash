@@ -66,12 +66,58 @@ let palettes = {
 		black5: [0, 0, 0],
 		white5: [0, 0, 100],
 	},
+	pastel: {
+		1: [60, 2, 93],
+		2: [30, 9, 84],
+		3: [31, 9, 96],
+		4: [26, 11, 89],
+		5: [22, 18, 84],
+		6: [22, 18, 84],
+		7: [26, 11, 89],
+		8: [31, 9, 96],
+		9: [30, 9, 84],
+		10: [60, 2, 93],
+	},
+	blue_pink: {
+		1: [278, 18, 86],
+		2: [337, 22, 100],
+		3: [338, 31, 100],
+		4: [208, 26, 100],
+		5: [209, 36, 100],
+		6: [209, 36, 100],
+		7: [208, 26, 100],
+		8: [338, 31, 100],
+		9: [337, 22, 100],
+		10: [278, 18, 86],
+	},
+	hunt: {
+		1: [74, 48, 42],
+		2: [88, 56, 21],
+		3: [52, 12, 100],
+		4: [32, 57, 87],
+		5: [28, 80, 74],
+		6: [28, 80, 74],
+		7: [32, 57, 87],
+		8: [52, 12, 100],
+		9: [88, 56, 21],
+		10: [74, 48, 42],
+	},
+	france: {
+		2: [105, 5, 98],
+		3: [182, 24, 86],
+		4: [203, 56, 62],
+		5: [215, 67, 34],
+		6: [215, 67, 34],
+		7: [203, 56, 62],
+		8: [182, 24, 86],
+		9: [105, 5, 98],
+	},
 };
 
 // choose a random key from the palettes object
 // chose a random key from the key array using math.random
 let themeArray = Object.keys(palettes);
-let randomThemeKey = themeArray[2];
+let randomThemeKey = themeArray[5];
 
 // chose a palette randomly from the palettes object
 let chosenPalette = palettes[randomThemeKey];
