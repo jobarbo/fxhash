@@ -2,7 +2,7 @@ let sun;
 
 function setup() {
 	pixelDensity(3.0);
-	createCanvas(3000, 3000);
+	createCanvas(1000, 1000);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(35, 10, 92);
 	randomSeed(fxrand() * 10000);

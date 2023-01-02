@@ -12,13 +12,14 @@ class Mountain {
 	display() {
 		// draw a mountain using multiple vertices
 		strokeWeight(15);
-		stroke(0);
+		stroke(0, 0, 10, 100);
+		fill(0, 0, 10, 100);
 		beginShape();
-		fill(35, 10, 92);
+
 		vertex(-100, this.baseY);
 		vertex(-100, this.y);
 		for (let i = 0; i < width; i += 10) {
-			this.iteration = n3(this.xoff, this.yoff, 1.005, 1) * this.multiplier;
+			this.iteration = n3(this.xoff, this.yoff, 10.005, 1) * this.multiplier;
 			this.x = i;
 			this.y += this.iteration;
 			this.yoff += 0.01;

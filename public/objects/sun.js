@@ -11,6 +11,8 @@ class Sun {
 	display() {
 		strokeWeight(15);
 		fill(35, 10, 92);
+		stroke(0, 0, 10, 100);
+		fill(0, 0, 10, 100);
 		ellipse(this.x, this.y, this.radius);
 	}
 }

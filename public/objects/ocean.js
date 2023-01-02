@@ -6,7 +6,7 @@ class Ocean {
 	display() {
 		// display the ocean
 		strokeWeight(15);
-		stroke(0);
+		stroke(0, 0, 10, 100);
 		fill(180, 70, 100, 0);
 		beginShape();
 		vertex(-100, this.baseY);
@@ -19,7 +19,7 @@ class Ocean {
 		endShape(CLOSE);
 
 		// make multiple waves
-		for (let i = 0; i < 5; i++) {
+		for (let i = 0; i < 3; i++) {
 			let wave = new Wave(this.topY, this.baseY);
 			wave.display();
 		}
@@ -30,7 +30,7 @@ class Wave {
 	constructor(top, base) {
 		this.xoff = random(1000000);
 		this.yoff = random(1000000);
-		this.a = 0;
+		this.a = random(0, 360);
 		this.x = 0;
 		this.y = random(top, base - 200);
 		this.iteration = TWO_PI / 25;
@@ -39,12 +39,12 @@ class Wave {
 	display() {
 		// draw simple wave lines using sin and cos
 		strokeWeight(15);
-		stroke(0);
-		fill(35, 10, 92);
+		stroke(0, 0, 10, 100);
+		noFill();
 
 		beginShape();
-		let startX = random(50, width - 1450);
-		let endX = startX + 1400;
+		let startX = -50;
+		let endX = width + 50;
 		for (let i = startX; i < endX; i += 10) {
 			// make a wave using sin and cos on the y axis only
 			this.y = this.y + sin(this.a) * this.multiplier;
