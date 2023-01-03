@@ -25,7 +25,8 @@ body {
 	--hContent: var(--min);
 	--wContent: var(--min);
 }
-canvas.p5Canvas {
+canvas.p5Canvas,
+canvas.threeCanvas {
 	display: block;
 	border: 1px solid #000;
 	padding-left: 0;

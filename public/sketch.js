@@ -1,68 +1,56 @@
-var container;
-var camera, scene, renderer;
-var uniforms;
-var clock = new THREE.Clock();
-
-init();
-animate();
+// wait until the page is loaded
+window.onload = function () {
+	init();
+};
 
 function init() {
-	//create a canvas element with id="myCanvas"
-	var canvas = document.createElement('canvas');
-	canvas.id = 'myCanvas';
-	canvas.width = 512;
-	canvas.height = 512;
+	// create a canvas element with the ID of "canvas" and append it to the body
+	var threeCanvas = document.createElement('canvas');
+	threeCanvas.id = 'threeCanvas';
+	threeCanvas.classList.add('threeCanvas');
 
-	// append canvas to body element
-	document.body.appendChild(canvas);
+	// threejs add size to canvas
+	threeCanvas.width = 1000;
+	threeCanvas.height = 1000;
 
-	console.log(canvas);
+	console.log(threeCanvas);
 
-	container = document.getElementById('myCanvas');
-	console.log(container);
-	camera = new THREE.PerspectiveCamera(
-		40,
-		window.innerWidth / window.innerHeight,
-		1,
-		3000
-	);
-	camera.position.z = 10;
+	document.body.appendChild(threeCanvas);
 
-	scene = new THREE.Scene();
+	// create a new scene
+	var scene = new THREE.Scene();
 
-	var geometry = new THREE.BoxGeometry(0.75, 0.75, 0.75);
+	// create a camera
+	var camera = new THREE.PerspectiveCamera(75, threeCanvas.width / threeCanvas.height, 0.1, 1000);
 
-	var anArray = new Array(4096);
-	//var anArray = new Array(64);
-	anArray[0] = 0;
-	anArray[1] = 255;
-	anArray[2] = 255;
+	// create a renderer
+	var renderer = new THREE.WebGLRenderer({canvas: threeCanvas});
+	renderer.setSize(1000, 1000);
 
-	anArray[4093] = 128;
-	anArray[4094] = 0;
-	anArray[4095] = 128;
+	// create a cube
+	var geometry = new THREE.BoxGeometry(1, 1, 1);
+	var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+	var cube = new THREE.Mesh(geometry, material);
+	scene.add(cube);
 
-	uniforms = {
-		//time:       { value: 1.0 },
-		//resolution: { value: new THREE.Vector2() },
-		//myArray: { type: "iv1", value: anArray },
-		imageIndex: {value: 0},
+	// set the camera position
+	camera.position.z = 5;
+
+	// render the scene
+	renderer.render(scene, camera);
+
+	// create a render loop
+	var animation = function () {
+		requestAnimationFrame(animation);
+		console.log('animation loop');
+		// rotate the cube
+		cube.rotation.x += 0.01;
+		cube.rotation.y += 0.01;
+
+		// render the scene
+		renderer.render(scene, camera);
 	};
 
-	var material = new THREE.MeshLambertMaterial({
-		color: 0xffffff,
-		//wireframe: true,
-	});
-
-	var mesh = new THREE.Mesh(geometry, material);
-	scene.add(mesh);
-
-	renderer = new THREE.WebGLRenderer();
-	renderer.setPixelRatio(window.devicePixelRatio);
-	container.appendChild(renderer.domElement);
-
-	controls = new THREE.OrbitControls(camera, renderer.domElement);
-	console.log(controls);
-	onWindowResize();
-	window.addEventListener('resize', onWindowResize, false);
+	// start the animation loop
+	animation();
 }
