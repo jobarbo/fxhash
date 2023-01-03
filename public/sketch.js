@@ -29,11 +29,54 @@ function setup() {
 	let maxsw = window.$fxhashFeatures.max_stroke_weight;
 	let baseAngle = window.$fxhashFeatures.base_angle;
 	let reliefMode = window.$fxhashFeatures.relief_mode;
-	let letterArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+	let letterArr = [
+		'A',
+		'B',
+		'C',
+		'D',
+		'E',
+		'F',
+		'G',
+		'H',
+		'I',
+		'J',
+		'K',
+		'L',
+		'M',
+		'N',
+		'O',
+		'P',
+		'Q',
+		'R',
+		'S',
+		'T',
+		'U',
+		'V',
+		'W',
+		'X',
+		'Y',
+		'Z',
+	];
 
 	background(hue, 80, 50);
 
-	let sketch = drawthings(margin, border, xstart, xnoise, ynoise, mode, modeYnoise, modeXnoise, baselen, step, hue, hueSteps, maxsw, baseAngle, reliefMode);
+	let sketch = drawthings(
+		margin,
+		border,
+		xstart,
+		xnoise,
+		ynoise,
+		mode,
+		modeYnoise,
+		modeXnoise,
+		baselen,
+		step,
+		hue,
+		hueSteps,
+		maxsw,
+		baseAngle,
+		reliefMode
+	);
 
 	let interval = setInterval(() => {
 		let result = sketch.next();
@@ -49,19 +92,26 @@ function setup() {
 			rect(width / 2, height / 2, width - border, height - border);
 
 			// write name of planet
-			let txt = `Planet ${Math.floor(random(1, 999))}${random(letterArr)}-${Math.floor(random(1, 99))}-${Math.floor(random(1, 9))}${random(letterArr)}`;
+			let txt = `Planet ${Math.floor(random(1, 999))}${random(letterArr)}-${Math.floor(
+				random(1, 99)
+			)}-${Math.floor(random(1, 9))}${random(letterArr)}`;
 			textSize(width / 60);
 			textFont(myFont);
 			rectMode(CENTER);
 			fill(hue, bsaturation, bbrightness);
 			noStroke();
-			rect(border + (textWidth(txt) + width / 40 - 1) / 2, border + textAscent(txt), textWidth(txt) + width / 40, textAscent(txt) + width / 53);
+			rect(
+				border + (textWidth(txt) + width / 40 - 1) / 2,
+				border + textAscent(txt),
+				textWidth(txt) + width / 40,
+				textAscent(txt) + width / 53
+			);
 			fill(hue, 10, 100);
 			textAlign(CENTER, CENTER);
 			text(txt, border + (textWidth(txt) + width / 40) / 2, border + textAscent(txt) / 1.5);
 
 			// draw texture
-			// createTexture(hue);
+			createTexture(hue);
 
 			fxpreview();
 		}
@@ -112,7 +162,23 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 	pop();
 }
 
-function* drawthings(margin, border, xstart, xnoise, ynoise, mode, modeYnoise, modeXnoise, baselen, step, hue, hueSteps, maxsw, baseAngle, reliefMode) {
+function* drawthings(
+	margin,
+	border,
+	xstart,
+	xnoise,
+	ynoise,
+	mode,
+	modeYnoise,
+	modeXnoise,
+	baselen,
+	step,
+	hue,
+	hueSteps,
+	maxsw,
+	baseAngle,
+	reliefMode
+) {
 	let count = 0;
 	let draw_every = 500;
 
@@ -141,9 +207,26 @@ function createTexture(hue) {
 		const rdnW1 = random(width / 160, width / 6);
 		texture[index] = new Smudge(rdnX, rdnY, rdnW1, hue);
 	}
+	let sketch_texture = drawTexture(texture);
+	let interval = setInterval(() => {
+		let result = sketch_texture.next();
+		if (result.done) {
+			clearInterval(interval);
+		}
+	}, 0);
+}
+
+function* drawTexture(texture) {
+	let count = 0;
+	let draw_every = 500;
 	for (let index = 0; index < texture.length; index++) {
-		for (let j = 0; j < 1500; j++) {
+		for (let j = 0; j < 10500; j++) {
 			texture[index].display();
+			count++;
+			if (count > draw_every) {
+				count = 0;
+				yield;
+			}
 		}
 	}
 }
