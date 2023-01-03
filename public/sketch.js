@@ -1,4 +1,5 @@
 let myFont;
+generateConsoleLogs();
 function preload() {
 	myFont = loadFont('CourierPrime-Bold.ttf');
 }
@@ -11,6 +12,7 @@ function setup() {
 	rectMode(CENTER);
 	angleMode(DEGREES);
 	smooth();
+
 	let margin = -width / 8;
 	let border = width / 60;
 	let xstart = random(width * 1.25);
