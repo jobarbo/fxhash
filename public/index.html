@@ -6,7 +6,8 @@
 		<script id="fxhash-snippet">
 			//---- do not edit the following code (you can indent as you wish)
 			let search = new URLSearchParams(window.location.search);
-			let alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+			let alphabet =
+				'123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
 			var fxhash =
 				search.get('fxhash') ||
 				'oo' +
@@ -15,7 +16,11 @@
 						.map((_) => alphabet[(Math.random() * alphabet.length) | 0])
 						.join('');
 
-			let b58dec = (str) => [...str].reduce((p, c) => (p * alphabet.length + alphabet.indexOf(c)) | 0, 0);
+			let b58dec = (str) =>
+				[...str].reduce(
+					(p, c) => (p * alphabet.length + alphabet.indexOf(c)) | 0,
+					0
+				);
 			let fxhashTrunc = fxhash.slice(2);
 			let regex = new RegExp('.{' + ((fxhash.length / 4) | 0) + '}', 'g');
 			let hashes = fxhashTrunc.match(regex).map((h) => b58dec(h));
@@ -46,12 +51,12 @@
 		</script>
 
 		<link rel="stylesheet" href="./style.css" />
-		<script src="p5.min.js"></script>
-		<script src="https://unpkg.com/p5.createloop@0.2.12/dist/p5.createloop.js"></script>
+		<script type="module" src="./library/threejs/three.min.js"></script>
+		<script type="module" src="./library/threejs/OrbitControls.js"></script>
 		<script src="./library/utils/saveCanvas.js"></script>
 		<script src="./library/utils/utils.js"></script>
 		<script src="./parameters/params.js"></script>
-		<script src="sketch.js"></script>
+		<script type="module" src="sketch.js"></script>
 		<!-- if you need to import js scripts do it here -->
 	</head>
 	<body>
