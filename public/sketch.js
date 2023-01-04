@@ -75,7 +75,7 @@ function init() {
 
 	// check if the device is mobile and not desktop
 	console.log(`window.innerWidth: ${window.innerWidth}`);
-	if (window.innerWidth < 600) {
+	if (window.innerWidth < 1000) {
 		console.log('mobile');
 		// add event listener to the canvas
 		btn.addEventListener('click', permission);
