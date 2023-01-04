@@ -35,21 +35,7 @@ function init() {
 	// render the scene
 	renderer.render(scene, camera);
 
-	// ask permission to use device orientation
-	window.addEventListener('deviceorientation', function (event) {
-		if (event.alpha) {
-			// deviceorientation event is supported
-			window.addEventListener('deviceorientation', function (event) {
-				console.log(event);
-				cube.rotation.x = event.beta;
-				cube.rotation.y = event.gamma;
-				cube.rotation.z = event.alpha;
-			});
-		} else {
-			// deviceorientation event is not supported
-			console.log('deviceorientation event is not supported');
-		}
-	});
+	console.log(deviceOrientationEvent);
 
 	// control the cube with mousepress and mousemove
 	var mouseDown = false;
