@@ -48,7 +48,11 @@ function init() {
 						window.addEventListener('devicemotion', (e) => {
 							console.log('motion');
 							console.log(e);
-							// do something for 'e' here.
+
+							// move the cube rotation
+							cube.rotation.x += e.rotationRate.alpha / 100;
+							cube.rotation.y += e.rotationRate.beta / 100;
+							cube.rotation.z += e.rotationRate.gamma / 100;
 						});
 					}
 				})
