@@ -39,12 +39,35 @@ function init() {
 	// render the scene
 	renderer.render(scene, camera);
 
-	// controle the cube with device orientation
+	// control the cube with device orientation
 	window.addEventListener('deviceorientation', function (event) {
 		console.log(event);
 		cube.rotation.x = event.beta;
 		cube.rotation.y = event.gamma;
 		cube.rotation.z = event.alpha;
+	});
+
+	// control the cube with mousepress and mousemove
+	var mouseDown = false;
+	var lastX = 0;
+	var lastY = 0;
+	window.addEventListener('mousedown', function (event) {
+		mouseDown = true;
+		lastX = event.clientX;
+		lastY = event.clientY;
+	});
+	window.addEventListener('mouseup', function (event) {
+		mouseDown = false;
+	});
+	window.addEventListener('mousemove', function (event) {
+		if (mouseDown) {
+			var deltaX = event.clientX - lastX;
+			var deltaY = event.clientY - lastY;
+			cube.rotation.x += deltaY / 100;
+			cube.rotation.y += deltaX / 100;
+			lastX = event.clientX;
+			lastY = event.clientY;
+		}
 	});
 
 	// create a render loop
