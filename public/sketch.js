@@ -47,9 +47,9 @@ function init() {
 					if (response == 'granted') {
 						window.addEventListener('devicemotion', (e) => {
 							// move the cube rotation
-							cube.rotation.x += e.rotationRate.alpha / 100;
-							cube.rotation.y += e.rotationRate.beta / 100;
-							cube.rotation.z += e.rotationRate.gamma / 100;
+							cube.rotation.x += e.rotationRate.alpha / 1000;
+							cube.rotation.y += e.rotationRate.beta / 1000;
+							cube.rotation.z += e.rotationRate.gamma / 1000;
 						});
 					}
 				})
