@@ -34,9 +34,7 @@ function init() {
 
 	// render the scene
 	renderer.render(scene, camera);
-	if (location.protocol != 'https:') {
-		location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-	}
+
 	function permission() {
 		if (
 			typeof DeviceMotionEvent !== 'undefined' &&
@@ -59,7 +57,7 @@ function init() {
 			alert('DeviceMotionEvent is not defined');
 		}
 	}
-	const btn = document.getElementById('request');
+	const btn = document.getElementById('threeCanvas');
 	btn.addEventListener('click', permission);
 	// control the cube with mousepress and mousemove
 	var mouseDown = false;
