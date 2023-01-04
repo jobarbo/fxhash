@@ -39,13 +39,21 @@ function init() {
 	// render the scene
 	renderer.render(scene, camera);
 
+	// controle the cube with device orientation
+	window.addEventListener('deviceorientation', function (event) {
+		console.log(event);
+		cube.rotation.x = event.beta;
+		cube.rotation.y = event.gamma;
+		cube.rotation.z = event.alpha;
+	});
+
 	// create a render loop
 	var animation = function () {
 		requestAnimationFrame(animation);
 		console.log('animation loop');
 		// rotate the cube
-		cube.rotation.x += 0.01;
-		cube.rotation.y += 0.01;
+		//cube.rotation.x += 0.01;
+		//cube.rotation.y += 0.01;
 
 		// render the scene
 		renderer.render(scene, camera);
