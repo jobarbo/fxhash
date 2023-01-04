@@ -46,9 +46,6 @@ function init() {
 					// (optional) Do something after API prompt dismissed.
 					if (response == 'granted') {
 						window.addEventListener('devicemotion', (e) => {
-							console.log('motion');
-							console.log(e);
-
 							// move the cube rotation
 							cube.rotation.x += e.rotationRate.alpha / 100;
 							cube.rotation.y += e.rotationRate.beta / 100;
