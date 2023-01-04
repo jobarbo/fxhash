@@ -9,8 +9,6 @@ function init() {
 	threeCanvas.id = 'threeCanvas';
 	threeCanvas.classList.add('threeCanvas');
 
-	console.log(threeCanvas);
-
 	document.body.appendChild(threeCanvas);
 
 	// create a new scene
@@ -76,6 +74,7 @@ function init() {
 	const btn = document.getElementById('threeCanvas');
 
 	// check if the device is mobile and not desktop
+	console.log(`window.innerWidth: ${window.innerWidth}`);
 	if (window.innerWidth < 600) {
 		console.log('mobile');
 		// add event listener to the canvas
