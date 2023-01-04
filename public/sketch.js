@@ -72,14 +72,17 @@ function init() {
 	var lastTouchY = 0;
 	window.addEventListener('touchstart', function (event) {
 		touchStart = true;
+		console.log(`touchstart: ${event.touches[0].clientX}, ${event.touches[0].clientY}`);
 		lastTouchX = event.touches[0].clientX;
 		lastTouchY = event.touches[0].clientY;
 	});
 	window.addEventListener('touchend', function (event) {
+		console.log('touchend');
 		touchStart = false;
 	});
 	window.addEventListener('touchmove', function (event) {
 		if (touchStart) {
+			console.log('touchmove');
 			var deltaX = event.touches[0].clientX - lastTouchX;
 			var deltaY = event.touches[0].clientY - lastTouchY;
 			cube.rotation.x += deltaY / 100;
@@ -92,7 +95,6 @@ function init() {
 	// create a render loop
 	var animation = function () {
 		requestAnimationFrame(animation);
-		console.log('animation loop');
 		// rotate the cube
 		//cube.rotation.x += 0.01;
 		//cube.rotation.y += 0.01;
