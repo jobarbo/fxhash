@@ -9,10 +9,6 @@ function init() {
 	threeCanvas.id = 'threeCanvas';
 	threeCanvas.classList.add('threeCanvas');
 
-	// threejs add size to canvas
-	threeCanvas.width = 1000;
-	threeCanvas.height = 1000;
-
 	console.log(threeCanvas);
 
 	document.body.appendChild(threeCanvas);
@@ -20,12 +16,12 @@ function init() {
 	// create a new scene
 	var scene = new THREE.Scene();
 
-	// create a camera
-	var camera = new THREE.PerspectiveCamera(75, threeCanvas.width / threeCanvas.height, 0.1, 1000);
+	// create a camera that is the same size as the viewport
+	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-	// create a renderer
+	// create a renderer that is the same size as the viewport
 	var renderer = new THREE.WebGLRenderer({canvas: threeCanvas});
-	renderer.setSize(1000, 1000);
+	renderer.setSize(window.innerWidth, window.innerHeight);
 
 	// create a cube
 	var geometry = new THREE.BoxGeometry(1, 1, 1);
