@@ -23,9 +23,23 @@ function init() {
 	var renderer = new THREE.WebGLRenderer({canvas: threeCanvas});
 	renderer.setSize(window.innerWidth, window.innerHeight);
 
-	// create a cube
+	// create directional light
+	var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+	directionalLight.position.set(0, 1, 1);
+	scene.add(directionalLight);
+
+	// create a plane using a geometry and a material
+	var planeGeometry = new THREE.PlaneGeometry(5, 5);
+	var planeMaterial = new THREE.MeshLambertMaterial({color: 0xeeee00});
+	var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+	plane.rotation.x = -0.5 * Math.PI;
+	plane.position.y = -2;
+	scene.add(plane);
+
+	// create a cube using a geometry and a material
 	var geometry = new THREE.BoxGeometry(1, 1, 1);
-	var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+	// create cube material using meshLambertMaterial
+	var material = new THREE.MeshLambertMaterial({color: 0x00ff00});
 	var cube = new THREE.Mesh(geometry, material);
 	scene.add(cube);
 
@@ -47,9 +61,9 @@ function init() {
 					if (response == 'granted') {
 						window.addEventListener('devicemotion', (e) => {
 							// move the cube rotation
-							cube.rotation.x += e.rotationRate.alpha / 1000;
-							cube.rotation.y += e.rotationRate.beta / 1000;
-							cube.rotation.z += e.rotationRate.gamma / 1000;
+							cube.rotation.x += e.rotationRate.alpha / 2000;
+							cube.rotation.y += e.rotationRate.beta / 2000;
+							cube.rotation.z += e.rotationRate.gamma / 2000;
 						});
 					}
 				})
