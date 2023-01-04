@@ -50,6 +50,7 @@ function init() {
 	renderer.render(scene, camera);
 
 	function permission() {
+		console.log(DeviceMotionEvent.requestPermission);
 		if (
 			typeof DeviceMotionEvent !== 'undefined' &&
 			typeof DeviceMotionEvent.requestPermission === 'function'
@@ -73,7 +74,12 @@ function init() {
 		}
 	}
 	const btn = document.getElementById('threeCanvas');
-	btn.addEventListener('click', permission);
+
+	// check if the device is mobile and not desktop
+	if (window.innerWidth < 600) {
+		// add event listener to the canvas
+		btn.addEventListener('click', permission);
+	}
 	// control the cube with mousepress and mousemove
 	var mouseDown = false;
 	var lastX = 0;
