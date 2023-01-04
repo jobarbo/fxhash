@@ -34,27 +34,33 @@ function init() {
 
 	// render the scene
 	renderer.render(scene, camera);
-
-	// call deviceOrientationHandler when the device orientation changes to request permission
-	window.addEventListener('deviceorientation', deviceOrientationHandler, true);
-
-	// request permission to use the device orientation
-	function deviceOrientationHandler(event) {
-		console.log(event);
-		if (event.alpha) {
-			console.log('device orientation permission granted');
-			window.removeEventListener('deviceorientation', deviceOrientationHandler, true);
-			window.addEventListener('deviceorientation', deviceOrientationHandler, true);
+	if (location.protocol != 'https:') {
+		location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+	}
+	function permission() {
+		if (
+			typeof DeviceMotionEvent !== 'undefined' &&
+			typeof DeviceMotionEvent.requestPermission === 'function'
+		) {
+			// (optional) Do something before API request prompt.
+			DeviceMotionEvent.requestPermission()
+				.then((response) => {
+					// (optional) Do something after API prompt dismissed.
+					if (response == 'granted') {
+						window.addEventListener('devicemotion', (e) => {
+							console.log('motion');
+							console.log(e);
+							// do something for 'e' here.
+						});
+					}
+				})
+				.catch(console.error);
+		} else {
+			alert('DeviceMotionEvent is not defined');
 		}
 	}
-
-	// control the cube with device orientation
-	window.addEventListener('deviceorientation', function (event) {
-		console.log(`deviceorientation: ${event.alpha}, ${event.beta}, ${event.gamma}`);
-		cube.rotation.x = (event.beta / 180) * Math.PI;
-		cube.rotation.y = (event.gamma / 180) * Math.PI;
-	});
-
+	const btn = document.getElementById('request');
+	btn.addEventListener('click', permission);
 	// control the cube with mousepress and mousemove
 	var mouseDown = false;
 	var lastX = 0;
