@@ -5,6 +5,17 @@ function setup() {
 	background(210, 23, 92);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
+
+	// create intersection points with the point class
+	var points = [];
+	for (var i = 0; i < 100; i++) {
+		points.push(new Point(random(width), random(height)));
+	}
+
+	// show the points
+	for (var i = 0; i < points.length; i++) {
+		points[i].show();
+	}
 }
 
 function draw() {
