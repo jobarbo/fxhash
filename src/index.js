@@ -32,15 +32,4 @@ window.$fxhashFeatures = {
 	'Center piece type': center_piece_type,
 };
 
-//* CONSOLE LOGGING *//
-
-var jbarbeau_logo = '%c                                                                         \n' + '%c     Art by Jonathan Barbeau  |  { @jbarbeau.art }  |  2022              \n' + '%c                                                                         \n';
-
-console.log(jbarbeau_logo, 'color: white; background: #000000; font-weight: bold; font-family: "Courier New", monospace;', 'color: white; background: #000000; font-weight: bold; font-family: "Courier New", monospace;', 'color: white; background: #000000; font-weight: bold; font-family: "Courier New", monospace;');
-console.log('%cLa nuit porte... de garage\n', 'font-style: italic; font-family: "Courier New", monospace;');
-
-console.log('%cTOKEN FEATURES', 'color: white; background: #000000;', '\n', 'Center piece type -> ' + center_piece_type, '\n');
-
-console.log('%cCONTROLS', 'color: white; background: #000000;', '\n', 'cmd + s   : save artwork with date', '\n');
-
-//* END CONSOLE LOGGING *//
+generateConsoleLogs(window.$fxhashFeatures);
