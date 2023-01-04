@@ -70,6 +70,29 @@ function init() {
 		}
 	});
 
+	//control the cube with touch
+	var touchStart = false;
+	var lastTouchX = 0;
+	var lastTouchY = 0;
+	window.addEventListener('touchstart', function (event) {
+		touchStart = true;
+		lastTouchX = event.touches[0].clientX;
+		lastTouchY = event.touches[0].clientY;
+	});
+	window.addEventListener('touchend', function (event) {
+		touchStart = false;
+	});
+	window.addEventListener('touchmove', function (event) {
+		if (touchStart) {
+			var deltaX = event.touches[0].clientX - lastTouchX;
+			var deltaY = event.touches[0].clientY - lastTouchY;
+			cube.rotation.x += deltaY / 100;
+			cube.rotation.y += deltaX / 100;
+			lastTouchX = event.touches[0].clientX;
+			lastTouchY = event.touches[0].clientY;
+		}
+	});
+
 	// create a render loop
 	var animation = function () {
 		requestAnimationFrame(animation);
