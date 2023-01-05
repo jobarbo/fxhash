@@ -3,7 +3,7 @@ let points = [];
 function setup() {
 	pixelDensity(3.0);
 	// create a canvas that fit for instagram reels resolution of 1080x1920
-	createCanvas(1080, 1920);
+	createCanvas(1920, 1080);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(210, 23, 12);
 	randomSeed(fxrand() * 10000);
