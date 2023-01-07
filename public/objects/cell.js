@@ -27,8 +27,18 @@ class Cell {
 		this.createNoise();
 
 		noStroke();
+		//fill(this.hue, this.sat, this.bright, 100);
+		//rect(this.x, this.y, this.w, this.h);
+
+		// write the index of the biome on the cell for debugging
 		fill(this.hue, this.sat, this.bright, 100);
-		rect(this.x, this.y, this.w, this.h);
+		// make the text the size of the cell
+		textSize(this.w);
+		// make the text bold
+		textStyle(BOLD);
+		// center the text
+		textAlign(CENTER, CENTER);
+		text(this.index, this.x, this.y);
 
 		//this.xoff += inc;
 		//this.yoff += inc;
@@ -61,8 +71,9 @@ class Cell {
 		//this.index = int(map(this.noise, 0.2, 0.8, 0, this.biomes.length - 1, true));
 
 		this.noise = n3(nx, ny, 0.005, 2);
-		this.index = int(map(this.noise, -0.5, 0.5, 0, this.biomes.length - 1, true));
 
+		this.index = int(map(this.noise, -0.5, 0.5, 0, this.biomes.length - 1, true));
+		console.log(this.index);
 		this.hue = this.biomes[this.index][0];
 		this.sat = this.biomes[this.index][1];
 		this.bright = this.biomes[this.index][2];

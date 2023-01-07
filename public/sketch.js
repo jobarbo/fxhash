@@ -8,7 +8,7 @@ let p_d = 3;
 function setup() {
 	createCanvas(w, h);
 	noLoop();
-	pixelDensity(3);
+	pixelDensity(1);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(10, 0, 10, 100);
 	rectMode(CENTER);
@@ -19,7 +19,7 @@ function setup() {
 
 	// have a cell width unit that is relative to the width of the screen
 	// cellWidth is always equal to 1 pixel relative to the width of the screen
-	let cellWidth = 3;
+	let cellWidth = 30;
 	let cellHeight = cellWidth;
 	console.log('cellWidth: ' + cellWidth);
 	console.log('cellHeight: ' + cellHeight);
