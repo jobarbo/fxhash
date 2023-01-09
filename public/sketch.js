@@ -2,10 +2,10 @@ let horizon;
 let trees = [];
 
 function setup() {
-	pixelDensity(1.0);
+	pixelDensity(3.0);
 	createCanvas(1000, 1000);
 	colorMode(HSB, 360, 100, 100, 100);
-	background(35, 10, 99);
+	background(35, 5, 99);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
 	noSmooth();
@@ -17,7 +17,7 @@ function setup() {
 	// each vector point position is calculated using the noise function
 
 	// we will create a new horizon object
-
+	createTexture(0);
 	horizon = new Horizon();
 	horizon.init();
 	// we will create a new tree object
@@ -32,7 +32,7 @@ function setup() {
 		}
 	}
 
-	for (let i = 0; i < 25; i++) {
+	for (let i = 0; i < 15; i++) {
 		trees[i] = new Tree(lowestPoint);
 		trees[i].draw();
 	}
@@ -46,8 +46,8 @@ function createTexture(hue) {
 	let texture = [];
 
 	for (let index = 0; index < 2000; index++) {
-		const rdnX = random(0, width);
-		const rdnY = random(0, height);
+		const rdnX = random(-500, width + 500);
+		const rdnY = random(-500, height + 500);
 		const rdnW1 = random(width / 160, width / 6);
 		texture[index] = new Smudge(rdnX, rdnY, rdnW1, hue);
 	}

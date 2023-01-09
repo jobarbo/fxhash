@@ -7,17 +7,17 @@
 class Tree {
 	constructor(points) {
 		console.log(points);
-		this.x = random(0, width);
+		this.x = random(100, width - 100);
 		this.baseY = points.y;
 		this.y = this.baseY;
 		this.height = random(150, 300);
-		this.baseWidth = random(2, 6);
+		this.baseWidth = random(4, 10);
 		this.width = this.baseWidth;
 		this.hue = 35;
 		this.saturation = 20;
-		this.brightness = 20;
-		this.inc = 2;
-		this.branchNodesNumber = random(2, 4);
+		this.brightness = random(10, 30);
+		this.inc = 1;
+		this.branchNodesNumber = random(1, 3);
 		this.branchesNodes = [];
 		this.leaves = [];
 	}
@@ -36,7 +36,7 @@ class Tree {
 			fill(this.hue, this.saturation, this.brightness);
 			stroke(this.hue, this.saturation, this.brightness - 10);
 			strokeWeight(1);
-			ellipse(this.x, y, this.width, this.inc);
+			ellipse(this.x, y, this.width, this.width * 2);
 			this.width -= 0.02;
 			if (this.width < 1) {
 				this.width = 1;

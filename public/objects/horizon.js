@@ -10,7 +10,7 @@ class Horizon {
 		this.startY = height / 2;
 		this.endY = height + 150;
 		this.hue = 35;
-		this.saturation = 10;
+		this.saturation = 6;
 		this.brightness = 100;
 		this.points;
 	}
