@@ -60,7 +60,7 @@ class Cell {
 		//this.noise = noise(this.xoff, this.yoff);
 		//this.index = int(map(this.noise, 0.2, 0.8, 0, this.biomes.length - 1, true));
 
-		this.noise = n3(nx, ny, 0.005, 2);
+		this.noise = n3(nx, ny, 0.01, 2);
 		this.index = int(map(this.noise, -0.5, 0.5, 0, this.biomes.length - 1, true));
 
 		this.hue = this.biomes[this.index][0];
