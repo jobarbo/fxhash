@@ -1,8 +1,8 @@
 let bleed = 0;
 let inc = 0.02;
 let cells = [];
-let w = Math.floor(15 * 300);
-let h = Math.floor(15 * 300);
+let w = Math.floor(10 * 300);
+let h = Math.floor(10 * 300);
 let p_d = 3;
 
 function setup() {
@@ -19,23 +19,14 @@ function setup() {
 
 	// have a cell width unit that is relative to the width of the screen
 	// cellWidth is always equal to 1 pixel relative to the width of the screen
-	let cellWidth = 3;
+	let cellWidth = 20;
 	let cellHeight = cellWidth;
-	console.log('cellWidth: ' + cellWidth);
-	console.log('cellHeight: ' + cellHeight);
 
 	//	calculates the number of cells that can fit in the screen according to cellWidth and cellHeight
 	let cellCountX = width / cellWidth;
 	let cellCountY = height / cellHeight;
 
-	console.log('cellCountX: ' + cellCountX);
-	console.log('cellCountY: ' + cellCountY);
-
 	let margin = cellWidth * 0;
-	console.log(margin);
-
-	// create a grid of cells that fill the sreen and is relative to the width and height of the screen
-	//noiseDetail(5, 0.55);
 
 	// calculate the time it takes to create the grid
 	let t0 = performance.now();
@@ -61,6 +52,7 @@ function setup() {
 	strokeWeight(bleed);
 	rect(width / 2, height / 2, width - bleed, height - bleed);
 }
+
 function* drawNoise(cellCountX, cellCountY, cellWidth, cellHeight, margin, inc, palette) {
 	let count = 0;
 	let draw_every = 3;
@@ -87,11 +79,10 @@ function* drawNoise(cellCountX, cellCountY, cellWidth, cellHeight, margin, inc, 
 }
 
 function draw() {
+	noLoop();
 	/* 	inc = 0.002;
 
 	for (let i = 0; i < cells.length; i++) {
 		cells[i].display(inc);
 	} */
-
-	noLoop();
 }

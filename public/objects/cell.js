@@ -26,6 +26,9 @@ class Cell {
 
 		this.createNoise();
 
+		//noFill();
+		//stroke(0, 0, 100, 100);
+		//strokeWeight(5);
 		noStroke();
 		fill(this.hue, this.sat, this.bright, 100);
 		rect(this.x, this.y, this.w, this.h);
@@ -37,7 +40,7 @@ class Cell {
 	createNoise() {
 		let nx = this.x,
 			ny = this.y,
-			a = 900.5,
+			a = 8.5,
 			sc = 0.002,
 			dx,
 			dy;
@@ -60,7 +63,7 @@ class Cell {
 		//this.noise = noise(this.xoff, this.yoff);
 		//this.index = int(map(this.noise, 0.2, 0.8, 0, this.biomes.length - 1, true));
 
-		this.noise = n3(nx, ny, 0.005, 2);
+		this.noise = n3(nx, ny, 0.001, 3);
 		this.index = int(map(this.noise, -0.5, 0.5, 0, this.biomes.length - 1, true));
 
 		this.hue = this.biomes[this.index][0];

@@ -112,18 +112,43 @@ let palettes = {
 		8: [182, 24, 86],
 		9: [105, 5, 98],
 	},
+	grayscale: {
+		1: [0, 0, 100],
+		2: [0, 0, 0],
+		3: [0, 0, 10],
+		4: [0, 0, 90],
+		5: [0, 0, 20],
+		6: [0, 0, 80],
+		7: [0, 0, 30],
+		8: [0, 0, 70],
+		9: [70, 80, 40],
+		10: [60, 60, 60],
+		11: [50, 100, 50],
+		12: [200, 80, 80],
+		13: [50, 100, 50],
+		14: [60, 60, 60],
+		15: [70, 80, 40],
+		16: [0, 0, 70],
+		17: [0, 0, 30],
+		18: [0, 0, 80],
+		19: [0, 0, 20],
+		20: [0, 0, 90],
+		21: [0, 0, 10],
+		22: [0, 0, 100],
+		23: [0, 0, 0],
+		24: [0, 0, 100],
+	},
 };
 
 // choose a random key from the palettes object
 // chose a random key from the key array using math.random
 let themeArray = Object.keys(palettes);
-let randomThemeKey = themeArray[5];
+let randomThemeKey = themeArray[8];
 
 // chose a palette randomly from the palettes object
 let chosenPalette = palettes[randomThemeKey];
 // create an array of the chosen palette colors withouth the name
 let paletteArr = Object.values(palettes[randomThemeKey]);
-console.log(paletteArr);
 // chose a random number of mountains between 2 and 5
 
 window.$fxhashFeatures = {
