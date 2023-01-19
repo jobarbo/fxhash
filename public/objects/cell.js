@@ -40,7 +40,7 @@ class Cell {
 	createNoise() {
 		let nx = this.x,
 			ny = this.y,
-			a = 8.5,
+			a = 800.5,
 			sc = 0.002,
 			dx,
 			dy;

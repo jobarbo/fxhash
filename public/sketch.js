@@ -19,7 +19,7 @@ function setup() {
 
 	// have a cell width unit that is relative to the width of the screen
 	// cellWidth is always equal to 1 pixel relative to the width of the screen
-	let cellWidth = 20;
+	let cellWidth = 1;
 	let cellHeight = cellWidth;
 
 	//	calculates the number of cells that can fit in the screen according to cellWidth and cellHeight
