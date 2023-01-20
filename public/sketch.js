@@ -6,7 +6,7 @@ let ballsNum = 1000;
 let rectNum = 1000;
 
 function setup() {
-	createCanvas(864, 1080);
+	createCanvas(1080, 1080);
 	pixelDensity(3);
 	colorMode(HSB, 360, 100, 100, 100);
 	rectMode(CENTER);
@@ -14,15 +14,15 @@ function setup() {
 	console.log(gui);
 
 	let bgHue = random(360);
-	background(bgHue, 10, 10);
+	background(bgHue, 0, 10);
 	let ballHue = (bgHue + 180) % 360;
 	for (i = 0; i < ballsNum; i++) {
-		balls[i] = new Ball_mc(ballHue, i);
+		balls[i] = new Noise_2d(ballHue, i);
 	}
 
 	let rectHue = random(360);
 	for (i = 0; i < rectNum; i++) {
-		rectangles[i] = new Rect_mc(rectHue, i);
+		rectangles[i] = new Noise_1d(rectHue, i);
 	}
 
 	addRectFolder(rectHue);
@@ -91,16 +91,19 @@ function addRectFolder(rectHue) {
 			rectangles[i].yHeightMin = value;
 		}
 	});
-	rectFolder.add(rectDynamicVar, 'size', 0, 10).onFinishChange(function (value) {
-		for (i = 0; i < rectRange; i++) {
-			rectangles[i].size = value;
-			if (rectangles[i].size < 0) {
-				rectangles[i].size = 0;
-			}
-		}
-	});
 	rectFolder
-		.add(rectDynamicVar, 'speedX', 0, 10)
+		.add(rectDynamicVar, 'size', 0, 10)
+		.step(0.1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < rectRange; i++) {
+				rectangles[i].size = value;
+				if (rectangles[i].size < 0) {
+					rectangles[i].size = 0;
+				}
+			}
+		});
+	rectFolder
+		.add(rectDynamicVar, 'speedX', -30, 30)
 		.step(0.1)
 		.onFinishChange(function (value) {
 			for (i = 0; i < rectRange; i++) {
@@ -108,7 +111,7 @@ function addRectFolder(rectHue) {
 			}
 		});
 	rectFolder
-		.add(rectDynamicVar, 'speedY', 0, 10)
+		.add(rectDynamicVar, 'speedY', -30, 30)
 		.step(0.1)
 		.onFinishChange(function (value) {
 			for (i = 0; i < rectRange; i++) {
@@ -143,15 +146,15 @@ function addRectFolder(rectHue) {
 	});
 
 	rectFolder
-		.add(rectDynamicVar, 'xoffIteration', -0.1, 0.1)
-		.step(0.0001)
+		.add(rectDynamicVar, 'xoffIteration', -0.3, 0.3)
+		.step(0.001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < rectRange; i++) {
 				rectangles[i].xoffIteration = value;
 			}
 		});
 	rectFolder
-		.add(rectDynamicVar, 'yoffIteration', -0.1, 0.1)
+		.add(rectDynamicVar, 'yoffIteration', -0.3, 0.3)
 		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < rectRange; i++) {
@@ -168,8 +171,8 @@ function addBallFolder(ballHue) {
 		speedX: 0,
 		speedY: 0,
 		hue: ballHue,
-		saturation: 10,
-		brightness: 80,
+		saturation: 0,
+		brightness: 100,
 		alpha: 0,
 		xoffIteration: 0,
 		yoffIteration: 0,
@@ -212,7 +215,7 @@ function addBallFolder(ballHue) {
 		}
 	});
 
-	ballFolder.add(ballDynamicVar, 'size', -10, 10).onFinishChange(function (value) {
+	ballFolder.add(ballDynamicVar, 'size', 0, 10).onFinishChange(function (value) {
 		for (i = 0; i < ballRange; i++) {
 			balls[i].size = value;
 			if (balls[i].size < 0) {
@@ -221,7 +224,7 @@ function addBallFolder(ballHue) {
 		}
 	});
 	ballFolder
-		.add(ballDynamicVar, 'speedX', 0, 50)
+		.add(ballDynamicVar, 'speedX', -50, 50)
 		.step(0.1)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -229,7 +232,7 @@ function addBallFolder(ballHue) {
 			}
 		});
 	ballFolder
-		.add(ballDynamicVar, 'speedY', 0, 50)
+		.add(ballDynamicVar, 'speedY', -50, 50)
 		.step(0.1)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -269,7 +272,7 @@ function addBallFolder(ballHue) {
 			}
 		});
 	ballFolder
-		.add(ballDynamicVar, 'xoffIteration', -0.1, 0.1)
+		.add(ballDynamicVar, 'xoffIteration', -0.3, 0.3)
 		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -277,7 +280,7 @@ function addBallFolder(ballHue) {
 			}
 		});
 	ballFolder
-		.add(ballDynamicVar, 'yoffIteration', -0.1, 0.1)
+		.add(ballDynamicVar, 'yoffIteration', -0.3, 0.3)
 		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -286,7 +289,7 @@ function addBallFolder(ballHue) {
 		});
 }
 
-class Ball_mc {
+class Noise_2d {
 	constructor(hue, id) {
 		this.xoffIteration = 0;
 		this.yoffIteration = 0;
@@ -298,12 +301,11 @@ class Ball_mc {
 		this.xWidthMin = 0;
 		this.yHeightMax = height;
 		this.yHeightMin = 0;
-
 		this.speedX = 0;
 		this.speedY = 0;
 		this.size = 1;
 		this.hue = hue;
-		this.saturation = 10;
+		this.saturation = 0;
 		this.brightness = 80;
 		this.alpha = 0;
 	}
@@ -342,7 +344,7 @@ class Ball_mc {
 	}
 }
 
-class Rect_mc {
+class Noise_1d {
 	constructor(hue, id) {
 		this.xoffIteration = 0;
 		this.yoffIteration = 0;
@@ -368,12 +370,12 @@ class Rect_mc {
 	display() {
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
 		noStroke();
-		rect(this.x, this.y, this.size);
+		ellipse(this.x, this.y, this.size);
 	}
 
 	move() {
-		this.x += map(noise(this.xoff, this.yoff2), 0, 1, -this.speedX, this.speedX);
-		this.y += map(noise(this.yoff, this.xoff2), 0, 1, -this.speedY, this.speedY);
+		this.x += map(noise(this.xoff), 0, 1, -this.speedX, this.speedX);
+		this.y += map(noise(this.yoff), 0, 1, -this.speedY, this.speedY);
 
 		this.xoff += this.xoffIteration;
 		this.yoff += this.yoffIteration;
