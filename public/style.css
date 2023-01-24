@@ -21,7 +21,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	--bodymargin: 10px;
-	--min: min(100vh, 100vw);
+	--min: min(100vw);
 	--hContent: var(--min);
 	--wContent: var(--min);
 }
