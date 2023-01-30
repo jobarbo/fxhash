@@ -19,7 +19,7 @@ function setup() {
 
 	let margin = 200;
 
-	//blendMode(HARD_LIGHT);
+	blendMode(MULTIPLY);
 
 	let balls = [];
 	let ballNum = random([1, 2, 5]);
