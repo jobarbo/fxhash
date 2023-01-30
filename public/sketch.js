@@ -61,30 +61,46 @@ class Sun {
 }
 
 class Ocean {
-	constructor() {
-		this.xoff = 0;
-		this.yoff = 1;
-		this.offX = 200;
-		this.offY = 200;
-		this.x = -this.offX;
-		this.y = height / 2;
-		this.pointNum = 100;
-		this.spacing = width / this.pointNum;
+	constructor(mtnY, topY, baseY) {
+		this.y = mtnY;
+		this.baseY = baseY;
+		this.topY = topY;
+		this.yoff = random(1000000);
+		this.xoff = random(1000000);
+		this.iteration = n3(this.xoff, this.yoff, 2.5, 1);
+		this.multiplier = random(10, 20);
 	}
 
 	display() {
-		fill(200, 50, 100, 100);
+		// draw a mountain using multiple vertices
+		strokeWeight(15);
+		stroke(0, 0, 10, 100);
+		fill(0, 0, 10, 100);
 		beginShape();
-		curveVertex(-this.offX, height + this.offY);
-		curveVertex(-this.offX, height / 2);
-		for (let i = 0; i < this.pointNum; i++) {
-			this.xoff += 0.001;
-			let x = this.x + this.spacing * i;
-			let y = map(noise(this.xoff), 0, 1, height / 2, height / 2 + 100);
-			curveVertex(x, y);
+
+		vertex(-100, this.baseY);
+		vertex(-100, this.y);
+		for (let i = 0; i < width; i += 10) {
+			this.iteration = n3(this.xoff, this.yoff, 10.005, 1) * this.multiplier;
+			this.x = i;
+			this.y += this.iteration;
+			this.yoff += 0.01;
+			this.xoff += 0.01;
+			if (this.y >= this.baseY) {
+				// leave the loop if the mountain reaches the base
+				console.log('break', `this.y: ${this.y}`, `this.baseY: ${this.baseY}`);
+				console.log(this.iteration);
+				this.y = this.baseY;
+				vertex(i, this.y);
+			} else {
+				vertex(i, this.y);
+				console.log(this.iteration);
+			}
 		}
-		curveVertex(width + this.offX, height / 2);
-		curveVertex(width + this.offX, height + this.offY);
+
+		vertex(width + 100, this.y);
+		vertex(width + 100, this.baseY);
+
 		endShape(CLOSE);
 	}
 }
