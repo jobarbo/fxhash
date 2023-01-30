@@ -89,6 +89,39 @@ function setup() {
 	}
 }
 
+function createTexture(hue) {
+	let texture = [];
+
+	for (let index = 0; index < 2000; index++) {
+		const rdnX = random(0, width);
+		const rdnY = random(0, height);
+		const rdnW1 = random(width / 160, width / 6);
+		texture[index] = new Smudge(rdnX, rdnY, rdnW1, hue);
+	}
+	let sketch_texture = drawTexture(texture);
+	let interval = setInterval(() => {
+		let result = sketch_texture.next();
+		if (result.done) {
+			clearInterval(interval);
+		}
+	}, 0);
+}
+
+function* drawTexture(texture) {
+	let count = 0;
+	let draw_every = 500;
+	for (let index = 0; index < texture.length; index++) {
+		for (let j = 0; j < 10500; j++) {
+			texture[index].display();
+			count++;
+			if (count > draw_every) {
+				count = 0;
+				yield;
+			}
+		}
+	}
+}
+
 class Ball {
 	constructor(x, y, r, colorArr) {
 		this.x = x;
