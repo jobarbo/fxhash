@@ -87,6 +87,10 @@ function setup() {
 		rects[i] = rect;
 		rects[i].draw();
 	}
+
+	blendMode(BLEND);
+
+	createTexture(0);
 }
 
 function createTexture(hue) {
@@ -95,7 +99,7 @@ function createTexture(hue) {
 	for (let index = 0; index < 2000; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
-		const rdnW1 = random(width / 160, width / 6);
+		const rdnW1 = random(width / 8, width / 2);
 		texture[index] = new Smudge(rdnX, rdnY, rdnW1, hue);
 	}
 	let sketch_texture = drawTexture(texture);
