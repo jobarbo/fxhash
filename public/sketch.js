@@ -25,10 +25,41 @@ function setup() {
 	let ocean = new Ocean(seaY, seaTopY, seaBaseY);
 	ocean.display();
 
-	createTextures();
+	createTexture(0);
 }
 
-function createTextures() {}
+function createTexture(hue) {
+	let texture = [];
+
+	for (let index = 0; index < 2000; index++) {
+		const rdnX = random(0, width);
+		const rdnY = random(0, height);
+		const rdnW1 = random(width / 8, width / 2);
+		texture[index] = new Smudge(rdnX, rdnY, rdnW1, hue);
+	}
+	let sketch_texture = drawTexture(texture);
+	let interval = setInterval(() => {
+		let result = sketch_texture.next();
+		if (result.done) {
+			clearInterval(interval);
+		}
+	}, 0);
+}
+
+function* drawTexture(texture) {
+	let count = 0;
+	let draw_every = 500;
+	for (let index = 0; index < texture.length; index++) {
+		for (let j = 0; j < 10500; j++) {
+			texture[index].display();
+			count++;
+			if (count > draw_every) {
+				count = 0;
+				yield;
+			}
+		}
+	}
+}
 
 class Sun {
 	constructor(x, y, r) {
@@ -38,8 +69,8 @@ class Sun {
 		this.pyArr = [];
 		this.r = r;
 		this.randomArr = [];
-		this.numPoints = 10;
-		this.maxRan = 200 / this.numPoints;
+		this.numPoints = 50;
+		this.maxRan = 100 / this.numPoints;
 		this.angleInc = TWO_PI / this.numPoints;
 	}
 
