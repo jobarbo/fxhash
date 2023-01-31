@@ -13,15 +13,22 @@ function setup() {
 
 	for (let i = 0; i < numSuns; i++) {
 		let r = 200;
-		let x = random(margin + r, width - margin + r);
-		let y = random(margin + r, height / 2 - margin + r);
+		let x = random(margin + r, width - margin - r);
+		let y = random(margin + r, height / 1.1 - margin - r);
 		suns[i] = new Sun(x, y, r);
 		suns[i].display();
 	}
 
-	let ocean = new Ocean();
+	let seaBaseY = height;
+	let seaTopY = seaBaseY - height / 3;
+	let seaY = random(seaTopY - 100, seaTopY + 100);
+	let ocean = new Ocean(seaY, seaTopY, seaBaseY);
 	ocean.display();
+
+	createTextures();
 }
+
+function createTextures() {}
 
 class Sun {
 	constructor(x, y, r) {
@@ -31,8 +38,8 @@ class Sun {
 		this.pyArr = [];
 		this.r = r;
 		this.randomArr = [];
-		this.numPoints = 6;
-		this.maxRan = 2;
+		this.numPoints = 10;
+		this.maxRan = 200 / this.numPoints;
 		this.angleInc = TWO_PI / this.numPoints;
 	}
 
@@ -67,34 +74,32 @@ class Ocean {
 		this.topY = topY;
 		this.yoff = random(1000000);
 		this.xoff = random(1000000);
-		this.iteration = n3(this.xoff, this.yoff, 2.5, 1);
-		this.multiplier = random(10, 20);
+		this.iteration = n3(this.xoff, this.yoff, 0.01, 1);
+		this.multiplier = random(-13, 13);
 	}
 
 	display() {
-		// draw a mountain using multiple vertices
+		// draw a ocean using multiple vertices
 		strokeWeight(15);
-		stroke(0, 0, 10, 100);
-		fill(0, 0, 10, 100);
+		stroke(0, 0, 10, 0);
+		fill(200, 70, 80, 100);
 		beginShape();
 
 		vertex(-100, this.baseY);
 		vertex(-100, this.y);
-		for (let i = 0; i < width; i += 10) {
-			this.iteration = n3(this.xoff, this.yoff, 10.005, 1) * this.multiplier;
+		for (let i = 0; i < width; i += 30) {
+			this.iteration = n3(this.xoff, this.yoff, 11.1, 1) * this.multiplier;
 			this.x = i;
 			this.y += this.iteration;
 			this.yoff += 0.01;
 			this.xoff += 0.01;
 			if (this.y >= this.baseY) {
-				// leave the loop if the mountain reaches the base
-				console.log('break', `this.y: ${this.y}`, `this.baseY: ${this.baseY}`);
-				console.log(this.iteration);
+				// leave the loop if the ocean reaches the base
+
 				this.y = this.baseY;
 				vertex(i, this.y);
 			} else {
 				vertex(i, this.y);
-				console.log(this.iteration);
 			}
 		}
 
@@ -102,5 +107,7 @@ class Ocean {
 		vertex(width + 100, this.baseY);
 
 		endShape(CLOSE);
+
+		// display
 	}
 }
