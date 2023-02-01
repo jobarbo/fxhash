@@ -28,6 +28,13 @@ function setup() {
 
 	addN1dFolder(n1dHue);
 	addN2dFolder(n2dHue);
+
+	// add a button that will trigger a function that will clear the canvas
+	gui.add({clearCanvas: () => clearCanvas(bgHue)}, 'clearCanvas');
+}
+
+function clearCanvas(bgHue) {
+	background(bgHue, 0, 10);
 }
 
 function draw() {
@@ -391,6 +398,7 @@ class Noise_2d {
 		let xIteration = map(noise(this.xoff, this.y), 0, 1, -this.speedX, this.speedX, true);
 		let yIteration = map(noise(this.yoff, this.x), 0, 1, -this.speedY, this.speedY, true);
 		let rIteration = map(noise(this.roff), 0, 1, -this.angle, this.angle, true);
+
 		this.x += xIteration;
 		this.y += yIteration;
 		this.rotation += rIteration;
@@ -443,6 +451,7 @@ class Noise_1d {
 		this.rotation = 0;
 		this.angle = 0;
 		this.rCenter = 0;
+		this.rCenterOff = 0;
 	}
 
 	display() {
@@ -451,7 +460,7 @@ class Noise_1d {
 		rotate(this.rotation);
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
 		noStroke();
-		ellipse(this.rCenter, this.rCenter, this.size);
+		ellipse(this.rCenterOff, this.rCenterOff, this.size);
 		pop();
 	}
 
@@ -459,6 +468,7 @@ class Noise_1d {
 		this.x += map(noise(this.xoff), 0, 1, -this.speedX, this.speedX);
 		this.y += map(noise(this.yoff), 0, 1, -this.speedY, this.speedY);
 		this.rotation += map(noise(this.roff), 0, 1, -this.angle, this.angle);
+		this.rCenterOff = random(-this.rCenter, this.rCenter);
 		this.xoff += this.xoffIteration;
 		this.yoff += this.yoffIteration;
 		this.xoff2 += this.xoffIteration;
