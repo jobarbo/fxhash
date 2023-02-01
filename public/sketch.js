@@ -2,14 +2,16 @@ let gui = '';
 
 let balls = [];
 let rectangles = [];
-let ballsNum = 1000;
-let rectNum = 1000;
+let ballsNum = 2000;
+let rectNum = 2000;
 
 function setup() {
-	createCanvas(1080, 1080);
+	createCanvas(2080, 2080);
 	pixelDensity(3);
 	colorMode(HSB, 360, 100, 100, 100);
 	rectMode(CENTER);
+	angleMode(DEGREES);
+	frameRate(10);
 	gui = new dat.GUI();
 	console.log(gui);
 
@@ -103,7 +105,7 @@ function addRectFolder(rectHue) {
 			}
 		});
 	rectFolder
-		.add(rectDynamicVar, 'speedX', -30, 30)
+		.add(rectDynamicVar, 'speedX', 0, 50)
 		.step(0.1)
 		.onFinishChange(function (value) {
 			for (i = 0; i < rectRange; i++) {
@@ -111,7 +113,7 @@ function addRectFolder(rectHue) {
 			}
 		});
 	rectFolder
-		.add(rectDynamicVar, 'speedY', -30, 30)
+		.add(rectDynamicVar, 'speedY', 0, 50)
 		.step(0.1)
 		.onFinishChange(function (value) {
 			for (i = 0; i < rectRange; i++) {
@@ -146,7 +148,7 @@ function addRectFolder(rectHue) {
 	});
 
 	rectFolder
-		.add(rectDynamicVar, 'xoffIteration', -0.3, 0.3)
+		.add(rectDynamicVar, 'xoffIteration', 0, 0.3)
 		.step(0.001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < rectRange; i++) {
@@ -154,7 +156,7 @@ function addRectFolder(rectHue) {
 			}
 		});
 	rectFolder
-		.add(rectDynamicVar, 'yoffIteration', -0.3, 0.3)
+		.add(rectDynamicVar, 'yoffIteration', 0, 0.3)
 		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < rectRange; i++) {
@@ -170,12 +172,15 @@ function addBallFolder(ballHue) {
 		size: 1,
 		speedX: 0,
 		speedY: 0,
+		angle: 0,
+		rCenter: 0,
 		hue: ballHue,
 		saturation: 0,
 		brightness: 100,
 		alpha: 0,
 		xoffIteration: 0,
 		yoffIteration: 0,
+		roffIteration: 0,
 		range: balls.length,
 		xWidthMax: width,
 		xWidthMin: 0,
@@ -224,7 +229,7 @@ function addBallFolder(ballHue) {
 		}
 	});
 	ballFolder
-		.add(ballDynamicVar, 'speedX', -50, 50)
+		.add(ballDynamicVar, 'speedX', 0, 50)
 		.step(0.1)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -232,13 +237,32 @@ function addBallFolder(ballHue) {
 			}
 		});
 	ballFolder
-		.add(ballDynamicVar, 'speedY', -50, 50)
+		.add(ballDynamicVar, 'speedY', 0, 50)
 		.step(0.1)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
 				balls[i].speedY = value;
 			}
 		});
+
+	ballFolder
+		.add(ballDynamicVar, 'angle', 0, 360)
+		.step(1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < ballRange; i++) {
+				balls[i].angle = value;
+			}
+		});
+
+	ballFolder
+		.add(ballDynamicVar, 'rCenter', 0, 100)
+		.step(1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < ballRange; i++) {
+				balls[i].rCenter = value;
+			}
+		});
+
 	ballFolder
 		.add(ballDynamicVar, 'hue', 0, 360)
 		.step(1)
@@ -272,7 +296,7 @@ function addBallFolder(ballHue) {
 			}
 		});
 	ballFolder
-		.add(ballDynamicVar, 'xoffIteration', -0.3, 0.3)
+		.add(ballDynamicVar, 'xoffIteration', 0, 0.3)
 		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
@@ -280,11 +304,19 @@ function addBallFolder(ballHue) {
 			}
 		});
 	ballFolder
-		.add(ballDynamicVar, 'yoffIteration', -0.3, 0.3)
+		.add(ballDynamicVar, 'yoffIteration', 0, 0.3)
 		.step(0.0001)
 		.onFinishChange(function (value) {
 			for (i = 0; i < ballRange; i++) {
 				balls[i].yoffIteration = value;
+			}
+		});
+	ballFolder
+		.add(ballDynamicVar, 'roffIteration', 0, 0.3)
+		.step(0.0001)
+		.onFinishChange(function (value) {
+			for (i = 0; i < ballRange; i++) {
+				balls[i].roffIteration = value;
 			}
 		});
 }
@@ -293,10 +325,12 @@ class Noise_2d {
 	constructor(hue, id) {
 		this.xoffIteration = 0;
 		this.yoffIteration = 0;
+		this.roffIteration = 0;
 		this.x = random(width);
 		this.y = random(height);
 		this.yoff = random(100000);
 		this.xoff = random(100000);
+		this.roff = random(100000);
 		this.xWidthMax = width;
 		this.xWidthMin = 0;
 		this.yHeightMax = height;
@@ -306,24 +340,33 @@ class Noise_2d {
 		this.size = 1;
 		this.hue = hue;
 		this.saturation = 0;
-		this.brightness = 80;
+		this.brightness = 100;
 		this.alpha = 0;
+		this.rotation = 0;
+		this.angle = 0;
+		this.rCenter = 0;
 	}
 
 	display() {
+		push();
+		translate(this.x, this.y);
+		rotate(this.rotation);
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
 		noStroke();
-		ellipse(this.x, this.y, this.size);
+		ellipse(this.rCenter, this.rCenter, this.size);
+		pop();
 	}
 
 	move() {
-		let xIteration = map(noise(this.xoff, this.y), 0, 1, -this.speedX, this.speedX, true);
-		let yIteration = map(noise(this.yoff, this.x), 0, 1, -this.speedY, this.speedY, true);
-
+		let xIteration = map(noise(this.yoff), 0, 1, -this.speedX, this.speedX, true);
+		let yIteration = map(noise(this.xoff), 0, 1, -this.speedY, this.speedY, true);
+		let rIteration = map(noise(this.roff), 0, 1, -this.angle, this.angle, true);
 		this.x += xIteration;
 		this.y += yIteration;
+		this.rotation += rIteration;
 		this.xoff += this.xoffIteration;
 		this.yoff += this.yoffIteration;
+		this.roff += this.roffIteration;
 
 		if (this.hue <= 0) {
 			this.hue = 359;
