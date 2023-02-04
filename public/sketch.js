@@ -2,11 +2,11 @@ let gui = '';
 
 let n2d = [];
 let n1d = [];
-let n2dNum = 2000;
-let n1dNum = 2000;
+let n2dNum = 1000;
+let n1dNum = 1000;
 
 function setup() {
-	createCanvas(1080, 1080);
+	createCanvas(1000, 1000);
 	pixelDensity(3);
 	colorMode(HSB, 360, 100, 100, 100);
 	rectMode(CENTER);
@@ -53,6 +53,7 @@ function addN1dFolder(n1dHue) {
 	let n1dFolder = gui.addFolder('1D noise');
 	let n1dDynamicVar = {
 		size: 1,
+		sWeight: 1,
 		speedX: 0,
 		speedY: 0,
 		angle: 0,
@@ -114,6 +115,17 @@ function addN1dFolder(n1dHue) {
 			}
 		});
 	n1dFolder
+		.add(n1dDynamicVar, 'sWeight', 0, 10)
+		.step(0.1)
+		.onFinishChange(function (value) {
+			for (i = 0; i < n1dRange; i++) {
+				n1d[i].sWeight = value;
+				if (n1d[i].sWeight < 0) {
+					n1d[i].sWeight = 0;
+				}
+			}
+		});
+	n1dFolder
 		.add(n1dDynamicVar, 'speedX', 0, 50)
 		.step(0.1)
 		.onFinishChange(function (value) {
@@ -130,8 +142,8 @@ function addN1dFolder(n1dHue) {
 			}
 		});
 	n1dFolder
-		.add(n1dDynamicVar, 'angle', 0, 360)
-		.step(1)
+		.add(n1dDynamicVar, 'angle', 0, 10)
+		.step(0.01)
 		.onFinishChange(function (value) {
 			for (i = 0; i < n1dRange; i++) {
 				n1d[i].angle = value;
@@ -205,6 +217,7 @@ function addN2dFolder(n2dHue) {
 	let n2dFolder = gui.addFolder('Flawed 2D noise');
 	let n2dDynamicVar = {
 		size: 1,
+		sWeight: 0,
 		speedX: 0,
 		speedY: 0,
 		angle: 0,
@@ -263,6 +276,14 @@ function addN2dFolder(n2dHue) {
 			}
 		}
 	});
+	n2dFolder.add(n2dDynamicVar, 'sWeight', 0, 10).onFinishChange(function (value) {
+		for (i = 0; i < n2dRange; i++) {
+			n2d[i].sWeight = value;
+			if (n2d[i].sWeight < 0) {
+				n2d[i].sWeight = 0;
+			}
+		}
+	});
 	n2dFolder
 		.add(n2dDynamicVar, 'speedX', 0, 50)
 		.step(0.1)
@@ -281,8 +302,8 @@ function addN2dFolder(n2dHue) {
 		});
 
 	n2dFolder
-		.add(n2dDynamicVar, 'angle', 0, 360)
-		.step(1)
+		.add(n2dDynamicVar, 'angle', 0, 10)
+		.step(0.01)
 		.onFinishChange(function (value) {
 			for (i = 0; i < n2dRange; i++) {
 				n2d[i].angle = value;
@@ -373,6 +394,7 @@ class Noise_2d {
 		this.speedX = 0;
 		this.speedY = 0;
 		this.size = 1;
+		this.sWeight = 0;
 		this.hue = hue;
 		this.saturation = 0;
 		this.brightness = 100;
@@ -380,6 +402,7 @@ class Noise_2d {
 		this.rotation = 0;
 		this.angle = 0;
 		this.rCenter = 0;
+		this.rCenterOff = 0;
 	}
 
 	display() {
@@ -387,8 +410,9 @@ class Noise_2d {
 		translate(this.x, this.y);
 		rotate(this.rotation);
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
-		noStroke();
-		ellipse(this.rCenter, this.rCenter, this.size);
+		strokeWeight(this.sWeight);
+		stroke(0, 0, 10, this.alpha);
+		ellipse(this.rCenterOff, this.rCenterOff, this.size);
 		pop();
 	}
 
@@ -398,7 +422,7 @@ class Noise_2d {
 		let xIteration = map(noise(this.xoff, this.y), 0, 1, -this.speedX, this.speedX, true);
 		let yIteration = map(noise(this.yoff, this.x), 0, 1, -this.speedY, this.speedY, true);
 		let rIteration = map(noise(this.roff), 0, 1, -this.angle, this.angle, true);
-
+		this.rCenterOff = map(noise(this.xoff, this.yoff), 0, 1, -this.rCenter, this.rCenter);
 		this.x += xIteration;
 		this.y += yIteration;
 		this.rotation += rIteration;
@@ -459,7 +483,8 @@ class Noise_1d {
 		translate(this.x, this.y);
 		rotate(this.rotation);
 		fill(this.hue, this.saturation, this.brightness, this.alpha);
-		noStroke();
+		strokeWeight(this.sWeight);
+		stroke(0, 0, 10, this.alpha);
 		ellipse(this.rCenterOff, this.rCenterOff, this.size);
 		pop();
 	}
@@ -468,7 +493,7 @@ class Noise_1d {
 		this.x += map(noise(this.xoff), 0, 1, -this.speedX, this.speedX);
 		this.y += map(noise(this.yoff), 0, 1, -this.speedY, this.speedY);
 		this.rotation += map(noise(this.roff), 0, 1, -this.angle, this.angle);
-		this.rCenterOff = random(-this.rCenter, this.rCenter);
+		this.rCenterOff = map(noise(this.xoff2, this.yoff2), 0, 1, -this.rCenter, this.rCenter);
 		this.xoff += this.xoffIteration;
 		this.yoff += this.yoffIteration;
 		this.xoff2 += this.xoffIteration;
