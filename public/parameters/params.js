@@ -4,28 +4,19 @@
 //* COMPOSITION TYPE DEFINITION *//
 // CATEGORISE VARIABILITY INSIDE ARRAYS //
 
-const example_type = [
+const shapeArr = [
 	// name, probability(0-100)
-	['none', 10],
-	['plane', 15],
-	['triangle', 15],
-	['double_triangle', 5],
-	['tetrahedron', 5],
-	['pentagon', 10],
-	['octahedron', 10],
-	['hexahedron', 10],
-	['dodecahedron', 10],
-	['station_h', 3],
-	['station_t', 3],
-	['station_o', 2],
-	['station_d', 2],
+	['ellipse', 10],
+	['lines', 15],
+	['rectangle', 15],
+	['all', 60],
 ];
 
 // all input parameters are optional, they will be chosen at random if not passed into the function
-function generate_composition_params(center_piece_type) {
+function generate_composition_params(shape_type) {
 	// SET DEFAULTS IF NOT PASSED IN
-	if (center_piece_type === undefined) {
-		center_piece_type = weighted_choice(example_type);
+	if (shape_type === undefined) {
+		shape_type = weighted_choice(shapeArr);
 	}
 
 	//* EXCEPTIONS AND OVER-RIDES *//
@@ -33,7 +24,7 @@ function generate_composition_params(center_piece_type) {
 
 	//* PACK PARAMETERS INTO OBJECT *//
 	var composition_params = {
-		center_piece_type: center_piece_type,
+		shape_type: shape_type,
 	};
 
 	//* RETURN PARAMETERS *//

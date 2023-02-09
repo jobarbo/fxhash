@@ -90,7 +90,7 @@ function setup() {
 
 	blendMode(BLEND);
 
-	createTexture(0);
+	//createTexture(0);
 }
 
 function createTexture(hue) {
@@ -105,6 +105,7 @@ function createTexture(hue) {
 	let sketch_texture = drawTexture(texture);
 	let interval = setInterval(() => {
 		let result = sketch_texture.next();
+		console.log(result);
 		if (result.done) {
 			clearInterval(interval);
 		}
@@ -112,10 +113,11 @@ function createTexture(hue) {
 }
 
 function* drawTexture(texture) {
+	console.log('drawTexture');
 	let count = 0;
 	let draw_every = 500;
 	for (let index = 0; index < texture.length; index++) {
-		for (let j = 0; j < 10500; j++) {
+		for (let j = 0; j < 500; j++) {
 			texture[index].display();
 			count++;
 			if (count > draw_every) {
@@ -123,64 +125,5 @@ function* drawTexture(texture) {
 				yield;
 			}
 		}
-	}
-}
-
-class Ball {
-	constructor(x, y, r, colorArr) {
-		this.x = x;
-		this.y = y;
-		this.r = r;
-		this.color = random(colorArr);
-	}
-
-	draw() {
-		fill(this.color);
-		noStroke();
-		ellipse(this.x, this.y, this.r * 2, this.r * 2);
-	}
-}
-
-class Line {
-	constructor(x, y, l, angleArr, colorArr) {
-		this.x = x;
-		this.y = y;
-		this.l = l;
-		this.angles = angleArr;
-		this.color = random(colorArr);
-	}
-
-	draw() {
-		push();
-		translate(this.x, this.y);
-		rotate(radians(random(this.angles)));
-		strokeCap(SQUARE);
-		strokeWeight(random([5, 10, 15, 20, 30]));
-		fill(this.color);
-		stroke(this.color);
-		line(-this.l / 2, 0, this.l / 2, 0);
-		pop();
-	}
-}
-
-class Rect {
-	constructor(x, y, w, h, angleArr, colorArr) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-		this.angles = angleArr;
-		this.color = random(colorArr);
-	}
-
-	draw() {
-		push();
-		translate(this.x, this.y);
-		rotate(radians(random(this.angles)));
-
-		fill(this.color);
-		noStroke();
-		rect(-this.w / 2, -this.h / 2, this.w, this.h);
-		pop();
 	}
 }
