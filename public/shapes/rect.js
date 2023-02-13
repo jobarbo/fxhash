@@ -1,9 +1,10 @@
 class Rect {
-	constructor(x, y, w, h, angleArr, colorArr) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
+	constructor(margin, colorArr, angleArr, bgHue) {
+		this.w = random(100, 400);
+		this.h = this.w / 2;
+		this.x = random(margin, width - margin);
+		this.y = random(margin, height - margin);
+		this.sHue = bgHue;
 		this.angles = angleArr;
 		this.color = random(colorArr);
 	}
@@ -15,6 +16,8 @@ class Rect {
 
 		fill(this.color);
 		noStroke();
+		stroke(this.sHue, 20, 100, 100);
+		strokeWeight(10);
 		rect(-this.w / 2, -this.h / 2, this.w, this.h);
 		pop();
 	}
