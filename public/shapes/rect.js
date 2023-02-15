@@ -6,18 +6,16 @@ class Rect {
 		this.y = random(margin, height - margin);
 		this.sHue = bgHue;
 		this.angles = angleArr;
+		this.rotation = radians(random(this.angles));
 		this.color = random(colorArr);
 	}
 
 	draw() {
 		push();
 		translate(this.x, this.y);
-		rotate(radians(random(this.angles)));
-
+		rotate(this.rotation);
 		fill(this.color);
 		noStroke();
-		stroke(this.sHue, 20, 100, 100);
-		strokeWeight(10);
 		rect(-this.w / 2, -this.h / 2, this.w, this.h);
 		pop();
 	}

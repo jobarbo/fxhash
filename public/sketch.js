@@ -38,14 +38,48 @@ function setup() {
 			}
 		}
 
-		balls[i].draw();
+		//balls[i].draw();
 	}
 
 	let lines = [];
-	let lineNum = random([1, 2, 3]);
-	console.log(lineNum);
+	let lineNum = 2;
 	for (let i = 0; i < lineNum; i++) {
-		lines[i] = new Line(margin, angleArr, colorArr);
+		lines[i] = new Line(margin, colorArr, angleArr, bgHue);
+		console.log(lines[i].points);
+		// check if the rect is overlapping another rect using the points array to check the bounding box of each rect
+		for (let j = 0; j < lines.length; j++) {
+			// check if the bounding box of the two rects are overlapping
+			// if the leftmost point of the first rect is to the right of the rightmost point of the second rect then they are not overlapping
+
+			if (i != j) {
+				if (lines[i].points[0].x > lines[j].points[1].x || lines[j].points[0].x > lines[i].points[1].x) {
+					console.log('the leftmost point of the first rect is to the right of the rightmost point of the second rect');
+					continue;
+				}
+				// if the rightmost point of the first rect is to the left of the leftmost point of the second rect then they are not overlapping
+				if (lines[i].points[1].x < lines[j].points[0].x || lines[j].points[1].x < lines[i].points[0].x) {
+					console.log('the rightmost point of the first rect is to the left of the leftmost point of the second rect');
+					continue;
+				}
+				// if the topmost point of the first rect is below the bottommost point of the second rect then they are not overlapping
+				if (lines[i].points[0].y > lines[j].points[1].y || lines[j].points[0].y > lines[i].points[1].y) {
+					console.log('the topmost point of the first rect is below the bottommost point of the second rect');
+					continue;
+				}
+
+				// if the bottommost point of the first rect is above the topmost point of the second rect then they are not overlapping
+				if (lines[i].points[1].y < lines[j].points[0].y || lines[j].points[1].y < lines[i].points[0].y) {
+					console.log('the bottommost point of the first rect is above the topmost point of the second rect');
+					continue;
+				}
+				// if none of the above conditions are true then the bounding boxes are overlapping
+				console.log('the bounding boxes are overlapping');
+				/* 				lines[i].w = lines[i].w / 2;
+				lines[i].x = random(margin + lines[i].w, width - (lines[i].w + margin));
+				lines[i].y = random(margin + lines[i].w, height - (lines[i].w + margin)); */
+			}
+		}
+
 		lines[i].draw();
 	}
 
@@ -65,12 +99,16 @@ function setup() {
 				j = -1;
 			}
 		}
-		rects[i].draw();
+		//rects[i].draw();
 	}
 
 	blendMode(BLEND);
 
 	//createTexture(0);
+}
+
+function draw() {
+	//console.log(`mouseX: ${mouseX}, mouseY: ${mouseY}`);
 }
 
 function createTexture(hue) {

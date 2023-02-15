@@ -10,8 +10,7 @@ class Ball {
 	draw() {
 		fill(this.color);
 		noStroke();
-		stroke(this.sHue, 20, 100, 100);
-		strokeWeight(10);
+
 		ellipse(this.x, this.y, this.r * 2, this.r * 2);
 	}
 }
