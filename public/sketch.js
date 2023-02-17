@@ -10,13 +10,16 @@ function setup() {
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
 	let colorArr = [
+		color(0, 20, 100),
+		color(0, 20, 100),
+		color(0, 20, 100),
 		color(155, 94, 40),
 		color(40, 80, 100),
 		color(206, 98, 50),
 		color(350, 97, 73),
-		color(0, 0, 10),
-		color(0, 0, 10),
-		color(0, 0, 10),
+		color(0, 20, 10),
+		color(0, 20, 10),
+		color(0, 20, 10),
 	];
 
 	let margin = 200;
@@ -24,7 +27,7 @@ function setup() {
 	blendMode(MULTIPLY);
 
 	let balls = [];
-	let ballNum = random([1, 2, 5]);
+	let ballNum = random([1, 2, 5, 8]);
 	for (let i = 0; i < ballNum; i++) {
 		balls[i] = new Ball(margin, colorArr, bgHue);
 		// check if the ball is overlapped
@@ -38,45 +41,31 @@ function setup() {
 			}
 		}
 
-		//balls[i].draw();
+		balls[i].draw();
 	}
 
 	let lines = [];
-	let lineNum = 2;
+	let lineNum = random([1, 2, 3, 4, 5]);
 	for (let i = 0; i < lineNum; i++) {
 		lines[i] = new Line(margin, colorArr, angleArr, bgHue);
 		console.log(lines[i].points);
 		// check if the rect is overlapping another rect using the points array to check the bounding box of each rect
 		for (let j = 0; j < lines.length; j++) {
 			// check if the bounding box of the two rects are overlapping
-			// if the leftmost point of the first rect is to the right of the rightmost point of the second rect then they are not overlapping
-
+			// if the leftmost point of the first rect bounding box is to the right of the rightmost point of the second rect bounding box then they are not overlapping
 			if (i != j) {
-				if (lines[i].points[0].x > lines[j].points[1].x || lines[j].points[0].x > lines[i].points[1].x) {
-					console.log('the leftmost point of the first rect is to the right of the rightmost point of the second rect');
-					continue;
+				if (
+					lines[i].topLeft.x > lines[j].topRight.x ||
+					lines[i].topRight.x < lines[j].topLeft.x ||
+					lines[i].topLeft.y > lines[j].bottomLeft.y ||
+					lines[i].bottomLeft.y < lines[j].topLeft.y
+				) {
+					return;
+				} else {
+					// replace the line elsewhere on the canvas
+					lines[i].resetLine(margin, colorArr, angleArr, bgHue);
+					j = -1;
 				}
-				// if the rightmost point of the first rect is to the left of the leftmost point of the second rect then they are not overlapping
-				if (lines[i].points[1].x < lines[j].points[0].x || lines[j].points[1].x < lines[i].points[0].x) {
-					console.log('the rightmost point of the first rect is to the left of the leftmost point of the second rect');
-					continue;
-				}
-				// if the topmost point of the first rect is below the bottommost point of the second rect then they are not overlapping
-				if (lines[i].points[0].y > lines[j].points[1].y || lines[j].points[0].y > lines[i].points[1].y) {
-					console.log('the topmost point of the first rect is below the bottommost point of the second rect');
-					continue;
-				}
-
-				// if the bottommost point of the first rect is above the topmost point of the second rect then they are not overlapping
-				if (lines[i].points[1].y < lines[j].points[0].y || lines[j].points[1].y < lines[i].points[0].y) {
-					console.log('the bottommost point of the first rect is above the topmost point of the second rect');
-					continue;
-				}
-				// if none of the above conditions are true then the bounding boxes are overlapping
-				console.log('the bounding boxes are overlapping');
-				/* 				lines[i].w = lines[i].w / 2;
-				lines[i].x = random(margin + lines[i].w, width - (lines[i].w + margin));
-				lines[i].y = random(margin + lines[i].w, height - (lines[i].w + margin)); */
 			}
 		}
 
