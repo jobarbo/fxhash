@@ -1,7 +1,8 @@
 class Line {
 	constructor(margin, colorArr, angleArr, bgHue) {
+		console.log('line created');
 		this.w = random((width - margin) / 3, (width - margin) / 1.5);
-		this.h = random([5, 8, 10, 15]);
+		this.h = random([5, 7, 10]);
 
 		this.x = random(margin, width - margin);
 		this.y = random(margin, height - margin);

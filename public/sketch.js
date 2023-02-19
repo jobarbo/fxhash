@@ -10,16 +10,13 @@ function setup() {
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
 	let colorArr = [
-		color(0, 20, 100),
-		color(0, 20, 100),
-		color(0, 20, 100),
 		color(155, 94, 40),
 		color(40, 80, 100),
 		color(206, 98, 50),
 		color(350, 97, 73),
-		color(0, 20, 10),
-		color(0, 20, 10),
-		color(0, 20, 10),
+		color(0, 0, 10),
+		color(0, 0, 10),
+		color(0, 0, 10),
 	];
 
 	let margin = 200;
@@ -27,7 +24,7 @@ function setup() {
 	blendMode(MULTIPLY);
 
 	let balls = [];
-	let ballNum = random([1, 2, 5, 8]);
+	let ballNum = random([1, 2, 5]);
 	for (let i = 0; i < ballNum; i++) {
 		balls[i] = new Ball(margin, colorArr, bgHue);
 		// check if the ball is overlapped
@@ -60,13 +57,17 @@ function setup() {
 					lines[i].topLeft.y > lines[j].bottomLeft.y ||
 					lines[i].bottomLeft.y < lines[j].topLeft.y
 				) {
-					return;
+					console.log('the boxes are not overlapping');
 				} else {
+					console.log('the boxes are overlapping');
 					// replace the line elsewhere on the canvas
 					lines[i].resetLine(margin, colorArr, angleArr, bgHue);
 					j = -1;
 				}
 			}
+
+			// check if the bounding box of the two rects are overlapping
+			// if the leftmost point of the first rect bounding box is to the right of the rightmost point of the second rect bounding box then they are not overlapping
 		}
 
 		lines[i].draw();
