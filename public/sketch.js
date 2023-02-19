@@ -58,6 +58,7 @@ function setup() {
 					lines[i].bottomLeft.y < lines[j].topLeft.y
 				) {
 					console.log('the boxes are not overlapping');
+					continue;
 				} else {
 					console.log('the boxes are overlapping');
 					// replace the line elsewhere on the canvas
@@ -89,7 +90,7 @@ function setup() {
 				j = -1;
 			}
 		}
-		//rects[i].draw();
+		rects[i].draw();
 	}
 
 	blendMode(BLEND);
