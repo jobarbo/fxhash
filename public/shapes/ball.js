@@ -1,6 +1,6 @@
 class Ball {
 	constructor(margin, colorArr, bgHue) {
-		this.r = random(100, 200);
+		this.r = random(width / 20, width / 5);
 		this.x = random(margin + this.r, width - (this.r + margin));
 		this.y = random(margin + this.r, height - (this.r + margin));
 		this.sHue = bgHue;

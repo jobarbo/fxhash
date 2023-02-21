@@ -26,11 +26,15 @@ let composition_params;
 composition_params = generate_composition_params();
 console.log(composition_params);
 
-var {shape_type} = composition_params; // unpacking parameters we need in main.js and turning them into globals
+var {shape_type, ellipse_num, line_num, rectangle_num, bg_mode} = composition_params; // unpacking parameters we need in main.js and turning them into globals
 
 //* FXHASH FEATURES DEFINITION *//
 window.$fxhashFeatures = {
-	'Shape Type': shape_type,
+	shape_type: shape_type,
+	ellipse_num: ellipse_num,
+	line_num: line_num,
+	rectangle_num: rectangle_num,
+	bg_mode: bg_mode,
 };
 
 //* CONSOLE LOGGING *//
@@ -48,7 +52,20 @@ console.log(
 );
 console.log('%cLa nuit porte... de garage\n', 'font-style: italic; font-family: "Courier New", monospace;');
 
-console.log('%cTOKEN FEATURES', 'color: white; background: #000000;', '\n', 'Center piece type -> ' + shape_type, '\n');
+console.log(
+	'%cTOKEN FEATURES',
+	'color: white; background: #000000;',
+	'\n',
+	'Shape Type -> ' + shape_type,
+	'\n',
+	'Ellipse Number -> ' + ellipse_num,
+	'\n',
+	'Line Number -> ' + line_num,
+	'\n',
+	'Rectangle Number -> ' + rectangle_num,
+	'\n',
+	'Background Mode -> ' + bg_mode
+);
 
 console.log('%cCONTROLS', 'color: white; background: #000000;', '\n', 'cmd + s   : save artwork with date', '\n');
 

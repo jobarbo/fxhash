@@ -1,12 +1,16 @@
+let features = '';
 function setup() {
+	features = window.$fxhashFeatures;
 	pixelDensity(2.0);
-	createCanvas(1000, 1000);
+	createCanvas(1500, 1500);
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
 
 	let bgHue = random([0, 10, 20, 30, 40, 50]);
-	background(bgHue, 10, 100);
+	let bgSat = 10;
+	let bgBri = features.bg_mode === 'light' ? 100 : 10;
+	background(bgHue, bgSat, bgBri);
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
 	let colorArr = [
@@ -19,12 +23,31 @@ function setup() {
 		color(0, 0, 10),
 	];
 
-	let margin = 200;
+	let margin = width / 6;
 
 	blendMode(MULTIPLY);
 
+	// create balls
+	console.log(features.shape_type);
+	// check if features.shape_type substring contains 'ellipse'
+	if (features.shape_type.includes('ellipse')) {
+		createBalls(margin, colorArr, bgHue);
+	}
+	if (features.shape_type.includes('line')) {
+		createLines(margin, colorArr, angleArr, bgHue);
+	}
+	if (features.shape_type.includes('rectangle')) {
+		createRectangles(margin, colorArr, angleArr, bgHue);
+	}
+
+	blendMode(BLEND);
+
+	//createTexture(0);
+}
+
+function createBalls(margin, colorArr, bgHue) {
 	let balls = [];
-	let ballNum = random([1, 2, 5]);
+	let ballNum = features.ellipse_num;
 	for (let i = 0; i < ballNum; i++) {
 		balls[i] = new Ball(margin, colorArr, bgHue);
 		// check if the ball is overlapped
@@ -40,13 +63,15 @@ function setup() {
 
 		balls[i].draw();
 	}
+}
 
+function createLines(margin, colorArr, angleArr, bgHue) {
 	let lines = [];
-	let lineNum = random([1, 2, 3, 4, 5]);
+	let lineNum = features.line_num;
 	for (let i = 0; i < lineNum; i++) {
 		lines[i] = new Line(margin, colorArr, angleArr, bgHue);
-		console.log(lines[i].points);
-		// check if the rect is overlapping another rect using the points array to check the bounding box of each rect
+		// store the number of tries to avoid infinite loop
+		let tries = 0;
 		for (let j = 0; j < lines.length; j++) {
 			// check if the bounding box of the two rects are overlapping
 			// if the leftmost point of the first rect bounding box is to the right of the rightmost point of the second rect bounding box then they are not overlapping
@@ -57,49 +82,64 @@ function setup() {
 					lines[i].topLeft.y > lines[j].bottomLeft.y ||
 					lines[i].bottomLeft.y < lines[j].topLeft.y
 				) {
-					console.log('the boxes are not overlapping');
+					//console.log('the boxes are not overlapping');
 					continue;
 				} else {
-					console.log('the boxes are overlapping');
+					//console.log('the boxes are overlapping');
 					// replace the line elsewhere on the canvas
-					lines[i].resetLine(margin, colorArr, angleArr, bgHue);
-					j = -1;
+					if (tries > 100) {
+						lines[i] = new Line(margin, colorArr, angleArr, bgHue, 25, 2);
+					} else {
+						lines[i] = new Line(margin, colorArr, angleArr, bgHue);
+						j = -1;
+						tries++;
+					}
 				}
 			}
-
-			// check if the bounding box of the two rects are overlapping
-			// if the leftmost point of the first rect bounding box is to the right of the rightmost point of the second rect bounding box then they are not overlapping
 		}
 
 		lines[i].draw();
 	}
+}
 
+function createRectangles(margin, colorArr, angleArr, bgHue) {
 	let rects = [];
-	let rectNum = random([1, 2, 4]);
+	let rectNum = features.rectangle_num;
 	for (let i = 0; i < rectNum; i++) {
 		rects[i] = new Rect(margin, colorArr, angleArr, bgHue);
-
 		// check if the rect is overlapped
 
+		let tries = 0;
 		for (let j = 0; j < rects.length; j++) {
-			let d = dist(rects[i].x, rects[i].y, rects[j].x, rects[j].y);
-			if (d < rects[i].w + rects[j].w && j != i) {
-				rects[i].w = rects[i].w / 2;
-				rects[i].x = random(margin + rects[i].w, width - (rects[i].w + margin));
-				rects[i].y = random(margin + rects[i].w, height - (rects[i].w + margin));
-				j = -1;
+			if (i != j) {
+				// check if the bounding box of the two rects are overlapping
+				// if the leftmost point of the first rect bounding box is to the right of the rightmost point of the second rect bounding box then they are not overlapping
+				if (
+					rects[i].topLeft.x > rects[j].topRight.x ||
+					rects[i].topRight.x < rects[j].topLeft.x ||
+					rects[i].topLeft.y > rects[j].bottomLeft.y ||
+					rects[i].bottomLeft.y < rects[j].topLeft.y
+				) {
+					//console.log('the boxes are not overlapping');
+					continue;
+				} else {
+					console.log('the boxes are overlapping');
+					// replace the rect elsewhere on the canvas
+					console.log('tries: ' + tries);
+					if (tries > 200) {
+						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, 20, 20);
+						j = -1;
+						tries++;
+					} else {
+						rects[i] = new Rect(margin, colorArr, angleArr, bgHue);
+						j = -1;
+						tries++;
+					}
+				}
 			}
 		}
 		rects[i].draw();
 	}
-
-	blendMode(BLEND);
-
-	//createTexture(0);
-}
-
-function draw() {
-	//console.log(`mouseX: ${mouseX}, mouseY: ${mouseY}`);
 }
 
 function createTexture(hue) {
@@ -114,7 +154,6 @@ function createTexture(hue) {
 	let sketch_texture = drawTexture(texture);
 	let interval = setInterval(() => {
 		let result = sketch_texture.next();
-		console.log(result);
 		if (result.done) {
 			clearInterval(interval);
 		}
@@ -122,7 +161,6 @@ function createTexture(hue) {
 }
 
 function* drawTexture(texture) {
-	console.log('drawTexture');
 	let count = 0;
 	let draw_every = 500;
 	for (let index = 0; index < texture.length; index++) {
