@@ -1,6 +1,6 @@
 let circles = [];
-let circleNum = 3000;
-let maxAttempts = circleNum * 20;
+let circleNum = 1000;
+let maxAttempts = circleNum * 10000;
 let count = 0;
 let attempts = 0;
 let margin = 5;
@@ -9,11 +9,11 @@ function setup() {
 	pixelDensity(2.0);
 	createCanvas(1000, 1000);
 	colorMode(HSB, 360, 100, 100, 100);
-	background(20, 5, 5);
+	background(200, 0, 10);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
 
-	margin = width / 15;
+	margin = width / 10;
 
 	// make an array of colors that looks like soap bubbles with mid saturation and high brightness
 	let colors = [];
@@ -29,7 +29,7 @@ function setup() {
 		let circle = new Circle(
 			random(margin, width - margin),
 			random(margin, height - margin),
-			random(width / 5000, width / 10),
+			random(width / 5000, width / 4),
 			random(colors)
 		);
 		let overlapping = false;
@@ -63,21 +63,33 @@ function setup() {
 	}
 }
 function startGenerator() {
-	/* 	let gen = drawCircles();
+	blendMode(OVERLAY);
+	let circleDone = false;
+	let lineDone = false;
+	let gen = drawCircles();
 	setInterval(() => {
-		gen.next();
-	}, 0); */
+		result = gen.next();
+		if (result.done) {
+			circleDone = true;
+		}
+	}, 0);
 
 	let gen2 = drawLines();
 	setInterval(() => {
-		gen2.next();
+		if (circleDone) {
+			result = gen2.next();
+		}
+		// if gen2 is finished, reset blend mode
+		if (result.done) {
+			lineDone = true;
+		}
 	}, 0);
 }
 // generator for drawing the circles
 function* drawCircles() {
 	for (let i = 0; i < circles.length; i += 1) {
 		circles[i].show();
-		if (i % 20 === 0) {
+		if (i % 200 === 0) {
 			yield;
 		}
 	}
@@ -106,13 +118,34 @@ class Circle {
 		this.y = y;
 		this.r = r;
 		this.c = c;
+		this.c.setAlpha(5);
 	}
 
 	show() {
-		strokeWeight(1);
-		noFill();
-		stroke(this.c);
-		ellipse(this.x, this.y, this.r * 2);
+		noStroke();
+		fill(this.c);
+		strokeWeight(this.r / 60);
+		for (let i = 0; i < 10; i += 1) {
+			let randX = random(-this.r / 10, this.r / 10);
+			let randY = random(-this.r / 10, this.r / 10);
+			let randX2 = random(-this.r / 10, this.r / 10);
+			let randY2 = random(-this.r / 10, this.r / 10);
+			let randX3 = random(-this.r / 10, this.r / 10);
+			let randY3 = random(-this.r / 10, this.r / 10);
+
+			noStroke();
+			fill(45, 30, 100, 15);
+			ellipse(this.x + randX, this.y + randY, this.r, this.r);
+			fill(0, 30, 100, 15);
+			stroke(45, 100, 100, 15);
+			ellipse(this.x + randX2, this.y + randY, this.r / 1.05, this.r / 1.05);
+			fill(0, 30, 100, 15);
+			stroke(0, 100, 100, 15);
+			ellipse(this.x + randX2, this.y + randY2, this.r / 1.05, this.r / 1.05);
+			fill(200, 30, 100, 15);
+			stroke(200, 100, 100, 15);
+			ellipse(this.x + randX3, this.y + randY3, this.r / 1.05, this.r / 1.05);
+		}
 	}
 
 	// check if the circle is overlapping with another circle
@@ -132,14 +165,16 @@ class Line {
 	}
 
 	show() {
-		let rand = random(3);
+		let rand = random(4);
 
-		strokeWeight(1);
-		stroke(0, 0, 100, 20);
+		strokeWeight(random(1));
+		stroke(45, 0, 100, 3);
 		line(this.x1, this.y1, this.x2, this.y2);
-		stroke(0, 100, 100, 10);
+		stroke(0, 100, 100, 1);
 		line(this.x1 - rand, this.y1 - rand, this.x2 - rand, this.y2 - rand);
-		stroke(200, 100, 100, 10);
+		stroke(200, 100, 100, 1);
+		line(this.x1 + rand, this.y1 + rand, this.x2 + rand, this.y2 + rand);
+		stroke(45, 100, 100, 1);
 		line(this.x1 + rand, this.y1 + rand, this.x2 + rand, this.y2 + rand);
 	}
 }
