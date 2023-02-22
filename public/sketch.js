@@ -132,12 +132,14 @@ class Line {
 	}
 
 	show() {
-		strokeWeight(0.5);
-		stroke(0, 0, 100, 50);
+		let rand = random(3);
+
+		strokeWeight(1);
+		stroke(0, 0, 100, 20);
 		line(this.x1, this.y1, this.x2, this.y2);
-		stroke(0, 100, 100, 20);
-		line(this.x1 - random(3), this.y1 - random(3), this.x2 - random(3), this.y2 - random(3));
-		stroke(200, 100, 100, 20);
-		line(this.x1 + random(3), this.y1 + random(3), this.x2 + random(3), this.y2 + random(3));
+		stroke(0, 100, 100, 10);
+		line(this.x1 - rand, this.y1 - rand, this.x2 - rand, this.y2 - rand);
+		stroke(200, 100, 100, 10);
+		line(this.x1 + rand, this.y1 + rand, this.x2 + rand, this.y2 + rand);
 	}
 }
