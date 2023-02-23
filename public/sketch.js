@@ -1,6 +1,6 @@
 let circles = [];
-let circleNum = 1000;
-let maxAttempts = circleNum * 10;
+let circleNum = 5000;
+let maxAttempts = circleNum * 2;
 let count = 0;
 let attempts = 0;
 let margin = 5;
@@ -26,7 +26,7 @@ function setup() {
 	// first generate a bunch of random circles and then check if they overlap
 	// if they do, remove them and try again
 	let allCircleGenerated = false;
-	sizeArr = [width / 500, width / 10];
+	sizeArr = [width / 1000, width / 10];
 	while (!allCircleGenerated) {
 		let circle = new Circle(
 			random(margin, width - margin),
@@ -154,72 +154,106 @@ class Line {
 		let nodes = 200;
 		// instead of drawing a straight line, draw a vertex line with vector points(nodes)
 		// displace the nodes with noise
-		let start = createVector(this.x2, this.y2);
-		let end = createVector(this.x1, this.y1);
+		let start = createVector(this.x1, this.y1);
+		let end = createVector(this.x2, this.y2);
 
-		let v = p5.Vector.sub(end, start);
-		v.div(nodes - 1);
-		console.log(v);
-
-		// map the stroke width of the first node according to the difference between radius of the biggest circle and the max radius
-
-		//beginShape();
-
-		let startw = map(this.goodCircle.r, this.minR * 15, this.maxR, 10, 20);
-		let endw = startw / 10;
-		if (startw < 10) {
-			startw = 0;
-			endw = 0;
+		// make a list of points that are on the line
+		// from this.x1, this.y1 to this.x2, this.y2
+		let points = [];
+		for (let i = 0; i < nodes; i += 1) {
+			let x = lerp(start.x, end.x, i / (nodes - 1));
+			let y = lerp(start.y, end.y, i / (nodes - 1));
+			points.push({x: x, y: y});
 		}
-
-		endw = constrain(endw, 0, 10);
-
-		let sw = 0;
 
 		let xoff = random(100000000);
-		let yoff = 1;
+		let yoff = random(100000000);
+		let sw = 1;
 
-		for (let i = 0; i < nodes; i += 1) {
-			let nx = noise(xoff, yoff);
-			let ny = noise(yoff, xoff);
-			let x = start.x + v.x * i + nx * 25;
-			let y = start.y + v.y * i + ny * 25;
-			let n = noise(x / 2, y / 2);
-			let d = dist(x, y, this.x1, this.y1);
+		let noiseArr = [];
 
-			this.s = map(d, 0, this.d / 2, 0, 50);
+		let lastPoint = points[points.length - 1];
+		noFill();
+		beginShape();
+		// first vertex is in the center of the good circle
+		vertex(this.goodCircle.x, this.goodCircle.y);
+		for (let i = 0; i < points.length - 1; i += 1) {
+			this.h = map(this.goodCircle.r, this.minR, this.maxR, 50, 0);
+			this.s += 1;
+			let x = points[i].x;
+			let y = points[i].y;
 
-			// make the stroke width of the first node the biggest and the last node the smallest
-			sw = map(d, 0, this.d, startw, endw);
-			// constrain the stroke width to be never smaller than 0
-			sw = constrain(sw, endw, startw);
-			let rand2 = map(n, 0, 1, -sw / 3, -sw / 100);
-			let rand3 = map(n, 0, 1, sw / 100, sw / 3);
-
-			strokeWeight(sw);
-			stroke(this.h, this.s, this.b1, 20);
-			point(x + rand2, y + rand2);
-			stroke(this.h, this.s, this.b2, 20);
-			point(x + rand3, y + rand3);
-			stroke(this.h, this.s, this.b3, 30);
-			point(x, y);
-			//vertex(x + rand, y + rand);
-
+			// displace the points with noise
+			let nx = map(noise(xoff), 0, 1, -20, 20);
+			let ny = map(noise(yoff), 0, 1, -20, 20);
 			xoff += 0.005;
 			yoff += 0.005;
+
+			noiseArr.push({x: nx, y: ny});
+
+			// draw the line
+			strokeWeight(2);
+
+			stroke(this.h, this.s, this.b1 - 20);
+			vertex(x + nx, y + ny);
+			lastPoint = {x: x + nx, y: y + ny};
 		}
+		// last vertex is in the center of the bad circle
+		vertex(lastPoint.x, lastPoint.y);
+		endShape();
 
-		//endShape();
+		this.s = 0;
+		lastPoint = points[points.length - 1];
+		noFill();
+		beginShape();
+		// first vertex is in the center of the good circle
+		vertex(this.goodCircle.x, this.goodCircle.y);
+		for (let i = 0; i < points.length - 1; i += 1) {
+			this.h = map(this.goodCircle.r, this.minR, this.maxR, 50, 0);
+			this.s += 1;
+			let x = points[i].x;
+			let y = points[i].y;
 
-		/* let rand = random(3);
+			// displace the points with noise
+			let nx = noiseArr[i].x;
+			let ny = noiseArr[i].y;
 
-		strokeWeight(1);
-		stroke(0, 0, 100, 20);
-		line(this.x1, this.y1, this.x2, this.y2);
-		stroke(0, 100, 100, 10);
-		line(this.x1 - rand, this.y1 - rand, this.x2 - rand, this.y2 - rand);
-		stroke(200, 100, 100, 10);
-		line(this.x1 + rand, this.y1 + rand, this.x2 + rand, this.y2 + rand);
-		*/
+			// draw the line
+			strokeWeight(2);
+
+			stroke(this.h, this.s, this.b2 - 20);
+			vertex(x + nx - 1, y + ny - 1);
+			lastPoint = {x: x + nx, y: y + ny};
+		}
+		// last vertex is in the center of the bad circle
+		vertex(lastPoint.x, lastPoint.y);
+		endShape();
+
+		this.s = 0;
+		lastPoint = points[points.length - 1];
+		noFill();
+		beginShape();
+		// first vertex is in the center of the good circle
+		vertex(this.goodCircle.x, this.goodCircle.y);
+		for (let i = 0; i < points.length - 1; i += 1) {
+			this.h = map(this.goodCircle.r, this.minR, this.maxR, 50, 0);
+			this.s += 1;
+			let x = points[i].x;
+			let y = points[i].y;
+
+			// displace the points with noise
+			let nx = noiseArr[i].x;
+			let ny = noiseArr[i].y;
+
+			// draw the line
+			strokeWeight(2);
+
+			stroke(this.h, this.s, this.b3 - 20);
+			vertex(x + nx + 1, y + ny + 1);
+			lastPoint = {x: x + nx, y: y + ny};
+		}
+		// last vertex is in the center of the bad circle
+		vertex(lastPoint.x, lastPoint.y);
+		endShape();
 	}
 }
