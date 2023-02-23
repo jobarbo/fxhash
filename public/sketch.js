@@ -1,5 +1,5 @@
 let circles = [];
-let circleNum = 100000;
+let circleNum = 1000;
 let maxAttempts = circleNum * 10;
 let count = 0;
 let attempts = 0;
