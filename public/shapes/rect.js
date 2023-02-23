@@ -1,7 +1,7 @@
 class Rect {
 	constructor(margin, colorArr, angleArr, bgHue, w = 0, h = 0) {
 		if (w === 0 && h === 0) {
-			this.w = random(width / 20, width / 3);
+			this.w = random(width / 8, width / 3);
 			this.h = random([this.w / 1.5, this.w / 2, this.w / 3, this.w / 5]);
 		} else {
 			this.w = w;
@@ -41,9 +41,12 @@ class Rect {
 		push();
 		translate(this.x, this.y);
 		rotate(this.rotation);
-		fill(this.color);
+
 		noStroke();
+
+		fill(this.color);
 		rect(-this.w / 2, -this.h / 2, this.w, this.h);
+
 		pop();
 	}
 	rotatePoint(point, center, angle) {

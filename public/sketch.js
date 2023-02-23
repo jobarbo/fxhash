@@ -9,26 +9,19 @@ function setup() {
 
 	let bgHue = random([0, 10, 20, 30, 40, 50]);
 	let bgSat = 10;
+	let blndMode =
+		features.bg_mode === 'light'
+			? random([BLEND, DARKEST, DIFFERENCE, EXCLUSION, MULTIPLY])
+			: random([BLEND, EXCLUSION, SCREEN, ADD, DIFFERENCE]);
 	let bgBri = features.bg_mode === 'light' ? 100 : 10;
 	background(bgHue, bgSat, bgBri);
+	let basecolor = features.bg_mode === 'light' ? color(0, 0, 10) : color(0, 10, 100);
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
-	let colorArr = [
-		color(155, 94, 40),
-		color(40, 80, 100),
-		color(206, 98, 50),
-		color(350, 97, 73),
-		color(0, 0, 10),
-		color(0, 0, 10),
-		color(0, 0, 10),
-	];
-
+	let colorArr = [color(155, 94, 40), color(40, 80, 100), color(206, 98, 50), color(350, 97, 73), basecolor];
 	let margin = width / 6;
-
-	blendMode(MULTIPLY);
-
+	blendMode(blndMode);
 	// create balls
-	console.log(features.shape_type);
 	// check if features.shape_type substring contains 'ellipse'
 	if (features.shape_type.includes('ellipse')) {
 		createBalls(margin, colorArr, bgHue);
@@ -39,10 +32,11 @@ function setup() {
 	if (features.shape_type.includes('rectangle')) {
 		createRectangles(margin, colorArr, angleArr, bgHue);
 	}
+	console.log(blndMode);
 
-	blendMode(BLEND);
+	blendMode(DIFFERENCE);
 
-	//createTexture(0);
+	createTexture(0);
 }
 
 function createBalls(margin, colorArr, bgHue) {
@@ -54,7 +48,7 @@ function createBalls(margin, colorArr, bgHue) {
 		for (let j = 0; j < balls.length; j++) {
 			let d = dist(balls[i].x, balls[i].y, balls[j].x, balls[j].y);
 			if (d < balls[i].r + balls[j].r && j != i) {
-				balls[i].r = random(20, 100, 200);
+				balls[i].r = random([20, 100, 150, 200]);
 				balls[i].x = random(margin + balls[i].r, width - (balls[i].r + margin));
 				balls[i].y = random(margin + balls[i].r, height - (balls[i].r + margin));
 				j = -1;
@@ -82,10 +76,8 @@ function createLines(margin, colorArr, angleArr, bgHue) {
 					lines[i].topLeft.y > lines[j].bottomLeft.y ||
 					lines[i].bottomLeft.y < lines[j].topLeft.y
 				) {
-					//console.log('the boxes are not overlapping');
 					continue;
 				} else {
-					//console.log('the boxes are overlapping');
 					// replace the line elsewhere on the canvas
 					if (tries > 100) {
 						lines[i] = new Line(margin, colorArr, angleArr, bgHue, 25, 2);
@@ -120,12 +112,9 @@ function createRectangles(margin, colorArr, angleArr, bgHue) {
 					rects[i].topLeft.y > rects[j].bottomLeft.y ||
 					rects[i].bottomLeft.y < rects[j].topLeft.y
 				) {
-					//console.log('the boxes are not overlapping');
 					continue;
 				} else {
-					console.log('the boxes are overlapping');
 					// replace the rect elsewhere on the canvas
-					console.log('tries: ' + tries);
 					if (tries > 200) {
 						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, 20, 20);
 						j = -1;
@@ -145,7 +134,7 @@ function createRectangles(margin, colorArr, angleArr, bgHue) {
 function createTexture(hue) {
 	let texture = [];
 
-	for (let index = 0; index < 2000; index++) {
+	for (let index = 0; index < 5000; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
 		const rdnW1 = random(width / 8, width / 2);
@@ -162,9 +151,9 @@ function createTexture(hue) {
 
 function* drawTexture(texture) {
 	let count = 0;
-	let draw_every = 500;
+	let draw_every = 5000;
 	for (let index = 0; index < texture.length; index++) {
-		for (let j = 0; j < 500; j++) {
+		for (let j = 0; j < 50; j++) {
 			texture[index].display();
 			count++;
 			if (count > draw_every) {
