@@ -1,5 +1,18 @@
 class Mountains {
-	constructor(ID, color, position, mountainHeight, index, indexMax, satOffset, brightOffset, skyColor, skySatOffset, skyBrightOffset, sunPos) {
+	constructor(
+		ID,
+		color,
+		position,
+		mountainHeight,
+		index,
+		indexMax,
+		satOffset,
+		brightOffset,
+		skyColor,
+		skySatOffset,
+		skyBrightOffset,
+		sunPos
+	) {
 		this.mtnID = ID;
 		this.mtnTotal = indexMax;
 		this.satOffset = satOffset;
@@ -45,6 +58,7 @@ class Mountains {
 	}
 
 	draw() {
+		console.log('draw() called');
 		this.started = true;
 		console.log(`'draw' started for mtnID: ${this.mtnID}`);
 		// make a custom shape using beginShape() and endShape() and noise();
@@ -168,7 +182,13 @@ class Mountains {
 
 			// change the value of yBleed to change the height of the texture with perlins noise
 			let yBleed = map(noise(this.rYoff), 0, 1, 20, this.height * 1.5);
-			let xBleed = map(noise(this.rXoff), 0, 1, $fxhashFeatures.mountain_texture.xBleedMin, $fxhashFeatures.mountain_texture.xBleedMax);
+			let xBleed = map(
+				noise(this.rXoff),
+				0,
+				1,
+				$fxhashFeatures.mountain_texture.xBleedMin,
+				$fxhashFeatures.mountain_texture.xBleedMax
+			);
 			this.rYoff += 0.2;
 			this.rXoff += 0.1;
 			let density = map(this.mtnID, 1, 5, 0.2, 0.05);
