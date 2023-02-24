@@ -32,11 +32,6 @@ function setup() {
 	if (features.shape_type.includes('rectangle')) {
 		createRectangles(margin, colorArr, angleArr, bgHue);
 	}
-	console.log(blndMode);
-
-	blendMode(DIFFERENCE);
-
-	createTexture(0);
 }
 
 function createBalls(margin, colorArr, bgHue) {

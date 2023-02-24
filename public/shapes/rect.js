@@ -15,6 +15,8 @@ class Rect {
 		this.padding = this.w / 5;
 		this.center = createVector(this.x, this.y);
 
+		this.mask = '';
+
 		// store the 4 corners of the rectangle
 		this.left = createVector(this.x - this.w / 2, this.y - this.h / 2);
 		this.right = createVector(this.x + this.w / 2, this.y - this.h / 2);
