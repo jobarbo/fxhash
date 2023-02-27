@@ -37,12 +37,12 @@ const lineNumArr = [
 
 const rectangleNumArr = [
 	// name, probability(0-100)
-	[1, 100],
-	[2, 0],
-	[3, 0],
-	[4, 0],
-	[5, 0],
-	[6, 0],
+	[1, 10],
+	[2, 20],
+	[3, 30],
+	[4, 15],
+	[5, 15],
+	[6, 10],
 ];
 
 const bgModeArr = [

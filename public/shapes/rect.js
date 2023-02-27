@@ -1,12 +1,16 @@
 class Rect {
-	constructor(margin, colorArr, angleArr, bgHue, w = 0, h = 0) {
+	constructor(margin, colorArr, angleArr, bgHue, rectTexture, w = 0, h = 0) {
 		if (w === 0 && h === 0) {
-			this.w = random(width / 8, width / 3);
-			this.h = random([this.w / 1.5, this.w / 2, this.w / 3, this.w / 5]);
+			// make the rectangle a random size but always 16:9 ratio
+			this.ratio = random([1 / 1, 1 / 2, 4 / 3, 16 / 9, 16 / 10]);
+			this.w = random(width / 10, width / 4);
+			this.h = this.w * this.ratio;
 		} else {
+			this.ratio = w / h;
 			this.w = w;
 			this.h = h;
 		}
+		console.log(this.ratio);
 		this.x = random(margin, width - margin);
 		this.y = random(margin, height - margin);
 		this.sHue = bgHue;
@@ -16,6 +20,7 @@ class Rect {
 		this.center = createVector(this.x, this.y);
 
 		this.mask = '';
+		this.texture = rectTexture;
 
 		// store the 4 corners of the rectangle
 		this.left = createVector(this.x - this.w / 2, this.y - this.h / 2);
@@ -37,19 +42,31 @@ class Rect {
 		this.topRight = createVector(this.right.x + this.padding, this.top.y - this.padding);
 		this.bottomLeft = createVector(this.left.x - this.padding, this.bottom.y + this.padding);
 		this.bottomRight = createVector(this.right.x + this.padding, this.bottom.y + this.padding);
+
+		// create a new canvas graphics the same size as the canvas to draw textures on
+		this.mask = createGraphics(width, height);
+		this.mask.pixelDensity(1);
+		this.mask.colorMode(HSB, 360, 100, 100, 100);
+		this.mask.background(this.color);
 	}
 
 	draw() {
-		push();
-		translate(this.x, this.y);
-		rotate(this.rotation);
+		this.mask.push();
+		this.mask.translate(this.x, this.y);
+		this.mask.rotate(this.rotation);
+		this.mask.noStroke();
+		// draw the texture on the mask so that the texture is the same size as the rectangle
+		this.mask.image(this.texture, -this.w / 2, -this.h / 2, this.w, this.h);
 
-		noStroke();
+		this.mask.drawingContext.globalCompositeOperation = 'destination-in';
+		this.mask.noStroke();
 
-		fill(this.color);
-		rect(-this.w / 2, -this.h / 2, this.w, this.h);
+		this.mask.fill(this.color);
+		this.mask.rect(-this.w / 2, -this.h / 2, this.w, this.h);
 
-		pop();
+		this.mask.pop();
+
+		image(this.mask, 0, 0);
 	}
 	rotatePoint(point, center, angle) {
 		// translate point to origin

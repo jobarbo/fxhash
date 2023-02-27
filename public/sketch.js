@@ -1,4 +1,9 @@
 let features = '';
+let rectTexture = '';
+
+function preload() {
+	rectTexture = loadImage('image/texture2.png');
+}
 function setup() {
 	features = window.$fxhashFeatures;
 	pixelDensity(2.0);
@@ -13,14 +18,17 @@ function setup() {
 		features.bg_mode === 'light'
 			? random([BLEND, DARKEST, DIFFERENCE, EXCLUSION, MULTIPLY])
 			: random([BLEND, EXCLUSION, SCREEN, ADD, DIFFERENCE]);
-	let bgBri = features.bg_mode === 'light' ? 100 : 10;
+	let bgBri = features.bg_mode === 'light' ? 100 : 15;
 	background(bgHue, bgSat, bgBri);
+	tint(255, 50);
+	image(rectTexture, 0, 0, width, height);
+	tint(255, 100); // Apply transparency without changing color
 	let basecolor = features.bg_mode === 'light' ? color(0, 0, 10) : color(0, 10, 100);
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
 	let colorArr = [color(155, 94, 40), color(40, 80, 100), color(206, 98, 50), color(350, 97, 73), basecolor];
 	let margin = width / 6;
-	//blendMode(blndMode);
+	blendMode(blndMode);
 	// create balls
 	// check if features.shape_type substring contains 'ellipse'
 	if (features.shape_type.includes('ellipse')) {
@@ -93,7 +101,7 @@ function createRectangles(margin, colorArr, angleArr, bgHue) {
 	let rects = [];
 	let rectNum = features.rectangle_num;
 	for (let i = 0; i < rectNum; i++) {
-		rects[i] = new Rect(margin, colorArr, angleArr, bgHue);
+		rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture);
 		// check if the rect is overlapped
 
 		let tries = 0;
@@ -111,11 +119,11 @@ function createRectangles(margin, colorArr, angleArr, bgHue) {
 				} else {
 					// replace the rect elsewhere on the canvas
 					if (tries > 200) {
-						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, 20, 20);
+						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture, 20, 20);
 						j = -1;
 						tries++;
 					} else {
-						rects[i] = new Rect(margin, colorArr, angleArr, bgHue);
+						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture);
 						j = -1;
 						tries++;
 					}
