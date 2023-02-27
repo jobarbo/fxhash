@@ -2,7 +2,7 @@ class Rect {
 	constructor(margin, colorArr, angleArr, bgHue, rectTexture, w = 0, h = 0) {
 		if (w === 0 && h === 0) {
 			// make the rectangle a random size but always 16:9 ratio
-			this.ratio = random([1 / 1, 1 / 2, 4 / 3, 16 / 9, 16 / 10]);
+			this.ratio = random([1 / 1, 1 / 2, 3 / 4, 9 / 16, 10 / 16]);
 			this.w = random(width / 10, width / 4);
 			this.h = this.w * this.ratio;
 		} else {
@@ -45,7 +45,7 @@ class Rect {
 
 		// create a new canvas graphics the same size as the canvas to draw textures on
 		this.mask = createGraphics(width, height);
-		this.mask.pixelDensity(1);
+		this.mask.pixelDensity(3);
 		this.mask.colorMode(HSB, 360, 100, 100, 100);
 		this.mask.background(this.color);
 	}

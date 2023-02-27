@@ -27,8 +27,9 @@ function setup() {
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
 	let colorArr = [color(155, 94, 40), color(40, 80, 100), color(206, 98, 50), color(350, 97, 73), basecolor];
-	let margin = width / 6;
-	blendMode(blndMode);
+	let margin = width / 5;
+	//blendMode(blndMode);
+
 	// create balls
 	// check if features.shape_type substring contains 'ellipse'
 	if (features.shape_type.includes('ellipse')) {
@@ -82,7 +83,7 @@ function createLines(margin, colorArr, angleArr, bgHue) {
 					continue;
 				} else {
 					// replace the line elsewhere on the canvas
-					if (tries > 100) {
+					if (tries > 1000) {
 						lines[i] = new Line(margin, colorArr, angleArr, bgHue, 25, 2);
 					} else {
 						lines[i] = new Line(margin, colorArr, angleArr, bgHue);
@@ -118,7 +119,7 @@ function createRectangles(margin, colorArr, angleArr, bgHue) {
 					continue;
 				} else {
 					// replace the rect elsewhere on the canvas
-					if (tries > 200) {
+					if (tries > 1000) {
 						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture, 20, 20);
 						j = -1;
 						tries++;
