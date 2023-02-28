@@ -1,7 +1,6 @@
 class Rect {
 	constructor(margin, colorArr, angleArr, bgHue, rectTexture, rectType, w = 0, h = 0) {
 		this.type = rectType;
-		console.log(this.type);
 		if (this.type === 'rectangle') {
 			if (w === 0 && h === 0) {
 				// make the rectangle a random size but always 16:9 ratio
@@ -24,7 +23,6 @@ class Rect {
 				this.h = h;
 			}
 		}
-		console.log(this.ratio);
 		this.x = random(margin, width - margin);
 		this.y = random(margin, height - margin);
 		this.sHue = bgHue;
