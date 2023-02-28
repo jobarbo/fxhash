@@ -10,7 +10,8 @@
     "start": "webpack serve --config ./config/webpack.config.dev.js"
   },
   "dependencies": {
-    "p5": "^1.4.1"
+    "p5": "^1.4.1",
+    "p5.collide2d": "^0.7.3"
   },
   "devDependencies": {
     "adm-zip": "^0.5.9",

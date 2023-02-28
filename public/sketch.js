@@ -20,9 +20,7 @@ function setup() {
 			: random([BLEND, EXCLUSION, SCREEN, ADD, DIFFERENCE]);
 	let bgBri = features.bg_mode === 'light' ? 100 : 15;
 	background(bgHue, bgSat, bgBri);
-	tint(255, 50);
-	image(rectTexture, 0, 0, width, height);
-	tint(255, 100); // Apply transparency without changing color
+	// Apply transparency without changing color
 	let basecolor = features.bg_mode === 'light' ? color(0, 0, 10) : color(0, 10, 100);
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
@@ -135,14 +133,14 @@ function createRectangles(margin, colorArr, angleArr, bgHue) {
 	}
 }
 
-function createTexture(hue) {
+function createTexturehue() {
 	let texture = [];
 
 	for (let index = 0; index < 5000; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
 		const rdnW1 = random(width / 8, width / 2);
-		texture[index] = new Smudge(rdnX, rdnY, rdnW1, hue);
+		texture[index] = new Smudge(rdnX, rdnY, rdnW1, 0);
 	}
 	let sketch_texture = drawTexture(texture);
 	let interval = setInterval(() => {
