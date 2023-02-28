@@ -1,5 +1,6 @@
 let features = '';
 let rectTexture = '';
+let rect_lines = [];
 
 function preload() {
 	rectTexture = loadImage('image/texture2.png');
@@ -33,103 +34,78 @@ function setup() {
 	if (features.shape_type.includes('ellipse')) {
 		createBalls(margin, colorArr, bgHue);
 	}
-	if (features.shape_type.includes('line')) {
-		createLines(margin, colorArr, angleArr, bgHue);
+	// if features.shape_type substring contains 'line' and 'rectangle'
+	if (features.shape_type.includes('line') || features.shape_type.includes('rectangle')) {
+		createRectangles(margin, colorArr, angleArr, bgHue, features.shape_type, features.line_num, features.rectangle_num);
 	}
-	if (features.shape_type.includes('rectangle')) {
-		createRectangles(margin, colorArr, angleArr, bgHue);
-	}
-}
 
-function createBalls(margin, colorArr, bgHue) {
-	let balls = [];
-	let ballNum = features.ellipse_num;
-	for (let i = 0; i < ballNum; i++) {
-		balls[i] = new Ball(margin, colorArr, bgHue);
-		// check if the ball is overlapped
-		for (let j = 0; j < balls.length; j++) {
-			let d = dist(balls[i].x, balls[i].y, balls[j].x, balls[j].y);
-			if (d < balls[i].r + balls[j].r && j != i) {
-				balls[i].r = random([20, 100, 150, 200]);
-				balls[i].x = random(margin + balls[i].r, width - (balls[i].r + margin));
-				balls[i].y = random(margin + balls[i].r, height - (balls[i].r + margin));
-				j = -1;
+	function createBalls(margin, colorArr, bgHue) {
+		let balls = [];
+		let ballNum = features.ellipse_num;
+		for (let i = 0; i < ballNum; i++) {
+			balls[i] = new Ball(margin, colorArr, bgHue);
+			// check if the ball is overlapped
+			for (let j = 0; j < balls.length; j++) {
+				let d = dist(balls[i].x, balls[i].y, balls[j].x, balls[j].y);
+				if (d < balls[i].r + balls[j].r && j != i) {
+					balls[i].r = random([20, 100, 150, 200]);
+					balls[i].x = random(margin + balls[i].r, width - (balls[i].r + margin));
+					balls[i].y = random(margin + balls[i].r, height - (balls[i].r + margin));
+					j = -1;
+				}
 			}
+
+			balls[i].draw();
+		}
+	}
+
+	function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num = 0, rect_num = 0) {
+		let rects = [];
+		let type = rectType;
+		let rectNum = rect_num;
+		let lineNum = line_num;
+
+		// if rectType does not contain 'line'
+		if (!rectType.includes('line')) {
+			lineNum = 0;
+		}
+		// if rectType does not contain 'rectangle'
+		if (!rectType.includes('rectangle')) {
+			rectNum = 0;
 		}
 
-		balls[i].draw();
-	}
-}
+		let totalNum = rectNum + lineNum;
 
-function createLines(margin, colorArr, angleArr, bgHue) {
-	let lines = [];
-	let lineNum = features.line_num;
-	for (let i = 0; i < lineNum; i++) {
-		lines[i] = new Line(margin, colorArr, angleArr, bgHue);
-		// store the number of tries to avoid infinite loop
-		let tries = 0;
-		for (let j = 0; j < lines.length; j++) {
-			// check if the bounding box of the two rects are overlapping
-			// if the leftmost point of the first rect bounding box is to the right of the rightmost point of the second rect bounding box then they are not overlapping
-			if (i != j) {
-				if (
-					lines[i].topLeft.x > lines[j].topRight.x ||
-					lines[i].topRight.x < lines[j].topLeft.x ||
-					lines[i].topLeft.y > lines[j].bottomLeft.y ||
-					lines[i].bottomLeft.y < lines[j].topLeft.y
-				) {
-					continue;
-				} else {
-					// replace the line elsewhere on the canvas
-					if (tries > 1000) {
-						lines[i] = new Line(margin, colorArr, angleArr, bgHue, 25, 2);
-					} else {
-						lines[i] = new Line(margin, colorArr, angleArr, bgHue);
-						j = -1;
-						tries++;
+		for (let i = 0; i < totalNum; i++) {
+			if (i < lineNum) {
+				type = 'line';
+			} else {
+				type = 'rectangle';
+			}
+			rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture, type);
+			// check if the rect is overlapped
+
+			let tries = 0;
+			console.log(rects);
+			let collidingRects = [];
+			for (let j = 0; j < rects.length; j++) {
+				if (i != j) {
+					hit = collidePolyPoly(rects[i].points, rects[j].points, true);
+					if (hit) {
+						// replace the rect elsewhere on the canvas
+						if (tries > 1000) {
+							rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture, type, 25, 2);
+						} else {
+							rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture, type);
+							j = -1;
+							tries++;
+						}
 					}
 				}
 			}
+
+			rects[i].draw();
 		}
-
-		lines[i].draw();
-	}
-}
-
-function createRectangles(margin, colorArr, angleArr, bgHue) {
-	let rects = [];
-	let rectNum = features.rectangle_num;
-	for (let i = 0; i < rectNum; i++) {
-		rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture);
-		// check if the rect is overlapped
-
-		let tries = 0;
-		for (let j = 0; j < rects.length; j++) {
-			if (i != j) {
-				// check if the bounding box of the two rects are overlapping
-				// if the leftmost point of the first rect bounding box is to the right of the rightmost point of the second rect bounding box then they are not overlapping
-				if (
-					rects[i].topLeft.x > rects[j].topRight.x ||
-					rects[i].topRight.x < rects[j].topLeft.x ||
-					rects[i].topLeft.y > rects[j].bottomLeft.y ||
-					rects[i].bottomLeft.y < rects[j].topLeft.y
-				) {
-					continue;
-				} else {
-					// replace the rect elsewhere on the canvas
-					if (tries > 1000) {
-						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture, 20, 20);
-						j = -1;
-						tries++;
-					} else {
-						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture);
-						j = -1;
-						tries++;
-					}
-				}
-			}
-		}
-		rects[i].draw();
 	}
 }
 
