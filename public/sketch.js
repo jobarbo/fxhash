@@ -29,7 +29,7 @@ function setup() {
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
 	let colorArr = [color(155, 94, 40), color(40, 80, 100), color(206, 98, 50), color(350, 97, 73), basecolor];
-	let margin = width / 5;
+	let margin = width / 8;
 	//blendMode(blndMode);
 
 	// if features.shape_type substring contains 'line' and 'rectangle'
