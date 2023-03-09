@@ -85,9 +85,7 @@ class Rect {
 		let texture = [];
 		// make texture num relative to the size of the rectangle (the width and the height)
 		let texture_num = Math.floor(this.w * (this.h / 1000) * 100);
-		console.log(`height: ${this.h}`);
-		console.log(`width: ${this.w}`);
-		console.log(`texture_num: ${texture_num}`);
+
 		this.mask.push();
 		this.mask.translate(this.x, this.y);
 		this.mask.rotate(this.rotation);
@@ -111,8 +109,6 @@ class Rect {
 				this.mask.rect(-this.w / 2, -this.h / 2, this.w, this.h);
 
 				this.mask.pop();
-				// draw a line on each side of the rectangle
-				this.drawBorder();
 
 				image(this.mask, 0, 0);
 
@@ -134,15 +130,5 @@ class Rect {
 				}
 			}
 		}
-	}
-
-	drawBorder() {
-		// draw a line on each side of the rectangle
-		stroke(0, 0, 100);
-		strokeWeight(2);
-		line(this.top_left.x, this.top_left.y, this.bottom_left.x, this.bottom_left.y);
-		line(this.top_right.x, this.top_right.y, this.bottom_right.x, this.bottom_right.y);
-		line(this.top_left.x, this.top_left.y, this.top_right.x, this.top_right.y);
-		line(this.bottom_left.x, this.bottom_left.y, this.bottom_right.x, this.bottom_right.y);
 	}
 }
