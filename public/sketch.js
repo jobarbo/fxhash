@@ -101,7 +101,7 @@ function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num 
 		} else {
 			type = 'rectangle';
 		}
-		rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture, type);
+		rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type);
 		// check if the rect is overlapped
 
 		let tries = 0;
@@ -111,9 +111,9 @@ function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num 
 				if (hit) {
 					// replace the rect elsewhere on the canvas
 					if (tries > 1000) {
-						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture, type, 25, 2);
+						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, 25, 2);
 					} else {
-						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, rectTexture, type);
+						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type);
 						j = -1;
 						tries++;
 					}

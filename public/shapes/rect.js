@@ -1,5 +1,5 @@
 class Rect {
-	constructor(margin, colorArr, angleArr, bgHue, rectTexture, rectType, w = 0, h = 0) {
+	constructor(margin, colorArr, angleArr, bgHue, rectType, w = 0, h = 0) {
 		this.type = rectType;
 		if (this.type === 'rectangle') {
 			if (w === 0 && h === 0) {
@@ -32,7 +32,7 @@ class Rect {
 		this.center = createVector(this.x, this.y);
 
 		this.mask = '';
-		this.texture = rectTexture;
+		this.textureDone = false;
 
 		// store the 4 corners of the rectangle
 		this.top_left = createVector(this.x - this.w / 2, this.y - this.h / 2);
@@ -58,18 +58,12 @@ class Rect {
 		this.mask.translate(this.x, this.y);
 		this.mask.rotate(this.rotation);
 		this.mask.noStroke();
-		// draw the texture on the mask so that the texture is the same size as the rectangle
-		this.mask.image(this.texture, -this.w / 2, -this.h / 2, this.w, this.h);
 
-		this.mask.drawingContext.globalCompositeOperation = 'destination-in';
-		this.mask.noStroke();
+		// run the createTexture function and wait for this.textureDone to be true to continue executing the rest of the code, this is to prevent the rest of the code from running before the texture is done being drawn,
 
-		this.mask.fill(this.color);
-		this.mask.rect(-this.w / 2, -this.h / 2, this.w, this.h);
-
-		this.mask.pop();
-
-		image(this.mask, 0, 0);
+		if (!this.textureDone) {
+			this.createTexture();
+		}
 	}
 
 	rotatePoint(point, center, angle) {
@@ -83,5 +77,48 @@ class Rect {
 		point.add(center);
 
 		return point;
+	}
+
+	createTexture() {
+		let texture = [];
+
+		for (let index = 0; index < 5000; index++) {
+			const rdnX = random(0, width);
+			const rdnY = random(0, height);
+			const rdnW1 = random(width / 8, width / 2);
+			texture[index] = new Texture(rdnX, rdnY, rdnW1, 0, this.mask);
+		}
+		let sketch_texture = drawTexture(texture);
+		let interval = setInterval(() => {
+			let result = sketch_texture.next();
+			if (result.done) {
+				this.textureDone = true;
+				this.mask.drawingContext.globalCompositeOperation = 'destination-in';
+				this.mask.noStroke();
+
+				this.mask.fill(this.color);
+				this.mask.rect(-this.w / 2, -this.h / 2, this.w, this.h);
+
+				this.mask.pop();
+
+				image(this.mask, 0, 0);
+				clearInterval(interval);
+			}
+		}, 0);
+	}
+
+	*drawTexture(texture) {
+		let count = 0;
+		let draw_every = 50;
+		for (let index = 0; index < texture.length; index++) {
+			for (let j = 0; j < 500; j++) {
+				texture[index].display();
+				count++;
+				if (count > draw_every) {
+					count = 0;
+					yield;
+				}
+			}
+		}
 	}
 }
