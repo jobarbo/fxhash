@@ -5,7 +5,7 @@ class Rect {
 			if (w === 0 && h === 0) {
 				// make the rectangle a random size but always 16:9 ratio
 				this.ratio = random([1 / 1, 1 / 2, 3 / 4, 9 / 16, 10 / 16]);
-				this.w = random(width / 10, width / 4);
+				this.w = random(width / 6, width / 3);
 				this.h = this.w * this.ratio;
 			} else {
 				this.ratio = w / h;
@@ -28,7 +28,6 @@ class Rect {
 		this.sHue = bgHue;
 		this.rotation = radians(random(angleArr));
 		this.color = random(colorArr);
-		console.log(brightness(this.color));
 		this.padding = 0;
 		this.center = createVector(this.x, this.y);
 
@@ -84,15 +83,15 @@ class Rect {
 	createTexture() {
 		let texture = [];
 		// make texture num relative to the size of the rectangle (the width and the height)
-		let texture_num = Math.floor(this.w * (this.h / 1000) * 100);
+		let texture_num = Math.floor((this.w / 5) * (this.h / 1000) * 1000);
 
 		this.mask.push();
 		this.mask.translate(this.x, this.y);
 		this.mask.rotate(this.rotation);
 		for (let index = 0; index < texture_num; index++) {
 			let rdnX = random(-this.w, this.w);
-			let rdnY = random(-this.h, this.h);
-			const rdnW1 = random(width / 8, width / 2);
+			let rdnY = random(-this.w, this.w);
+			const rdnW1 = random(this.w / 8, this.w / 2);
 
 			texture[index] = new Texture(this.rotation, 0, 0, this.w, this.h, rdnX, rdnY, rdnW1, this.color, this.mask);
 		}
@@ -119,9 +118,9 @@ class Rect {
 
 	*drawTexture(texture) {
 		let count = 0;
-		let draw_every = 50;
+		let draw_every = 5000;
 		for (let index = 0; index < texture.length; index++) {
-			for (let j = 0; j < 5000; j++) {
+			for (let j = 0; j < 50; j++) {
 				texture[index].display();
 				count++;
 				if (count > draw_every) {

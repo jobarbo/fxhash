@@ -145,7 +145,7 @@ function createTexture() {
 
 function* drawTexture(texture) {
 	let count = 0;
-	let draw_every = 5000;
+	let draw_every = 500;
 	for (let index = 0; index < texture.length; index++) {
 		for (let j = 0; j < 50; j++) {
 			texture[index].display();
