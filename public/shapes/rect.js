@@ -83,7 +83,7 @@ class Rect {
 	createTexture() {
 		let texture = [];
 		// make texture num relative to the size of the rectangle (the width and the height)
-		let texture_num = Math.floor(this.w / 100 + (this.h / 100) * 1000);
+		let texture_num = Math.floor(this.w / 100 + (this.h / 100) * 100);
 		console.log(texture_num);
 
 		this.mask.push();
@@ -121,7 +121,7 @@ class Rect {
 
 	*drawTexture(texture) {
 		let count = 0;
-		let draw_every = 5000;
+		let draw_every = 1;
 		for (let index = 0; index < texture.length; index++) {
 			for (let j = 0; j < 50; j++) {
 				texture[index].display();

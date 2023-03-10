@@ -1,9 +1,9 @@
 class Texture {
 	constructor(rotation, shapeX, shapeY, shapeW, shapeH, rdnX, rdnY, w1, color, mask) {
 		this.mask = mask;
-		this.xoff = 0;
+		this.xoff = 1;
 		this.yoff = 1;
-		this.woff1 = 1;
+		this.woff1 = fxrand(10000000);
 		this.rdnX = rdnX;
 		this.rdnY = rdnY;
 		this.rdnW1 = w1;
@@ -12,10 +12,10 @@ class Texture {
 		this.shapeW = shapeW;
 		this.shapeH = shapeH;
 		this.rotation = rotation;
-		this.mapXLow = this.shapeX - this.shapeW * 2;
-		this.mapXHigh = this.shapeX + this.shapeW * 2;
-		this.mapYLow = this.shapeY - this.shapeH * 2;
-		this.mapYHigh = this.shapeY + this.shapeH * 2;
+		this.mapXLow = this.shapeX - this.shapeW;
+		this.mapXHigh = this.shapeX + this.shapeW;
+		this.mapYLow = this.shapeY - this.shapeH;
+		this.mapYHigh = this.shapeY + this.shapeH;
 		this.hue = hue(color);
 		this.sat = saturation(color);
 		this.bri = brightness(color);
@@ -23,9 +23,9 @@ class Texture {
 	}
 
 	display() {
-		this.xoff += 0.01;
-		this.yoff += 0.001;
-		this.woff1 += 0;
+		this.xoff += this.mask.width / 600000;
+		this.yoff += this.mask.width / 600000;
+		this.woff1 += this.mask.width / 20000000000;
 
 		let w1 = map(noise(this.woff1, this.rdnW1), 0.4, 1, this.mask.width / 5000, this.mask.width / 100, true);
 		let x = map(noise(this.xoff, this.rdnX), 0, 1, this.mapXHigh, this.mapXLow, true);
