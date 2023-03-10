@@ -83,11 +83,13 @@ class Rect {
 	createTexture() {
 		let texture = [];
 		// make texture num relative to the size of the rectangle (the width and the height)
-		let texture_num = Math.floor((this.w / 5) * (this.h / 1000) * 1000);
+		let texture_num = Math.floor(this.w / 100 + (this.h / 100) * 1000);
+		console.log(texture_num);
 
 		this.mask.push();
 		this.mask.translate(this.x, this.y);
 		this.mask.rotate(this.rotation);
+		//this.mask.blendMode(MULTIPLY);
 		for (let index = 0; index < texture_num; index++) {
 			let rdnX = random(-this.w, this.w);
 			let rdnY = random(-this.w, this.w);
@@ -110,6 +112,7 @@ class Rect {
 				this.mask.pop();
 
 				image(this.mask, 0, 0);
+				//this.mask.blendMode(BLEND);
 
 				clearInterval(interval);
 			}
