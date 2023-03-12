@@ -1,11 +1,14 @@
 class Rect {
-	constructor(margin, colorArr, angleArr, bgHue, rectType, rectNum, w = 0, h = 0) {
+	constructor(margin, colorArr, angleArr, bgHue, rectType, rectNum, all_shapes_num, id, w = 0, h = 0) {
 		this.type = rectType;
+		this.margin = margin;
+		this.w_shape = width / (all_shapes_num / 2 + id) - this.margin;
+		console.log(id);
 		if (this.type === 'rectangle') {
 			if (w === 0 && h === 0) {
 				// make the rectangle a random size but always 16:9 ratio
 				this.ratio = random([1 / 1, 1 / 2, 3 / 4, 9 / 16, 10 / 16]);
-				this.w = random(width / 10, width / 2);
+				this.w = this.w_shape;
 				this.h = this.w * this.ratio;
 			} else {
 				this.ratio = w / h;
@@ -30,6 +33,7 @@ class Rect {
 		this.color = random(colorArr);
 		this.padding = 0;
 		this.center = createVector(this.x, this.y);
+		this.margin = margin;
 
 		this.mask = '';
 		this.textureDone = false;
@@ -95,8 +99,8 @@ class Rect {
 	createTexture() {
 		let texture = [];
 		// make texture num relative to the size of the rectangle (the width and the height)
-		let texture_num = int(map(this.w, 0, width, 1, 10));
-		console.log(texture_num);
+		let texture_num = int(map(this.w, 0, width - this.margin, 1, 10, true));
+
 		this.mask.push();
 		this.mask.translate(this.x, this.y);
 		this.mask.rotate(this.rotation);

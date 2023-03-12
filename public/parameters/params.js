@@ -57,17 +57,23 @@ function generate_composition_params(shape_type, ellipse_num, line_num, rectangl
 	if (shape_type === undefined) {
 		shape_type = weighted_choice(shapeArr);
 	}
-
-	if (ellipse_num === undefined) {
+	// if shape_type includes ellipse, choose ellipse_num
+	if (ellipse_num === undefined && shape_type.includes('ellipse')) {
 		ellipse_num = weighted_choice(ellipseNumArr);
+	} else {
+		ellipse_num = 0;
 	}
 
-	if (line_num === undefined) {
+	if (line_num === undefined && shape_type.includes('line')) {
 		line_num = weighted_choice(lineNumArr);
+	} else {
+		line_num = 0;
 	}
 
-	if (rectangle_num === undefined) {
+	if (rectangle_num === undefined && shape_type.includes('rectangle')) {
 		rectangle_num = weighted_choice(rectangleNumArr);
+	} else {
+		rectangle_num = 0;
 	}
 
 	if (bg_mode === undefined) {

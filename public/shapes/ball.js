@@ -1,8 +1,11 @@
 class Ball {
-	constructor(margin, colorArr, bgHue, ballNum, r = 0) {
+	constructor(margin, colorArr, bgHue, ballNum, all_shapes_num, id, r = 0) {
+		this.margin = margin;
+		this.w_shape = width / (all_shapes_num / 2 + id) - this.margin;
+		console.log(id);
 		if (r === 0) {
-			this.r = random(width / 10, width / 3);
-			this.d = this.r * 2;
+			this.d = this.w_shape;
+			this.r = this.d / 2;
 		} else {
 			this.r = r;
 			this.d = this.r * 2;
@@ -11,7 +14,7 @@ class Ball {
 		this.y = random(margin + this.r, height - (this.r + margin));
 		this.sHue = bgHue;
 		this.color = random(colorArr);
-
+		this.margin = margin;
 		this.textureDone = false;
 		this.runs = this.d * 100;
 		this.mask = createGraphics(width, height);
@@ -38,8 +41,7 @@ class Ball {
 	createTexture() {
 		let texture = [];
 		// make texture num relative to the size of the rectangle (the width and the height)
-		let texture_num = int(map(this.d, 0, width, 1, 10, true));
-		console.log(texture_num);
+		let texture_num = int(map(this.d, 0, width - this.margin, 1, 10, true));
 
 		for (let index = 0; index < texture_num; index++) {
 			let rdnX = random(-this.d, this.d);

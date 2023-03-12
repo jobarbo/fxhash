@@ -24,64 +24,84 @@ function setup() {
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
 	let colorArr = [color(155, 94, 40), color(45, 100, 80), color(206, 98, 50), color(350, 97, 73)];
-	let margin = width / 200;
+	let margin = 0;
+
+	// shape_num is the number of shapes that are selected in the feature selection
+	let total_shape_num = features.ellipse_num + features.line_num + features.rectangle_num;
 
 	// create textures
 	//createTexture();
 
 	// if features.shape_type substring contains 'line' and 'rectangle'
 	if (features.shape_type.includes('line') || features.shape_type.includes('rectangle')) {
-		createRectangles(margin, colorArr, angleArr, bgHue, features.shape_type, features.line_num, features.rectangle_num);
+		createRectangles(
+			margin,
+			colorArr,
+			angleArr,
+			bgHue,
+			features.shape_type,
+			features.line_num,
+			features.rectangle_num,
+			total_shape_num
+		);
 	}
 	// create balls
 	// check if features.shape_type substring contains 'ellipse'
 	if (features.shape_type.includes('ellipse')) {
-		createBalls(margin, colorArr, bgHue, rects);
+		createBalls(margin, colorArr, bgHue, rects, total_shape_num);
 	}
 }
 
-function createBalls(margin, colorArr, bgHue, rects) {
+function createBalls(margin, colorArr, bgHue, rects, total_shape_num) {
 	let rectArr = rects;
 	let ballNum = features.ellipse_num;
+	let all_shapes_num = total_shape_num;
+	let balls = [];
+	let hit_ball = false;
+	let hit_rect = false;
 	for (let i = 0; i < ballNum; i++) {
-		let ball = new Ball(margin, colorArr, bgHue, ballNum);
+		let ball = new Ball(margin, colorArr, bgHue, ballNum, all_shapes_num, i + 1);
 		let tries = 0;
-		let collided = true;
-		while (collided && tries < 1000) {
-			collided = false;
-			if (rectArr.length > 0) {
+		while (tries < 500) {
+			hit_ball = false;
+			hit_rect = false;
+			for (let j = 0; j < balls.length; j++) {
+				if (collideCircleCircle(ball.x, ball.y, ball.d, balls[j].x, balls[j].y, balls[j].d)) {
+					hit_ball = true;
+					break;
+				}
+			}
+			if (!hit_ball) {
 				for (let j = 0; j < rectArr.length; j++) {
-					if (collideCirclePoly(ball.x, ball.y, ball.d, rectArr[j].points, true)) {
-						collided = true;
+					if (collideCirclePoly(ball.x, ball.y, ball.d, rectArr[j].points)) {
+						hit_rect = true;
 						break;
 					}
 				}
 			}
-			for (let j = 0; j < i; j++) {
-				if (collideCircleCircle(ball.x, ball.y, ball.d, balls[j].x, balls[j].y, balls[j].d)) {
-					collided = true;
-					break;
-				}
-			}
-			if (collided) {
-				ball = new Ball(margin, colorArr, bgHue, ballNum);
+			if (!hit_ball && !hit_rect) {
+				break;
+			} else {
+				ball = new Ball(margin, colorArr, bgHue, ballNum, all_shapes_num, i + 1);
 				tries++;
 			}
 		}
-		if (tries >= 1000) {
-			ball = new Ball(margin, colorArr, bgHue, ballNum, 25);
+		if (tries >= 500) {
+			ball = new Ball(margin, colorArr, bgHue, ballNum, all_shapes_num, i + 1, 0, 0);
 		}
 		balls.push(ball);
 		ball.draw();
 	}
 }
 
-function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num = 0, rect_num = 0) {
+function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num = 0, rect_num = 0, total_shape_num) {
 	let type = rectType;
 	let rectNum = rect_num;
 	let lineNum = line_num;
 
-	// if rectType does not contain 'line'
+	let all_shapes_num = total_shape_num;
+
+	// if rectType doenpms not contain 'line'
 	if (!rectType.includes('line')) {
 		lineNum = 0;
 	}
@@ -98,7 +118,7 @@ function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num 
 		} else {
 			type = 'rectangle';
 		}
-		rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, rectNum);
+		rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, rectNum, all_shapes_num, i + 1);
 		// check if the rect is overlapped
 
 		let tries = 0;
@@ -108,9 +128,9 @@ function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num 
 				if (hit) {
 					// replace the rect elsewhere on the canvas
 					if (tries > 1000) {
-						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, rectNum, 25, 2);
+						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, rectNum, all_shapes_num, i + 1, 0, 0);
 					} else {
-						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, rectNum);
+						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, rectNum, all_shapes_num, i + 1);
 						j = -1;
 						tries++;
 					}
