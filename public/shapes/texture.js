@@ -1,9 +1,9 @@
 class Texture {
 	constructor(rotation, shapeX, shapeY, shapeW, shapeH, rdnX, rdnY, w1, color, mask) {
 		this.mask = mask;
-		this.xoff = 1;
-		this.yoff = 1;
-		this.woff1 = fxrand(10000000);
+		this.xoff = random(1000000);
+		this.yoff = random(1000000);
+		this.woff1 = random(1000000);
 		this.rdnX = rdnX;
 		this.rdnY = rdnY;
 		this.rdnW1 = w1;
@@ -12,36 +12,47 @@ class Texture {
 		this.shapeW = shapeW;
 		this.shapeH = shapeH;
 		this.rotation = rotation;
-		this.mapXLow = this.shapeX - this.shapeW;
-		this.mapXHigh = this.shapeX + this.shapeW;
-		this.mapYLow = this.shapeY - this.shapeH;
-		this.mapYHigh = this.shapeY + this.shapeH;
+		this.mapXLow = this.shapeX - this.shapeW * 2;
+		this.mapXHigh = this.shapeX + this.shapeW * 2;
+		this.mapYLow = this.shapeY - this.shapeH * 2;
+		this.mapYHigh = this.shapeY + this.shapeH * 2;
 		this.hue = hue(color);
 		this.sat = saturation(color);
 		this.bri = brightness(color);
-		this.alpha = random(0, 20);
+		this.alpha = 20;
+
+		this.xoffInc = width / 300000;
+		this.yoffInc = width / 100000;
+		this.woff1Inc = width / 100;
+
+		this.maxWidth = height / 250;
+		this.minWidth = height / 900;
+
+		this.x = rdnX;
+		this.y = rdnY;
+		this.w = map(noise(this.woff1), 0.6, 1, this.minWidth, this.maxWidth, true);
+
+		this.offset = this.w / 2;
 	}
 
 	display() {
-		this.xoff += this.mask.width / 600000;
-		this.yoff += this.mask.width / 600000;
-		this.woff1 += this.mask.width / 20000000000;
+		this.xoff += this.xoffInc;
+		this.yoff += this.yoffInc;
+		this.woff1 += this.woff1Inc;
 
-		let w1 = map(noise(this.woff1, this.rdnW1), 0.4, 1, this.mask.width / 5000, this.mask.width / 100, true);
-		let x = map(noise(this.xoff, this.rdnX), 0, 1, this.mapXHigh, this.mapXLow, true);
-		let y = map(noise(this.yoff, this.rdnW1), 0, 1, this.mapYHigh, this.mapYLow, true);
-		let bright = 100;
+		this.w = map(noise(this.woff1), 0.6, 1, this.minWidth, this.maxWidth, true);
+		this.x = map(noise(this.xoff), 0, 1, this.mapXHigh, this.mapXLow, true);
+		this.y = map(noise(this.yoff), 0, 1, this.mapYHigh, this.mapYLow, true);
 
-		let diviser = map(w1, this.mask.width / 1000, this.mask.width / 200, 1, 10, true);
-
-		let offset = w1 / diviser;
+		this.offset = this.w / 2;
 		this.mask.noStroke();
-
-		this.mask.fill(0, 100, bright, this.alpha / 2);
-		this.mask.ellipse(x - offset, y + offset, w1, w1);
-		this.mask.fill(200, 100, bright, this.alpha / 2);
-		this.mask.ellipse(x + offset, y - offset, w1, w1);
-		this.mask.fill(this.hue, this.sat - 40, bright, this.alpha + 10);
-		this.mask.ellipse(x, y, w1, w1);
+		this.mask.fill(this.hue, 0, 0, this.alpha / 2);
+		this.mask.ellipse(this.x - this.offset, this.y - this.offset, this.w, this.w);
+		this.mask.fill(0, 100, 100, this.alpha);
+		this.mask.ellipse(this.x - this.offset, this.y + this.offset, this.w, this.w);
+		this.mask.fill(200, 100, 100, this.alpha);
+		this.mask.ellipse(this.x + this.offset, this.y - this.offset, this.w, this.w);
+		this.mask.fill(this.hue, this.sat / 2, 100, this.alpha + 10);
+		this.mask.ellipse(this.x + this.offset, this.y + this.offset, this.w * 1.25, this.w * 1.25);
 	}
 }

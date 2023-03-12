@@ -1,13 +1,8 @@
 let features = '';
-let rectTexture = '';
-let elTexture = '';
+
 let rects = [];
 let balls = [];
 
-function preload() {
-	rectTexture = loadImage('image/texture2.png');
-	elTexture = loadImage('image/el_texture.png');
-}
 function setup() {
 	features = window.$fxhashFeatures;
 	pixelDensity(2.0);
@@ -28,9 +23,11 @@ function setup() {
 	let basecolor = features.bg_mode === 'light' ? color(0, 0, 10) : color(0, 10, 100);
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
-	let colorArr = [color(155, 94, 40), color(40, 80, 70), color(206, 98, 50), color(350, 97, 73), basecolor];
-	let margin = width / 8;
-	//blendMode(blndMode);
+	let colorArr = [color(155, 94, 40), color(45, 100, 80), color(206, 98, 50), color(350, 97, 73)];
+	let margin = width / 200;
+
+	// create textures
+	//createTexture();
 
 	// if features.shape_type substring contains 'line' and 'rectangle'
 	if (features.shape_type.includes('line') || features.shape_type.includes('rectangle')) {
@@ -47,7 +44,7 @@ function createBalls(margin, colorArr, bgHue, rects) {
 	let rectArr = rects;
 	let ballNum = features.ellipse_num;
 	for (let i = 0; i < ballNum; i++) {
-		let ball = new Ball(margin, colorArr, bgHue, elTexture);
+		let ball = new Ball(margin, colorArr, bgHue, ballNum);
 		let tries = 0;
 		let collided = true;
 		while (collided && tries < 1000) {
@@ -67,12 +64,12 @@ function createBalls(margin, colorArr, bgHue, rects) {
 				}
 			}
 			if (collided) {
-				ball = new Ball(margin, colorArr, bgHue, elTexture);
+				ball = new Ball(margin, colorArr, bgHue, ballNum);
 				tries++;
 			}
 		}
 		if (tries >= 1000) {
-			ball = new Ball(margin, colorArr, bgHue, elTexture, 25, 2);
+			ball = new Ball(margin, colorArr, bgHue, ballNum, 25);
 		}
 		balls.push(ball);
 		ball.draw();
@@ -101,7 +98,7 @@ function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num 
 		} else {
 			type = 'rectangle';
 		}
-		rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type);
+		rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, rectNum);
 		// check if the rect is overlapped
 
 		let tries = 0;
@@ -111,9 +108,9 @@ function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num 
 				if (hit) {
 					// replace the rect elsewhere on the canvas
 					if (tries > 1000) {
-						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, 25, 2);
+						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, rectNum, 25, 2);
 					} else {
-						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type);
+						rects[i] = new Rect(margin, colorArr, angleArr, bgHue, type, rectNum);
 						j = -1;
 						tries++;
 					}
@@ -128,7 +125,7 @@ function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num 
 function createTexture() {
 	let texture = [];
 
-	for (let index = 0; index < 5000; index++) {
+	for (let index = 0; index < 100; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
 		const rdnW1 = random(width / 8, width / 2);
@@ -147,7 +144,7 @@ function* drawTexture(texture) {
 	let count = 0;
 	let draw_every = 500;
 	for (let index = 0; index < texture.length; index++) {
-		for (let j = 0; j < 50; j++) {
+		for (let j = 0; j < 10000; j++) {
 			texture[index].display();
 			count++;
 			if (count > draw_every) {

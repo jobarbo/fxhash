@@ -1,11 +1,11 @@
 class Rect {
-	constructor(margin, colorArr, angleArr, bgHue, rectType, w = 0, h = 0) {
+	constructor(margin, colorArr, angleArr, bgHue, rectType, rectNum, w = 0, h = 0) {
 		this.type = rectType;
 		if (this.type === 'rectangle') {
 			if (w === 0 && h === 0) {
 				// make the rectangle a random size but always 16:9 ratio
 				this.ratio = random([1 / 1, 1 / 2, 3 / 4, 9 / 16, 10 / 16]);
-				this.w = random(width / 6, width / 3);
+				this.w = random(width / 10, width / 2);
 				this.h = this.w * this.ratio;
 			} else {
 				this.ratio = w / h;
@@ -33,6 +33,7 @@ class Rect {
 
 		this.mask = '';
 		this.textureDone = false;
+		this.runs = this.h * 100;
 
 		// store the 4 corners of the rectangle
 		this.top_left = createVector(this.x - this.w / 2, this.y - this.h / 2);
@@ -61,7 +62,18 @@ class Rect {
 	}
 
 	draw() {
-		// run the createTexture function and wait for this.textureDone to be true to continue executing the rest of the code, this is to prevent the rest of the code from running before the texture is done being drawn,
+		// draw a preview of the rectangle
+
+		push();
+		translate(this.x, this.y);
+		rotate(this.rotation);
+		noStroke();
+		fill(this.color);
+		rectMode(CENTER);
+		rect(0, 0, this.w, this.h);
+		pop();
+
+		// run the createTexture function and wait for this.textureDone to be true to continue executing the rest of the code, this is to prevent the rest of the code from running before the texture is done being drawn
 		if (!this.textureDone) {
 			this.createTexture();
 		}
@@ -83,13 +95,11 @@ class Rect {
 	createTexture() {
 		let texture = [];
 		// make texture num relative to the size of the rectangle (the width and the height)
-		let texture_num = Math.floor(this.w / 100 + (this.h / 100) * 100);
+		let texture_num = int(map(this.w, 0, width, 1, 10));
 		console.log(texture_num);
-
 		this.mask.push();
 		this.mask.translate(this.x, this.y);
 		this.mask.rotate(this.rotation);
-		//this.mask.blendMode(MULTIPLY);
 		for (let index = 0; index < texture_num; index++) {
 			let rdnX = random(-this.w, this.w);
 			let rdnY = random(-this.w, this.w);
@@ -97,7 +107,7 @@ class Rect {
 
 			texture[index] = new Texture(this.rotation, 0, 0, this.w, this.h, rdnX, rdnY, rdnW1, this.color, this.mask);
 		}
-		let sketch_texture = drawTexture(texture);
+		let sketch_texture = this.drawTexture(texture);
 		let interval = setInterval(() => {
 			let result = sketch_texture.next();
 			if (result.done) {
@@ -112,7 +122,6 @@ class Rect {
 				this.mask.pop();
 
 				image(this.mask, 0, 0);
-				//this.mask.blendMode(BLEND);
 
 				clearInterval(interval);
 			}
@@ -121,9 +130,9 @@ class Rect {
 
 	*drawTexture(texture) {
 		let count = 0;
-		let draw_every = 1;
+		let draw_every = 1000;
 		for (let index = 0; index < texture.length; index++) {
-			for (let j = 0; j < 50; j++) {
+			for (let j = 0; j < this.runs; j++) {
 				texture[index].display();
 				count++;
 				if (count > draw_every) {
