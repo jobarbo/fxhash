@@ -5,8 +5,8 @@ let balls = [];
 
 function setup() {
 	features = window.$fxhashFeatures;
-	pixelDensity(2.0);
-	createCanvas(1500, 1500);
+	pixelDensity(3);
+	createCanvas(2000, 2000);
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
