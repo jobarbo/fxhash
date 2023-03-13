@@ -1,9 +1,9 @@
 class Rect {
-	constructor(margin, colorArr, angleArr, bgHue, rectType, rectNum, all_shapes_num, id, tries, w = 0, h = 0) {
+	constructor(margin, colorArr, angleArr, bgColor, rectType, rectNum, all_shapes_num, id, tries, w = 0, h = 0) {
 		this.type = rectType;
 		console.log(`this.type: ${this.type}`);
 		this.margin = margin;
-		this.w_shape = (width - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
+		this.w_shape = (width - this.margin) / (all_shapes_num / 5 + id) / (tries + 1);
 		// I want to make the width of the shape smaller as the number of shapes increases and the number of tries increases
 
 		console.log(
@@ -37,7 +37,10 @@ class Rect {
 		}
 		this.x = random(margin, width - margin);
 		this.y = random(margin, height - margin);
-		this.sHue = bgHue;
+		this.bgHue = hue(bgColor);
+		this.bgSat = saturation(bgColor);
+		this.bgBright = brightness(bgColor);
+		this.sHue = hue(bgColor);
 		this.rotation = radians(random(angleArr));
 		this.color = random(colorArr);
 		this.hue = hue(this.color);
@@ -148,11 +151,25 @@ class Rect {
 				rotate(this.rotation);
 				noFill();
 				// make the stroke width relative to the size of the rectangle
-				let sw = map(this.w, 0, width - this.margin, 1, 40, true);
-				strokeWeight(sw);
-				stroke(this.hue, this.saturation, this.brightness - 30, 50);
-				rectMode(CENTER);
-				rect(0, 0, this.w - sw, this.h - sw);
+				let sw = map(this.h, 0, width - this.margin, 0.25, 3, true);
+				let shue = this.hue;
+				let ssaturation = this.saturation;
+				let sbrightness = this.brightness - 15;
+				let salpha = 100;
+				let incr = sw;
+				let sRectWidth = this.w;
+				let sRectHeight = this.h;
+				// slowly reduce the rect size and the stroke alpha to create a gradient effect
+				for (let i = 0; i < 50; i++) {
+					rectMode(CENTER);
+					stroke(shue, ssaturation, sbrightness, salpha);
+					strokeWeight(sw);
+					rect(0, 0, sRectWidth, sRectHeight);
+					salpha = salpha - 2;
+					sRectWidth = sRectWidth - sw;
+					sRectHeight = sRectHeight - sw;
+					sbrightness += 0.5;
+				}
 				pop();
 				//blendMode(BLEND);
 				clearInterval(interval);

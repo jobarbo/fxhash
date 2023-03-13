@@ -28,8 +28,8 @@ class Texture {
 		this.yoffInc = width / 400000;
 		this.woff1Inc = width / 100;
 
-		this.maxWidth = height / 650;
-		this.minWidth = height / 900;
+		this.maxWidth = height / 750;
+		this.minWidth = height / 1000;
 
 		this.x = rdnX;
 		this.y = rdnY;

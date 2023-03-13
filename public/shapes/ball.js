@@ -1,7 +1,7 @@
 class Ball {
 	constructor(margin, colorArr, bgHue, ballNum, all_shapes_num, id, tries, r = 0) {
 		this.margin = margin;
-		this.w_shape = (width - this.margin) / (all_shapes_num / 10 + id) / (tries + 1 / 1.01);
+		this.w_shape = (width - this.margin) / (all_shapes_num / 5 + id) / (tries + 1);
 		console.log(this.w_shape);
 		console.log(
 			`width: ${width} - margin: ${this.margin} / (all_shapes_num: ${all_shapes_num} / 15 + id: ${id}) / (tries: ${
@@ -73,10 +73,22 @@ class Ball {
 
 				noFill();
 				// make the stroke width relative to the size of the circle
-				let sw = map(this.d, 0, width - this.margin, 1, 40, true);
-				strokeWeight(sw);
-				stroke(this.hue, this.sat, this.bri - 30, 50);
-				ellipse(this.x, this.y, this.d - sw, this.d - sw);
+				let sw = map(this.d, 0, width - this.margin, 0.25, 3, true);
+				let shue = this.hue;
+				let ssaturation = this.sat;
+				let sbrightness = this.bri - 15;
+				let salpha = 100;
+				let incr = sw;
+				let sElWidth = this.d;
+				// slowly reduce the rect size and the stroke alpha to create a gradient effect
+				for (let i = 0; i < 50; i++) {
+					stroke(shue, ssaturation, sbrightness, salpha);
+					strokeWeight(sw);
+					ellipse(this.x, this.y, sElWidth - sw, sElWidth - sw);
+					salpha = salpha - 2;
+					sElWidth = sElWidth - sw;
+					sbrightness += 0.5;
+				}
 
 				clearInterval(interval);
 			}
