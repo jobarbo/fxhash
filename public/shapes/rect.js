@@ -1,9 +1,18 @@
 class Rect {
-	constructor(margin, colorArr, angleArr, bgHue, rectType, rectNum, all_shapes_num, id, w = 0, h = 0) {
+	constructor(margin, colorArr, angleArr, bgHue, rectType, rectNum, all_shapes_num, id, tries, w = 0, h = 0) {
 		this.type = rectType;
+		console.log(`this.type: ${this.type}`);
 		this.margin = margin;
-		this.w_shape = width / (all_shapes_num / 3 + id) - this.margin;
-		console.log(id);
+		this.w_shape = (width - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
+		// I want to make the width of the shape smaller as the number of shapes increases and the number of tries increases
+
+		console.log(
+			`width: ${width} - margin: ${this.margin} / (all_shapes_num: ${all_shapes_num} / 15 + id: ${id}) / (tries: ${
+				tries + 1
+			} / 10)`
+		);
+		console.log(`this.w_shape: ${this.w_shape}`);
+
 		if (this.type === 'rectangle') {
 			if (w === 0 && h === 0) {
 				// make the rectangle a random size but always 16:9 ratio
@@ -31,6 +40,9 @@ class Rect {
 		this.sHue = bgHue;
 		this.rotation = radians(random(angleArr));
 		this.color = random(colorArr);
+		this.hue = hue(this.color);
+		this.saturation = saturation(this.color);
+		this.brightness = brightness(this.color);
 		this.padding = 0;
 		this.center = createVector(this.x, this.y);
 		this.margin = margin;
@@ -75,6 +87,9 @@ class Rect {
 		fill(this.color);
 		rectMode(CENTER);
 		rect(0, 0, this.w, this.h);
+
+		// make the stroke inside the rectangle
+		strokeWeight(15);
 		pop();
 
 		// run the createTexture function and wait for this.textureDone to be true to continue executing the rest of the code, this is to prevent the rest of the code from running before the texture is done being drawn
@@ -125,10 +140,21 @@ class Rect {
 
 				this.mask.pop();
 
-				//blendMode(DIFFERENCE);
 				image(this.mask, 0, 0);
-				//blendMode(BLEND);
 
+				//blendMode(HARD_LIGHT);
+				push();
+				translate(this.x, this.y);
+				rotate(this.rotation);
+				noFill();
+				// make the stroke width relative to the size of the rectangle
+				let sw = map(this.w, 0, width - this.margin, 1, 40, true);
+				strokeWeight(sw);
+				stroke(this.hue, this.saturation, this.brightness - 30, 50);
+				rectMode(CENTER);
+				rect(0, 0, this.w - sw, this.h - sw);
+				pop();
+				//blendMode(BLEND);
 				clearInterval(interval);
 			}
 		}, 0);

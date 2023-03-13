@@ -19,7 +19,8 @@ class Texture {
 		this.mapYHigh = this.shapeY + this.shapeH * 2;
 		this.hue = hue(color);
 		this.sat = saturation(color);
-		this.bri = brightness(color);
+		//this.bri = brightness(color);
+		this.bri = 100;
 		this.alpha = 20;
 
 		this.aoffInc = width / 100000000;
@@ -38,6 +39,15 @@ class Texture {
 	}
 
 	display() {
+		// make the brightness of the texture brighter when closer to the center of the shape
+		/* 		let distance = dist(this.x, this.y, this.shapeX, this.shapeY);
+		let maxDistance = dist(this.shapeX, this.shapeY, this.shapeX + this.shapeW, this.shapeY + this.shapeH);
+		this.bri = map(distance, 0, maxDistance, 100, 50, true);
+
+		// make this.minWidth and this.maxWidth smaller when closer to the center of the shape
+		this.minWidth = map(distance, 0, maxDistance / 2, height / 900, height / 5200, true);
+		this.maxWidth = map(distance, 0, maxDistance / 2, height / 300, height / 900, true); */
+
 		this.xoff += this.xoffInc;
 		this.yoff += this.yoffInc;
 		this.woff1 += this.woff1Inc;
@@ -52,11 +62,11 @@ class Texture {
 		this.mask.noStroke();
 		this.mask.fill(this.hue, 0, 0, this.alpha / 2);
 		this.mask.ellipse(this.x - this.offset, this.y - this.offset, this.w, this.w);
-		this.mask.fill(0, 100, 100, this.alpha);
+		this.mask.fill(0, 100, this.bri, this.alpha);
 		this.mask.ellipse(this.x - this.offset, this.y + this.offset, this.w, this.w);
-		this.mask.fill(200, 100, 100, this.alpha);
+		this.mask.fill(200, 100, this.bri, this.alpha);
 		this.mask.ellipse(this.x + this.offset, this.y - this.offset, this.w, this.w);
-		this.mask.fill(this.hue, 0, 100, this.alpha + 10);
+		this.mask.fill(this.hue, 0, this.bri, this.alpha + 10);
 		this.mask.ellipse(this.x + this.offset, this.y + this.offset, this.w * 1.25, this.w * 1.25);
 	}
 }

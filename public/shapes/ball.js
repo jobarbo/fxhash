@@ -1,8 +1,13 @@
 class Ball {
-	constructor(margin, colorArr, bgHue, ballNum, all_shapes_num, id, r = 0) {
+	constructor(margin, colorArr, bgHue, ballNum, all_shapes_num, id, tries, r = 0) {
 		this.margin = margin;
-		this.w_shape = width / (all_shapes_num / 3 + id) - this.margin;
-		console.log(id);
+		this.w_shape = (width - this.margin) / (all_shapes_num / 10 + id) / (tries + 1 / 1.01);
+		console.log(this.w_shape);
+		console.log(
+			`width: ${width} - margin: ${this.margin} / (all_shapes_num: ${all_shapes_num} / 15 + id: ${id}) / (tries: ${
+				tries + 1
+			} / 10)`
+		);
 		if (r === 0) {
 			this.d = this.w_shape;
 			this.r = this.d / 2;
@@ -14,6 +19,10 @@ class Ball {
 		this.y = random(margin + this.r, height - (this.r + margin));
 		this.sHue = bgHue;
 		this.color = random(colorArr);
+		this.hue = hue(this.color);
+		this.sat = saturation(this.color);
+		this.bri = brightness(this.color);
+		this.alpha = 100;
 		this.margin = margin;
 		this.textureDone = false;
 		this.runs = this.d * 100;
@@ -29,7 +38,7 @@ class Ball {
 		translate(this.x, this.y);
 		rotate(this.rotation);
 		noStroke();
-		fill(this.color);
+		fill(this.hue, this.sat, this.bri, this.alpha);
 		ellipse(0, 0, this.d, this.d);
 		pop();
 
@@ -60,9 +69,15 @@ class Ball {
 				this.mask.noStroke();
 				this.mask.fill(this.color);
 				this.mask.ellipse(this.x, this.y, this.r * 2, this.r * 2);
-				//blendMode(DIFFERENCE);
 				image(this.mask, 0, 0);
-				//blendMode(BLEND);
+
+				noFill();
+				// make the stroke width relative to the size of the circle
+				let sw = map(this.d, 0, width - this.margin, 1, 40, true);
+				strokeWeight(sw);
+				stroke(this.hue, this.sat, this.bri - 30, 50);
+				ellipse(this.x, this.y, this.d - sw, this.d - sw);
+
 				clearInterval(interval);
 			}
 		}, 0);
