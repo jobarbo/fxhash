@@ -1,17 +1,9 @@
 class Rect {
 	constructor(margin, colorArr, angleArr, bgColor, rectType, rectNum, all_shapes_num, id, tries, w = 0, h = 0) {
 		this.type = rectType;
-		console.log(`this.type: ${this.type}`);
 		this.margin = margin;
 		this.w_shape = (width - this.margin) / (all_shapes_num / 5 + id) / (tries + 1);
 		// I want to make the width of the shape smaller as the number of shapes increases and the number of tries increases
-
-		console.log(
-			`width: ${width} - margin: ${this.margin} / (all_shapes_num: ${all_shapes_num} / 15 + id: ${id}) / (tries: ${
-				tries + 1
-			} / 10)`
-		);
-		console.log(`this.w_shape: ${this.w_shape}`);
 
 		if (this.type === 'rectangle') {
 			if (w === 0 && h === 0) {
@@ -26,7 +18,7 @@ class Rect {
 			}
 		} else {
 			if (w === 0 && h === 0) {
-				this.ratio = random([1 / 30, 1 / 40, 1 / 20, 1 / 50]);
+				this.ratio = random([1 / 40, 1 / 50]);
 				this.w = random(width / 5, width / 3);
 				this.h = this.w * this.ratio;
 			} else {

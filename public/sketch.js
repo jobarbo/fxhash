@@ -3,6 +3,7 @@ let features = '';
 let rects = [];
 let balls = [];
 let bgTextureDone = false;
+let rectDrawn = false;
 
 function setup() {
 	features = window.$fxhashFeatures;
@@ -22,14 +23,14 @@ function setup() {
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
 	let colorArr = [color(155, 94, 40), color(45, 100, 80), color(206, 98, 50), color(350, 97, 73)];
-	let margin = 0;
+	let margin = width / 10;
 
 	// shape_num is the number of shapes that are selected in the feature selection
 	let total_shape_num = features.ellipse_num + features.rectangle_num;
 
 	// create textures
 	createTexture(bgColor);
-	// bgTextureDone = true;
+	bgTextureDone = true;
 	// only start drawing the shapes once the textures are done
 
 	const intervalId = setInterval(() => {
@@ -48,13 +49,20 @@ function setup() {
 					features.rectangle_num,
 					total_shape_num
 				);
+			} else {
+				console.log('no lines or rectangles');
+				rectDrawn = true;
 			}
 			// create balls
 			// check if features.shape_type substring contains 'ellipse'
 			if (features.shape_type.includes('ellipse')) {
-				createBalls(margin, colorArr, bgHue, rects, total_shape_num);
+				const elIntervalId = setInterval(() => {
+					if (rectDrawn) {
+						createBalls(margin, colorArr, bgHue, rects, total_shape_num);
+						clearInterval(elIntervalId);
+					}
+				}, 100);
 			}
-			//blendMode(BLEND);
 		} else {
 			// keep checking
 		}
@@ -66,39 +74,40 @@ function createBalls(margin, colorArr, bgHue, rects, total_shape_num) {
 	let ballNum = features.ellipse_num;
 	let all_shapes_num = total_shape_num;
 	let balls = [];
-	let hit_ball = false;
-	let hit_rect = false;
-	for (let i = 0; i < ballNum; i++) {
-		let tries = 0;
-		let ball = new Ball(margin, colorArr, bgHue, ballNum, all_shapes_num, i + 1, tries);
 
-		while (tries < 500) {
-			hit_ball = false;
-			hit_rect = false;
+	for (let i = 0; i < ballNum; i++) {
+		let ball = new Ball(margin, colorArr, bgHue, ballNum, all_shapes_num, i + 1, 0);
+
+		// check for collisions with other shapes
+		let colliding = true;
+		let tries = 0;
+		while (colliding) {
+			colliding = false;
+
+			// check for collisions with other ellipses
 			for (let j = 0; j < balls.length; j++) {
 				if (collideCircleCircle(ball.x, ball.y, ball.d, balls[j].x, balls[j].y, balls[j].d)) {
-					hit_ball = true;
+					colliding = true;
 					break;
 				}
 			}
-			if (!hit_ball) {
-				for (let j = 0; j < rectArr.length; j++) {
-					if (collideCirclePoly(ball.x, ball.y, ball.d, rectArr[j].points)) {
-						hit_rect = true;
-						break;
-					}
+
+			// check for collisions with rectangles
+			for (let j = 0; j < rectArr.length; j++) {
+				if (collideCirclePoly(ball.x, ball.y, ball.d, rectArr[j].points)) {
+					colliding = true;
+					break;
 				}
 			}
-			if (!hit_ball && !hit_rect) {
-				break;
-			} else {
+
+			// if there's a collision, move the ellipse to a new position
+			if (colliding) {
+				ball = new Ball(margin, colorArr, bgHue, ballNum, all_shapes_num, i + 1, tries);
 				ball = new Ball(margin, colorArr, bgHue, ballNum, all_shapes_num, i + 1, tries);
 				tries++;
 			}
 		}
-		if (tries >= 500) {
-			ball = new Ball(margin, colorArr, bgHue, ballNum, all_shapes_num, i + 1, tries, 0, 0);
-		}
+
 		balls.push(ball);
 		ball.draw();
 	}
@@ -150,6 +159,7 @@ function createRectangles(margin, colorArr, angleArr, bgColor, rectType, line_nu
 		}
 
 		rects[i].draw();
+		rectDrawn = true;
 	}
 }
 
