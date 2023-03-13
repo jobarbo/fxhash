@@ -41,6 +41,7 @@ class Texture {
 		this.xoff += this.xoffInc;
 		this.yoff += this.yoffInc;
 		this.woff1 += this.woff1Inc;
+		this.aoff += this.aoffInc;
 
 		this.w = map(noise(this.woff1), 0.6, 1, this.minWidth, this.maxWidth, true);
 		this.x = map(noise(this.xoff), 0, 1, this.mapXHigh, this.mapXLow, true);

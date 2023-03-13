@@ -1,7 +1,7 @@
 class Ball {
 	constructor(margin, colorArr, bgHue, ballNum, all_shapes_num, id, r = 0) {
 		this.margin = margin;
-		this.w_shape = width / (all_shapes_num / 2 + id) - this.margin;
+		this.w_shape = width / (all_shapes_num / 3 + id) - this.margin;
 		console.log(id);
 		if (r === 0) {
 			this.d = this.w_shape;
@@ -60,9 +60,9 @@ class Ball {
 				this.mask.noStroke();
 				this.mask.fill(this.color);
 				this.mask.ellipse(this.x, this.y, this.r * 2, this.r * 2);
-
+				//blendMode(DIFFERENCE);
 				image(this.mask, 0, 0);
-
+				//blendMode(BLEND);
 				clearInterval(interval);
 			}
 		}, 0);

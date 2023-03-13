@@ -6,43 +6,38 @@
 
 const shapeArr = [
 	// name, probability(0-100)
-	['ellipse', 15],
-	['line', 15],
-	['rectangle', 15],
+	['ellipse', 20],
+	['rectangle', 20],
 	['ellipse & line', 15],
 	['ellipse & rectangle', 15],
 	['line & rectangle', 20],
-	['ellipse & line & rectangle', 5],
+	['ellipse & line & rectangle', 10],
 ];
 
 const ellipseNumArr = [
 	// name, probability(0-100)
-	[1, 30],
-	[2, 30],
-	[3, 15],
-	[4, 10],
-	[5, 10],
-	[6, 5],
+	[1, 25],
+	[2, 25],
+	[3, 25],
+	[4, 25],
 ];
 
 const lineNumArr = [
 	// name, probability(0-100)
-	[1, 30],
-	[2, 30],
-	[3, 15],
-	[4, 10],
-	[5, 10],
-	[6, 5],
+	[3, 30],
+	[4, 15],
+	[5, 15],
+	[6, 15],
+	[7, 10],
+	[8, 10],
 ];
 
 const rectangleNumArr = [
 	// name, probability(0-100)
-	[1, 10],
-	[2, 20],
-	[3, 30],
-	[4, 15],
-	[5, 15],
-	[6, 10],
+	[1, 25],
+	[2, 25],
+	[3, 25],
+	[4, 25],
 ];
 
 const bgModeArr = [

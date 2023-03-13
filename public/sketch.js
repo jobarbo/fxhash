@@ -2,10 +2,11 @@ let features = '';
 
 let rects = [];
 let balls = [];
+let bgTextureDone = false;
 
 function setup() {
 	features = window.$fxhashFeatures;
-	pixelDensity(3);
+	pixelDensity(1);
 	createCanvas(2000, 2000);
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 10000);
@@ -13,12 +14,9 @@ function setup() {
 
 	let bgHue = random([0, 10, 20, 30, 40, 50]);
 	let bgSat = 10;
-	let blndMode =
-		features.bg_mode === 'light'
-			? random([BLEND, DARKEST, DIFFERENCE, EXCLUSION, MULTIPLY])
-			: random([BLEND, EXCLUSION, SCREEN, ADD, DIFFERENCE]);
 	let bgBri = features.bg_mode === 'light' ? 100 : 15;
-	background(bgHue, bgSat, bgBri);
+	let bgColor = color(bgHue, bgSat, bgBri);
+	background(bgColor);
 	// Apply transparency without changing color
 	let basecolor = features.bg_mode === 'light' ? color(0, 0, 10) : color(0, 10, 100);
 
@@ -27,29 +25,40 @@ function setup() {
 	let margin = 0;
 
 	// shape_num is the number of shapes that are selected in the feature selection
-	let total_shape_num = features.ellipse_num + features.line_num + features.rectangle_num;
+	let total_shape_num = features.ellipse_num + features.rectangle_num;
 
 	// create textures
-	//createTexture();
+	createTexture(bgColor);
 
-	// if features.shape_type substring contains 'line' and 'rectangle'
-	if (features.shape_type.includes('line') || features.shape_type.includes('rectangle')) {
-		createRectangles(
-			margin,
-			colorArr,
-			angleArr,
-			bgHue,
-			features.shape_type,
-			features.line_num,
-			features.rectangle_num,
-			total_shape_num
-		);
-	}
-	// create balls
-	// check if features.shape_type substring contains 'ellipse'
-	if (features.shape_type.includes('ellipse')) {
-		createBalls(margin, colorArr, bgHue, rects, total_shape_num);
-	}
+	// only start drawing the shapes once the textures are done
+
+	const intervalId = setInterval(() => {
+		if (bgTextureDone) {
+			// stop the interval and start drawing the shapes
+			clearInterval(intervalId);
+			//blendMode(OVERLAY);
+			if (features.shape_type.includes('line') || features.shape_type.includes('rectangle')) {
+				createRectangles(
+					margin,
+					colorArr,
+					angleArr,
+					bgHue,
+					features.shape_type,
+					features.line_num,
+					features.rectangle_num,
+					total_shape_num
+				);
+			}
+			// create balls
+			// check if features.shape_type substring contains 'ellipse'
+			if (features.shape_type.includes('ellipse')) {
+				createBalls(margin, colorArr, bgHue, rects, total_shape_num);
+			}
+			//blendMode(BLEND);
+		} else {
+			console.log('drawing textures...');
+		}
+	}, 100);
 }
 
 function createBalls(margin, colorArr, bgHue, rects, total_shape_num) {
@@ -142,19 +151,20 @@ function createRectangles(margin, colorArr, angleArr, bgHue, rectType, line_num 
 	}
 }
 
-function createTexture() {
+function createTexture(bgColor) {
 	let texture = [];
 
-	for (let index = 0; index < 100; index++) {
+	for (let index = 0; index < 1000; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
 		const rdnW1 = random(width / 8, width / 2);
-		texture[index] = new Smudge(rdnX, rdnY, rdnW1, 0);
+		texture[index] = new Smudge(rdnX, rdnY, rdnW1, bgColor);
 	}
 	let sketch_texture = drawTexture(texture);
 	let interval = setInterval(() => {
 		let result = sketch_texture.next();
 		if (result.done) {
+			bgTextureDone = true;
 			clearInterval(interval);
 		}
 	}, 0);
@@ -162,9 +172,9 @@ function createTexture() {
 
 function* drawTexture(texture) {
 	let count = 0;
-	let draw_every = 500;
+	let draw_every = 10000;
 	for (let index = 0; index < texture.length; index++) {
-		for (let j = 0; j < 10000; j++) {
+		for (let j = 0; j < 2000; j++) {
 			texture[index].display();
 			count++;
 			if (count > draw_every) {

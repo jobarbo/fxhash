@@ -2,7 +2,7 @@ class Rect {
 	constructor(margin, colorArr, angleArr, bgHue, rectType, rectNum, all_shapes_num, id, w = 0, h = 0) {
 		this.type = rectType;
 		this.margin = margin;
-		this.w_shape = width / (all_shapes_num / 2 + id) - this.margin;
+		this.w_shape = width / (all_shapes_num / 3 + id) - this.margin;
 		console.log(id);
 		if (this.type === 'rectangle') {
 			if (w === 0 && h === 0) {
@@ -125,7 +125,9 @@ class Rect {
 
 				this.mask.pop();
 
+				//blendMode(DIFFERENCE);
 				image(this.mask, 0, 0);
+				//blendMode(BLEND);
 
 				clearInterval(interval);
 			}
