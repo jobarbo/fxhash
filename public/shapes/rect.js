@@ -3,6 +3,7 @@ class Rect {
 		this.type = rectType;
 		this.margin = margin;
 		this.w_shape = (width / 1.25 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
+		this.w_shape = constrain(this.w_shape, width / 4 - this.margin, width / 1.5 - this.margin);
 		// I want to make the width of the shape smaller as the number of shapes increases and the number of tries increases
 
 		if (this.type === 'rectangle') {
@@ -60,16 +61,12 @@ class Rect {
 		this.top = this.y - this.h / 2;
 		this.bottom = this.y + this.h / 2;
 
+		this.id = id;
+
 		// rotate each point around the center of the rectangle
 		for (let i = 0; i < 4; i++) {
 			this.points[i] = this.rotatePoint(this.points[i], this.center, this.rotation);
 		}
-
-		// create a new canvas graphics the same size as the canvas to draw textures on
-		this.mask = createGraphics(width, height);
-		this.mask.pixelDensity(3);
-		this.mask.colorMode(HSB, 360, 100, 100, 100);
-		this.mask.background(this.color);
 	}
 
 	draw() {
@@ -80,13 +77,17 @@ class Rect {
 		rotate(this.rotation);
 		noStroke();
 		fill(this.color);
-		rectMode(CENTER);
 		rect(0, 0, this.w, this.h);
 
 		// make the stroke inside the rectangle
 		strokeWeight(15);
 		pop();
-
+		// create a new canvas graphics the same size as the canvas to draw textures on
+		this.mask = createGraphics(width, height);
+		this.mask.pixelDensity(3);
+		this.mask.colorMode(HSB, 360, 100, 100, 100);
+		this.mask.rectMode(CENTER);
+		this.mask.background(this.color);
 		// run the createTexture function and wait for this.textureDone to be true to continue executing the rest of the code, this is to prevent the rest of the code from running before the texture is done being drawn
 		if (!this.textureDone) {
 			this.createTexture();
@@ -131,7 +132,7 @@ class Rect {
 				this.mask.noStroke();
 
 				this.mask.fill(this.color);
-				this.mask.rect(-this.w / 2, -this.h / 2, this.w, this.h);
+				this.mask.rect(0, 0, this.w, this.h);
 
 				this.mask.pop();
 
@@ -146,18 +147,17 @@ class Rect {
 				let sw = map(this.h, 0, width - this.margin, 0.25, 3, true);
 				let shue = this.hue;
 				let ssaturation = this.saturation;
-				let sbrightness = this.brightness - 15;
-				let salpha = 100;
+				let sbrightness = this.brightness - 35;
+				let salpha = 50;
 				let incr = sw;
 				let sRectWidth = this.w;
 				let sRectHeight = this.h;
 				// slowly reduce the rect size and the stroke alpha to create a gradient effect
 				for (let i = 0; i < 50; i++) {
-					rectMode(CENTER);
 					stroke(shue, ssaturation, sbrightness, salpha);
 					strokeWeight(sw);
 					rect(0, 0, sRectWidth, sRectHeight);
-					salpha = salpha - 2;
+					salpha = salpha - 1;
 					sRectWidth = sRectWidth - sw;
 					sRectHeight = sRectHeight - sw;
 					sbrightness += 0.5;

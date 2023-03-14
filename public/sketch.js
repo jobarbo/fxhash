@@ -42,8 +42,8 @@ function setup() {
 	rect(width / 2, height / 2, width - margin, height - margin);
 
 	// create textures
-	createTexture(bgColor);
-	//bgTextureDone = true;
+	//createTexture(bgColor);
+	bgTextureDone = true;
 	// only start drawing the shapes once the textures are done
 
 	const intervalId = setInterval(() => {
@@ -74,7 +74,7 @@ function setup() {
 						createBalls(margin, colorArr, bgHue, rects, total_shape_num);
 						clearInterval(elIntervalId);
 					}
-				}, 100);
+				}, 1000);
 			}
 		} else {
 			// keep checking
@@ -84,6 +84,7 @@ function setup() {
 
 function createBalls(margin, colorArr, bgHue, rects, total_shape_num) {
 	let rectArr = rects;
+	console.log(rectArr);
 	let ballNum = features.ellipse_num;
 	let all_shapes_num = total_shape_num;
 	let balls = [];
@@ -94,22 +95,30 @@ function createBalls(margin, colorArr, bgHue, rects, total_shape_num) {
 		// check for collisions with other shapes
 		let colliding = true;
 		let tries = 0;
+		let collidingType = '';
+
 		while (colliding) {
 			colliding = false;
 
-			// check for collisions with other ellipses
-			for (let j = 0; j < balls.length; j++) {
-				if (collideCircleCircle(ball.x, ball.y, ball.d, balls[j].x, balls[j].y, balls[j].d)) {
-					colliding = true;
-					break;
+			if (!colliding) {
+				// check for collisions with other ellipses
+				for (let j = 0; j < balls.length; j++) {
+					if (collideCircleCircle(ball.x, ball.y, ball.d, balls[j].x, balls[j].y, balls[j].d, true)) {
+						colliding = true;
+						collidingType = 'ellipse';
+						break;
+					}
 				}
 			}
 
-			// check for collisions with rectangles
-			for (let j = 0; j < rectArr.length; j++) {
-				if (collideCirclePoly(ball.x, ball.y, ball.d, rectArr[j].points)) {
-					colliding = true;
-					break;
+			if (!colliding) {
+				// check for collisions with rectangles
+				for (let j = 0; j < rectArr.length; j++) {
+					if (collideCirclePoly(ball.x, ball.y, ball.d, rectArr[j].points, true)) {
+						colliding = true;
+						collidingType = 'rectangle';
+						break;
+					}
 				}
 			}
 
@@ -121,6 +130,7 @@ function createBalls(margin, colorArr, bgHue, rects, total_shape_num) {
 		}
 
 		balls.push(ball);
+
 		ball.draw();
 	}
 }
@@ -171,8 +181,9 @@ function createRectangles(margin, colorArr, angleArr, bgColor, rectType, line_nu
 		}
 
 		rects[i].draw();
-		rectDrawn = true;
 	}
+	console.log(`rect drawn`);
+	rectDrawn = true;
 }
 
 function createTexture(bgColor) {

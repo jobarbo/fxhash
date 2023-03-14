@@ -2,11 +2,7 @@ class Ball {
 	constructor(margin, colorArr, bgHue, ballNum, all_shapes_num, id, tries, r = 0) {
 		this.margin = margin;
 		this.w_shape = (width / 1.25 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
-		/* 		console.log(`width - this.margin: ${width - this.margin}`);
-		console.log(`all_shapes_num / 5 + ID: ${all_shapes_num / 5 + id}`);
-		console.log(`tries + 1: ${tries + 1}`);
-		console.log(`id: ${id}`);
-		console.log(`this.w_shape: ${this.w_shape}`); */
+		this.w_shape = constrain(this.w_shape, width / 4 - this.margin, width / 1.5 - this.margin);
 		if (r === 0) {
 			this.d = this.w_shape;
 			this.r = this.d / 2;
@@ -25,21 +21,23 @@ class Ball {
 		this.margin = margin;
 		this.textureDone = false;
 		this.runs = this.d * 100;
-		this.mask = createGraphics(width, height);
-		this.mask.pixelDensity(3);
-		this.mask.colorMode(HSB, 360, 100, 100, 100);
-		this.mask.background(this.color);
+		this.id = id;
 	}
 
 	draw() {
 		// draw a preview of the ball
 		push();
 		translate(this.x, this.y);
-		rotate(this.rotation);
+		//rotate(this.rotation);
 		noStroke();
 		fill(this.hue, this.sat, this.bri, this.alpha);
 		ellipse(0, 0, this.d, this.d);
 		pop();
+
+		this.mask = createGraphics(width, height);
+		this.mask.pixelDensity(3);
+		this.mask.colorMode(HSB, 360, 100, 100, 100);
+		this.mask.background(this.color);
 
 		if (!this.textureDone) {
 			this.createTexture();
@@ -75,8 +73,8 @@ class Ball {
 				let sw = map(this.d, 0, width - this.margin, 0.25, 3, true);
 				let shue = this.hue;
 				let ssaturation = this.sat;
-				let sbrightness = this.bri - 15;
-				let salpha = 100;
+				let sbrightness = this.bri - 35;
+				let salpha = 50;
 				let incr = sw;
 				let sElWidth = this.d;
 				// slowly reduce the rect size and the stroke alpha to create a gradient effect
@@ -84,7 +82,7 @@ class Ball {
 					stroke(shue, ssaturation, sbrightness, salpha);
 					strokeWeight(sw);
 					ellipse(this.x, this.y, sElWidth - sw, sElWidth - sw);
-					salpha = salpha - 2;
+					salpha = salpha - 1;
 					sElWidth = sElWidth - sw;
 					sbrightness += 0.5;
 				}

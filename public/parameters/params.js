@@ -24,12 +24,12 @@ const ellipseNumArr = [
 
 const lineNumArr = [
 	// name, probability(0-100)
-	[3, 30],
-	[4, 15],
+	[3, 40],
+	[4, 25],
 	[5, 15],
-	[6, 15],
-	[7, 10],
-	[8, 10],
+	[6, 10],
+	[7, 5],
+	[8, 5],
 ];
 
 const rectangleNumArr = [
@@ -44,6 +44,12 @@ const bgModeArr = [
 	// name, probability(0-100)
 	['light', 50],
 	['dark', 50],
+];
+
+const borderModeArr = [
+	// name, probability(0-100)
+	['none', 35],
+	['border', 65],
 ];
 
 // all input parameters are optional, they will be chosen at random if not passed into the function
