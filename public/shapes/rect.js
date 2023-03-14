@@ -2,7 +2,7 @@ class Rect {
 	constructor(margin, colorArr, angleArr, bgColor, rectType, rectNum, all_shapes_num, id, tries, w = 0, h = 0) {
 		this.type = rectType;
 		this.margin = margin;
-		this.w_shape = (width / 1.5 - this.margin) / (all_shapes_num / 5 + id) / (tries + 1);
+		this.w_shape = (width / 1.25 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
 		// I want to make the width of the shape smaller as the number of shapes increases and the number of tries increases
 
 		if (this.type === 'rectangle') {
