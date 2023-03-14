@@ -25,7 +25,7 @@ function setup() {
 	let basecolor = features.bg_mode === 'light' ? color(0, 0, 10) : color(0, 10, 100);
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
-	let colorArr = [color(155, 94, 40), color(45, 100, 80), color(206, 98, 50), color(350, 97, 73)];
+	let colorArr = [color(44, 96, 100), color(19, 97, 98), color(334, 100, 100), color(265, 76, 93), color(217, 77, 100)];
 	margin = width / 10;
 
 	// shape_num is the number of shapes that are selected in the feature selection
@@ -42,7 +42,7 @@ function setup() {
 	rect(width / 2, height / 2, width - margin, height - margin);
 
 	// create textures
-	//createTexture(bgColor);
+	createTexture(bgColor);
 	bgTextureDone = true;
 	// only start drawing the shapes once the textures are done
 
