@@ -5,6 +5,8 @@ let balls = [];
 let bgTextureDone = false;
 let rectDrawn = false;
 
+let margin = 0;
+
 function setup() {
 	features = window.$fxhashFeatures;
 	pixelDensity(1);
@@ -12,10 +14,11 @@ function setup() {
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
+	rectMode(CENTER);
 
 	let bgHue = random([0, 10, 20, 30, 40, 50]);
 	let bgSat = 10;
-	let bgBri = features.bg_mode === 'light' ? 100 : 15;
+	let bgBri = features.bg_mode === 'light' ? 100 : 10;
 	let bgColor = color(bgHue, bgSat, bgBri);
 	background(bgColor);
 	// Apply transparency without changing color
@@ -23,14 +26,24 @@ function setup() {
 
 	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
 	let colorArr = [color(155, 94, 40), color(45, 100, 80), color(206, 98, 50), color(350, 97, 73)];
-	let margin = width / 10;
+	margin = width / 10;
 
 	// shape_num is the number of shapes that are selected in the feature selection
 	let total_shape_num = features.ellipse_num + features.rectangle_num;
 
+	// draw the border
+	noStroke();
+	if (features.bg_mode == 'light') {
+		fill(bgHue, 0, 10);
+	} else {
+		fill(bgHue, bgSat, 100);
+	}
+
+	rect(width / 2, height / 2, width - margin, height - margin);
+
 	// create textures
 	createTexture(bgColor);
-	bgTextureDone = true;
+	//bgTextureDone = true;
 	// only start drawing the shapes once the textures are done
 
 	const intervalId = setInterval(() => {
@@ -103,7 +116,6 @@ function createBalls(margin, colorArr, bgHue, rects, total_shape_num) {
 			// if there's a collision, move the ellipse to a new position
 			if (colliding) {
 				ball = new Ball(margin, colorArr, bgHue, ballNum, all_shapes_num, i + 1, tries);
-				ball = new Ball(margin, colorArr, bgHue, ballNum, all_shapes_num, i + 1, tries);
 				tries++;
 			}
 		}
@@ -140,11 +152,11 @@ function createRectangles(margin, colorArr, angleArr, bgColor, rectType, line_nu
 
 		let tries = 0;
 		rects[i] = new Rect(margin, colorArr, angleArr, bgColor, type, rectNum, all_shapes_num, i + 1, tries);
-		// check if the rect is overlapped
 
 		for (let j = 0; j < rects.length; j++) {
 			if (i != j) {
-				hit = collidePolyPoly(rects[i].points, rects[j].points, true);
+				let hit = collidePolyPoly(rects[i].points, rects[j].points, true);
+
 				if (hit) {
 					// replace the rect elsewhere on the canvas
 					if (tries > 1000) {

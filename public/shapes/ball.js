@@ -2,7 +2,11 @@ class Ball {
 	constructor(margin, colorArr, bgHue, ballNum, all_shapes_num, id, tries, r = 0) {
 		this.margin = margin;
 		this.w_shape = (width - this.margin) / (all_shapes_num / 5 + id) / (tries + 1);
-
+		/* 		console.log(`width - this.margin: ${width - this.margin}`);
+		console.log(`all_shapes_num / 5 + ID: ${all_shapes_num / 5 + id}`);
+		console.log(`tries + 1: ${tries + 1}`);
+		console.log(`id: ${id}`);
+		console.log(`this.w_shape: ${this.w_shape}`); */
 		if (r === 0) {
 			this.d = this.w_shape;
 			this.r = this.d / 2;
