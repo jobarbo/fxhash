@@ -69,7 +69,7 @@ function checkTexturesAndDrawShapes(features, colorArr, angleArr, bgColor, bgHue
 						createBalls(margin, colorArr, bgHue, rects, total_shape_num);
 						clearInterval(elIntervalId);
 					}
-				}, 1000);
+				}, 100);
 			}
 		}
 	}, 100);
@@ -125,8 +125,8 @@ function createRectangles(margin, colorArr, angleArr, bgColor, rectType, lineNum
 
 function createTexture(bgColor) {
 	let texture = [];
-
-	for (let index = 0; index < 20; index++) {
+	console.time('drawTexture');
+	for (let index = 0; index < 5; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
 		const rdnW1 = random(width / 8, width / 2);
@@ -137,6 +137,7 @@ function createTexture(bgColor) {
 		let result = sketch_texture.next();
 		if (result.done) {
 			bgTextureDone = true;
+			console.timeEnd('drawTexture');
 			clearInterval(interval);
 		}
 	}, 0);
@@ -144,9 +145,14 @@ function createTexture(bgColor) {
 
 function* drawTexture(texture) {
 	let count = 0;
-	let draw_every = 1000;
+	let draw_every = 2000;
+	// 100 is too long;
+	// 1000 is 10 seconds;
+
+	// track time spent to draw
+
 	for (let index = 0; index < texture.length; index++) {
-		for (let j = 0; j < 100000; j++) {
+		for (let j = 0; j < 300000; j++) {
 			texture[index].display();
 			count++;
 			if (count > draw_every) {
