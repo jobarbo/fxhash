@@ -19,7 +19,7 @@ class Rect {
 			}
 		} else {
 			if (w === 0 && h === 0) {
-				this.ratio = random([1 / 40, 1 / 50]);
+				this.ratio = random([1 / 40, 1 / 50, 1 / 70, 1 / 100]);
 				this.w = random(width / 5, width / 3);
 				this.h = this.w * this.ratio;
 			} else {

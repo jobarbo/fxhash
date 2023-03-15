@@ -1,10 +1,6 @@
 class Texture {
 	constructor(rotation, shapeX, shapeY, shapeW, shapeH, rdnX, rdnY, w1, color, mask) {
 		this.mask = mask;
-		this.xoff = random(1000000);
-		this.yoff = random(1000000);
-		this.woff1 = random(1000000);
-		this.aoff = random(1000000);
 		this.rdnX = rdnX;
 		this.rdnY = rdnY;
 		this.rdnW1 = w1;
@@ -19,9 +15,14 @@ class Texture {
 		this.mapYHigh = this.shapeY + this.shapeH * 2;
 		this.hue = hue(color);
 		this.sat = saturation(color);
-		//this.bri = brightness(color);
 		this.bri = 100;
 		this.alpha = 20;
+
+		const randomMax = 1000000;
+		this.xoff = random(randomMax);
+		this.yoff = random(randomMax);
+		this.woff1 = random(randomMax);
+		this.aoff = random(randomMax);
 
 		this.aoffInc = width / 100000000;
 		this.xoffInc = width / 300000;
@@ -39,15 +40,6 @@ class Texture {
 	}
 
 	display() {
-		// make the brightness of the texture brighter when closer to the center of the shape
-		/* 		let distance = dist(this.x, this.y, this.shapeX, this.shapeY);
-		let maxDistance = dist(this.shapeX, this.shapeY, this.shapeX + this.shapeW, this.shapeY + this.shapeH);
-		this.bri = map(distance, 0, maxDistance, 100, 50, true);
-
-		// make this.minWidth and this.maxWidth smaller when closer to the center of the shape
-		this.minWidth = map(distance, 0, maxDistance / 2, height / 900, height / 5200, true);
-		this.maxWidth = map(distance, 0, maxDistance / 2, height / 300, height / 900, true); */
-
 		this.xoff += this.xoffInc;
 		this.yoff += this.yoffInc;
 		this.woff1 += this.woff1Inc;
