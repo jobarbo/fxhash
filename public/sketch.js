@@ -22,7 +22,6 @@ function setup() {
 	rectMode(CENTER);
 
 	margin = (width + height) / random([15, 25, 40, 50, 60, 100]);
-	console.log('margin', margin);
 
 	let bgHue = random([0, 10, 20, 30, 40, 50]);
 	let bgSat = 10;
@@ -62,7 +61,6 @@ function checkTexturesAndDrawShapes(features, colorArr, angleArr, bgColor, bgHue
 					total_shape_num
 				);
 			} else {
-				console.log('no lines or rectangles');
 				rectDrawn = true;
 			}
 			if (features.shape_type.includes('ellipse')) {
@@ -85,7 +83,6 @@ function createBalls(margin, colorArr, bgHue, rects, totalShapes) {
 	for (let i = 0; i < ballNum; i++) {
 		let ball = new Ball(margin, colorArr, bgHue, ballNum, totalShapes, i + 1, 0);
 		let colliding = true;
-		console.log(rects);
 
 		do {
 			colliding =
@@ -123,7 +120,6 @@ function createRectangles(margin, colorArr, angleArr, bgColor, rectType, lineNum
 		rect.draw();
 	}
 
-	console.log('rect drawn');
 	rectDrawn = true;
 }
 
