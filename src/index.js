@@ -24,7 +24,7 @@
 let composition_params;
 
 composition_params = generate_composition_params();
-console.log(composition_params);
+//console.log(composition_params);
 
 var {shape_type, ellipse_num, line_num, rectangle_num, bg_mode, border_mode, format_mode} = composition_params; // unpacking parameters we need in main.js and turning them into globals
 

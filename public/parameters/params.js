@@ -6,12 +6,12 @@
 
 const shapeArr = [
 	// name, probability(0-100)
-	['ellipse', 20],
-	['rectangle', 20],
-	['ellipse & line', 15],
-	['ellipse & rectangle', 15],
+	['ellipse', 10],
+	['rectangle', 10],
+	['ellipse & line', 20],
+	['ellipse & rectangle', 20],
 	['line & rectangle', 20],
-	['ellipse & line & rectangle', 10],
+	['ellipse & line & rectangle', 20],
 ];
 
 const ellipseNumArr = [
