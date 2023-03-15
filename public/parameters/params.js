@@ -52,8 +52,23 @@ const borderModeArr = [
 	['border', 75],
 ];
 
+const formatModeArr = [
+	// name, probability(0-100)
+	['portrait', 33],
+	['landscape', 33],
+	['square', 33],
+];
+
 // all input parameters are optional, they will be chosen at random if not passed into the function
-function generate_composition_params(shape_type, ellipse_num, line_num, rectangle_num, bg_mode, border_mode) {
+function generate_composition_params(
+	shape_type,
+	ellipse_num,
+	line_num,
+	rectangle_num,
+	bg_mode,
+	border_mode,
+	format_mode
+) {
 	// SET DEFAULTS IF NOT PASSED IN
 	if (shape_type === undefined) {
 		shape_type = weighted_choice(shapeArr);
@@ -85,6 +100,10 @@ function generate_composition_params(shape_type, ellipse_num, line_num, rectangl
 		border_mode = weighted_choice(borderModeArr);
 	}
 
+	if (format_mode === undefined) {
+		format_mode = weighted_choice(formatModeArr);
+	}
+
 	//* EXCEPTIONS AND OVER-RIDES *//
 	// if necessary, add exceptions and over-rides here
 
@@ -96,6 +115,7 @@ function generate_composition_params(shape_type, ellipse_num, line_num, rectangl
 		rectangle_num: rectangle_num,
 		bg_mode: bg_mode,
 		border_mode: border_mode,
+		format_mode: format_mode,
 	};
 
 	//* RETURN PARAMETERS *//

@@ -4,17 +4,24 @@ let features = '',
 	bgTextureDone = false,
 	rectDrawn = false,
 	margin = 0;
+format = {
+	portrait: [1600, 2000],
+	landscape: [2000, 1600],
+	square: [1600, 1600],
+};
 
 function setup() {
 	features = window.$fxhashFeatures;
+
+	let formatMode = features.format_mode;
 	pixelDensity(3);
-	createCanvas(2000, 1600);
+	createCanvas(format[formatMode][0], format[formatMode][1]);
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
 	rectMode(CENTER);
 
-	margin = (width + height) / random(10, 100);
+	margin = (width + height) / random([15, 25, 40, 50, 60, 100]);
 	console.log('margin', margin);
 
 	let bgHue = random([0, 10, 20, 30, 40, 50]);
