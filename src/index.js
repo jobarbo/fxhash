@@ -26,7 +26,7 @@ let composition_params;
 composition_params = generate_composition_params();
 console.log(composition_params);
 
-var {shape_type, ellipse_num, line_num, rectangle_num, bg_mode} = composition_params; // unpacking parameters we need in main.js and turning them into globals
+var {shape_type, ellipse_num, line_num, rectangle_num, bg_mode, border_mode} = composition_params; // unpacking parameters we need in main.js and turning them into globals
 
 //* FXHASH FEATURES DEFINITION *//
 window.$fxhashFeatures = {
@@ -35,13 +35,14 @@ window.$fxhashFeatures = {
 	line_num: line_num,
 	rectangle_num: rectangle_num,
 	bg_mode: bg_mode,
+	border_mode: border_mode,
 };
 
 //* CONSOLE LOGGING *//
 
 var jbarbeau_logo =
 	'%c                                                                         \n' +
-	'%c     Art by Jonathan Barbeau  |  { @jbarbeau.art }  |  2022              \n' +
+	'%c     Art by Jonathan Barbeau  |  { @jbarbeau.art }  |  2023              \n' +
 	'%c                                                                         \n';
 
 console.log(
@@ -64,7 +65,9 @@ console.log(
 	'\n',
 	'Rectangle Number -> ' + rectangle_num,
 	'\n',
-	'Background Mode -> ' + bg_mode
+	'Background Mode -> ' + bg_mode,
+	'\n',
+	'Border Mode -> ' + border_mode
 );
 
 console.log('%cCONTROLS', 'color: white; background: #000000;', '\n', 'cmd + s   : save artwork with date', '\n');
