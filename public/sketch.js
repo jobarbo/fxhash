@@ -29,7 +29,7 @@ function setup() {
 	let bgColor = color(bgHue, bgSat, bgBri);
 	background(bgColor);
 
-	let angleArr = [0, 45, 90, 135, 180, 225, 270, 315];
+	let angleArr = [0, 45, 90, 135, 225, 270, 315];
 	let colorArr = [color(44, 96, 100), color(19, 97, 98), color(334, 100, 100), color(265, 76, 93), color(217, 77, 100)];
 
 	let total_shape_num = features.ellipse_num + features.rectangle_num;
