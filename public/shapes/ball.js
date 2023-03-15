@@ -1,8 +1,13 @@
 class Ball {
 	constructor(margin, colorArr, bgHue, ballNum, all_shapes_num, id, tries, r = 0) {
 		this.margin = margin;
-		this.w_shape = (width / 1.25 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
-		this.w_shape = constrain(this.w_shape, width / 4 - this.margin, width / 1.5 - this.margin);
+		let base = width;
+		if (width > height) {
+			base = height;
+		}
+
+		this.w_shape = (base / 1.25 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
+		this.w_shape = constrain(this.w_shape, base / 4 - this.margin, base / 1.5 - this.margin);
 		if (r === 0) {
 			this.d = this.w_shape;
 			this.r = this.d / 2;

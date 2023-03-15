@@ -21,7 +21,7 @@ function setup() {
 	noiseSeed(fxrand() * 10000);
 	rectMode(CENTER);
 
-	margin = (width + height) / random([15, 25, 40, 50, 60, 100]);
+	margin = (width + height) / random([15, 25, 40, 50, 60, 80]);
 
 	let bgHue = random([0, 10, 20, 30, 40, 50]);
 	let bgSat = 10;

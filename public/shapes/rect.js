@@ -2,8 +2,16 @@ class Rect {
 	constructor(margin, colorArr, angleArr, bgColor, rectType, rectNum, all_shapes_num, id, tries, w = 0, h = 0) {
 		this.type = rectType;
 		this.margin = margin;
-		this.w_shape = (width / 1.25 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
-		this.w_shape = constrain(this.w_shape, width / 4 - this.margin, width / 1.5 - this.margin);
+		// if width is bigger than height, it's a landscape rectangle use height as the base
+		// if height is bigger than width, it's a portrait rectangle use width as the base
+		// if width and height are the same, it's a square use width as the base\
+		let base = width;
+		if (width > height) {
+			base = height;
+		}
+
+		this.w_shape = (base / 1.25 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
+		this.w_shape = constrain(this.w_shape, base / 4 - this.margin, base / 1.5 - this.margin);
 		// I want to make the width of the shape smaller as the number of shapes increases and the number of tries increases
 
 		if (this.type === 'rectangle') {
@@ -20,7 +28,7 @@ class Rect {
 		} else {
 			if (w === 0 && h === 0) {
 				this.ratio = random([1 / 40, 1 / 50, 1 / 70, 1 / 100]);
-				this.w = random(width / 5, width / 3);
+				this.w = random(base / 5, base / 3);
 				this.h = this.w * this.ratio;
 			} else {
 				this.ratio = w / h;
