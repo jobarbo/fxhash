@@ -95,9 +95,9 @@ class Rect {
 		// create a new canvas graphics the same size as the canvas to draw textures on
 		this.mask = createGraphics(width, height);
 		if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
-			pixelDensity(2.0);
+			this.mask.pixelDensity(2.0);
 		} else {
-			pixelDensity(3.0);
+			this.mask.pixelDensity(3.0);
 		}
 		this.mask.colorMode(HSB, 360, 100, 100, 100);
 		this.mask.rectMode(CENTER);
