@@ -40,7 +40,7 @@ class Ball {
 		pop();
 
 		this.mask = createGraphics(width, height);
-		this.mask.pixelDensity(3.0);
+		this.mask.pixelDensity(2.0);
 		this.mask.colorMode(HSB, 360, 100, 100, 100);
 		this.mask.background(this.color);
 

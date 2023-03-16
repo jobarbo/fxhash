@@ -15,7 +15,7 @@ function setup() {
 	features = window.$fxhashFeatures;
 
 	let formatMode = features.format_mode;
-	pixelDensity(3.0);
+	pixelDensity(2.0);
 	createCanvas(format[formatMode][0], format[formatMode][1]);
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 10000);
