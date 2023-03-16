@@ -6,7 +6,7 @@ class Ball {
 			this.base = height;
 		}
 
-		this.w_shape = (this.base / 1.35 - this.margin) / (all_shapes_num / 5 + id) / ((tries + 1) / 20);
+		this.w_shape = (this.base / 1.35 - this.margin) / (all_shapes_num / 5 + id) / ((tries + 1) / 10);
 		this.w_shape = constrain(this.w_shape, this.base / 4 - this.margin, this.base / 1.35 - this.margin);
 		if (r === 0) {
 			this.d = this.w_shape;
