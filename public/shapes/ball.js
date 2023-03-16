@@ -1,13 +1,14 @@
 class Ball {
 	constructor(margin, colorArr, bgHue, ballNum, all_shapes_num, id, tries, r = 0) {
 		this.margin = margin;
-		let base = width;
+		this.base = width;
 		if (width > height) {
-			base = height;
+			this.base = height;
 		}
 
-		this.w_shape = (base / 1.25 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
-		this.w_shape = constrain(this.w_shape, base / 4 - this.margin, base / 1.25 - this.margin);
+		this.w_shape = (this.base / 1.35 - this.margin) / (all_shapes_num / 10 + id) / ((tries + 1) / 10);
+		this.w_shape = constrain(this.w_shape, this.base / 4 - this.margin, this.base / 1.25 - this.margin);
+		console.log(tries);
 		if (r === 0) {
 			this.d = this.w_shape;
 			this.r = this.d / 2;
@@ -56,7 +57,7 @@ class Ball {
 	createTexture() {
 		let texture = [];
 		// make texture num relative to the size of the rectangle (the width and the height)
-		let texture_num = int(map(this.d, 0, width - this.margin, 1, 10, true));
+		let texture_num = int(map(this.d, this.base / 4 - this.margin, this.base / 1.25 - this.margin, 3, 10, true));
 
 		for (let index = 0; index < texture_num; index++) {
 			let rdnX = random(-this.d, this.d);
@@ -82,7 +83,7 @@ class Ball {
 				let sw = map(this.d, 0, width - this.margin, 0.25, 3, true);
 				let shue = this.hue;
 				let ssaturation = this.sat;
-				let sbrightness = this.bri - 35;
+				let sbrightness = constrain(this.bri - 35, 10, 90);
 				let salpha = 50;
 				let incr = sw;
 				let sElWidth = this.d;
@@ -93,7 +94,7 @@ class Ball {
 					ellipse(this.x, this.y, sElWidth - sw, sElWidth - sw);
 					salpha = salpha - 1;
 					sElWidth = sElWidth - sw;
-					sbrightness += 0.5;
+					sbrightness += 1;
 				}
 
 				clearInterval(interval);

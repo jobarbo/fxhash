@@ -35,7 +35,7 @@ function setup() {
 	let bgColor = color(bgHue, bgSat, bgBri);
 	background(bgColor);
 
-	let angleArr = [0, 45, 90, 135];
+	let angleArr = [0, 45, 90, 135, 225, 270];
 	let paletteObj = {
 		'80s': [color(44, 96, 100), color(19, 97, 98), color(334, 100, 100), color(265, 76, 93), color(217, 77, 100)],
 		'90s': [color(333, 85, 97), color(276, 95, 72), color(258, 93, 64), color(229, 72, 93), color(194, 68, 94)],
@@ -104,9 +104,9 @@ function checkTexturesAndDrawShapes(features, colorArr, angleArr, bgColor, bgHue
 function createBalls(margin, colorArr, bgColor, rects, totalShapes) {
 	const ballNum = features.ellipse_num;
 	const balls = [];
-	let tries = 1;
 
 	for (let i = 0; i < ballNum; i++) {
+		let tries = 1;
 		let ball = new Ball(margin, colorArr, bgColor, ballNum, totalShapes, i + 1, 0);
 		let colliding = true;
 

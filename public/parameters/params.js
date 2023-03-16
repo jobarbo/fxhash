@@ -24,12 +24,12 @@ const ellipseNumArr = [
 
 const lineNumArr = [
 	// name, probability(0-100)
-	[3, 40],
-	[4, 25],
-	[5, 15],
-	[6, 10],
-	[7, 5],
-	[8, 5],
+	[3, 5],
+	[4, 10],
+	[5, 10],
+	[6, 15],
+	[7, 25],
+	[8, 35],
 ];
 
 const rectangleNumArr = [

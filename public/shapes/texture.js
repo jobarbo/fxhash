@@ -29,8 +29,10 @@ class Texture {
 		this.yoffInc = width / 400000;
 		this.woff1Inc = width / 100;
 
-		this.maxWidth = height / 750;
+		this.maxWidth = height / 550;
 		this.minWidth = height / 1000;
+
+		this.maxAlpha = map(this.shapeW, 0, width, 30, 100, true);
 
 		this.x = rdnX;
 		this.y = rdnY;
@@ -48,7 +50,7 @@ class Texture {
 		this.w = map(noise(this.woff1), 0.6, 1, this.minWidth, this.maxWidth, true);
 		this.x = map(noise(this.xoff), 0, 1, this.mapXHigh, this.mapXLow, true);
 		this.y = map(noise(this.yoff), 0, 1, this.mapYHigh, this.mapYLow, true);
-		this.alpha = map(noise(this.woff1), 0.6, 1, 1, 35, true);
+		this.alpha = map(noise(this.woff1), 0.6, 1, 1, this.maxAlpha, true);
 
 		this.offset = this.w / 2;
 		this.mask.noStroke();

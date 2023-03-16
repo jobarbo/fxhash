@@ -5,13 +5,13 @@ class Rect {
 		// if width is bigger than height, it's a landscape rectangle use height as the base
 		// if height is bigger than width, it's a portrait rectangle use width as the base
 		// if width and height are the same, it's a square use width as the base\
-		let base = width;
+		this.base = width;
 		if (width > height) {
-			base = height;
+			this.base = height;
 		}
 
-		this.w_shape = (base / 1.35 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
-		this.w_shape = constrain(this.w_shape, base / 5 - this.margin, base / 1.35 - this.margin);
+		this.w_shape = (this.base / 1.25 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1 / 10);
+		this.w_shape = constrain(this.w_shape, this.base / 5 - this.margin, this.base / 1.35 - this.margin);
 		// I want to make the width of the shape smaller as the number of shapes increases and the number of tries increases
 
 		if (this.type === 'rectangle') {
@@ -28,7 +28,7 @@ class Rect {
 		} else {
 			if (w === 0 && h === 0) {
 				this.ratio = random([1 / 40, 1 / 50, 1 / 70, 1 / 100]);
-				this.w = random(base / 5, base / 3);
+				this.w = random(this.base / 5, this.base / 3);
 				this.h = this.w * this.ratio;
 			} else {
 				this.ratio = w / h;
@@ -124,7 +124,7 @@ class Rect {
 	createTexture() {
 		let texture = [];
 		// make texture num relative to the size of the rectangle (the width and the height)
-		let texture_num = int(map(this.w, 0, width - this.margin, 1, 10, true));
+		let texture_num = int(map(this.w, this.base / 5 - this.margin, this.base / 1.35 - this.margin, 3, 10, true));
 
 		this.mask.push();
 		this.mask.translate(this.x, this.y);
@@ -161,7 +161,7 @@ class Rect {
 				let sw = map(this.h, 0, width - this.margin, 0, 3, true);
 				let shue = this.hue;
 				let ssaturation = this.saturation;
-				let sbrightness = constrain(this.brightness - 35, 10, 100);
+				let sbrightness = constrain(this.brightness - 35, 10, 90);
 				let salpha = 50;
 				let incr = sw;
 				let sRectWidth = this.w;
