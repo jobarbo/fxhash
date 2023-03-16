@@ -54,7 +54,7 @@ const borderModeArr = [
 
 const formatModeArr = [
 	// name, probability(0-100)
-	['portrait', 325],
+	['portrait', 25],
 	['landscape', 25],
 	['square', 50],
 ];
