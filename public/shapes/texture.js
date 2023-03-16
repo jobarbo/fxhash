@@ -54,7 +54,7 @@ class Texture {
 
 		this.offset = this.w / 2;
 		this.mask.noStroke();
-		this.mask.fill(this.hue, 0, 0, this.alpha / 1.5);
+		this.mask.fill(this.hue, 0, 0, this.alpha / 2);
 		this.mask.ellipse(this.x - this.offset, this.y - this.offset, this.w, this.w);
 		this.mask.fill(0, 100, this.bri, this.alpha);
 		this.mask.ellipse(this.x - this.offset, this.y + this.offset, this.w, this.w);

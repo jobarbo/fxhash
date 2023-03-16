@@ -77,7 +77,6 @@ function setup() {
 	}
 
 	createTexture(bgColor);
-	bgTextureDone = true;
 	checkTexturesAndDrawShapes(features, colorArr, angleArr, bgColor, bgHue, total_shape_num);
 }
 
