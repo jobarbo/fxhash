@@ -10,7 +10,7 @@ class Rect {
 			this.base = height;
 		}
 
-		this.w_shape = (this.base / 1.25 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1 / 10);
+		this.w_shape = (this.base / 1.35 - this.margin) / (all_shapes_num / 5 + id) / (tries + 1 / 20);
 		this.w_shape = constrain(this.w_shape, this.base / 5 - this.margin, this.base / 1.35 - this.margin);
 		// I want to make the width of the shape smaller as the number of shapes increases and the number of tries increases
 
@@ -161,7 +161,7 @@ class Rect {
 				let sw = map(this.h, 0, width - this.margin, 0, 3, true);
 				let shue = this.hue;
 				let ssaturation = this.saturation;
-				let sbrightness = constrain(this.brightness - 35, 10, 90);
+				let sbrightness = constrain(this.brightness - 50, 10, 90);
 				let salpha = 50;
 				let incr = sw;
 				let sRectWidth = this.w;
@@ -175,6 +175,9 @@ class Rect {
 					sRectWidth = sRectWidth - sw;
 					sRectHeight = sRectHeight - sw;
 					sbrightness += 0.5;
+					if (sbrightness > this.brightness) {
+						sbrightness = this.brightness;
+					}
 				}
 				pop();
 				//blendMode(BLEND);

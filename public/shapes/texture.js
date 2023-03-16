@@ -32,7 +32,7 @@ class Texture {
 		this.maxWidth = height / 550;
 		this.minWidth = height / 1000;
 
-		this.maxAlpha = map(this.shapeW, 0, width, 30, 100, true);
+		this.maxAlpha = map(this.shapeW, 0, width, 20, 60, true);
 
 		this.x = rdnX;
 		this.y = rdnY;
@@ -54,7 +54,7 @@ class Texture {
 
 		this.offset = this.w / 2;
 		this.mask.noStroke();
-		this.mask.fill(this.hue, 0, 0, this.alpha / 2);
+		this.mask.fill(this.hue, 0, 0, this.alpha / 1.5);
 		this.mask.ellipse(this.x - this.offset, this.y - this.offset, this.w, this.w);
 		this.mask.fill(0, 100, this.bri, this.alpha);
 		this.mask.ellipse(this.x - this.offset, this.y + this.offset, this.w, this.w);
