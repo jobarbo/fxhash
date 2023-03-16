@@ -59,6 +59,16 @@ const formatModeArr = [
 	['square', 33],
 ];
 
+const paletteModeArr = [
+	// name, probability(0-100)
+	['80s', 16.66],
+	['90s', 16.66],
+	['june', 16.66],
+	['coworking', 16.66],
+	['traditional', 16.66],
+	['mono', 16.66],
+];
+
 // all input parameters are optional, they will be chosen at random if not passed into the function
 function generate_composition_params(
 	shape_type,
@@ -67,7 +77,8 @@ function generate_composition_params(
 	rectangle_num,
 	bg_mode,
 	border_mode,
-	format_mode
+	format_mode,
+	palette_mode
 ) {
 	// SET DEFAULTS IF NOT PASSED IN
 	if (shape_type === undefined) {
@@ -104,6 +115,10 @@ function generate_composition_params(
 		format_mode = weighted_choice(formatModeArr);
 	}
 
+	if (palette_mode === undefined) {
+		palette_mode = weighted_choice(paletteModeArr);
+	}
+
 	//* EXCEPTIONS AND OVER-RIDES *//
 	// if necessary, add exceptions and over-rides here
 
@@ -116,6 +131,7 @@ function generate_composition_params(
 		bg_mode: bg_mode,
 		border_mode: border_mode,
 		format_mode: format_mode,
+		palette_mode: palette_mode,
 	};
 
 	//* RETURN PARAMETERS *//

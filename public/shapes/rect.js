@@ -42,6 +42,8 @@ class Rect {
 		this.bgSat = saturation(bgColor);
 		this.bgBright = brightness(bgColor);
 		this.sHue = hue(bgColor);
+		this.sSat = saturation(bgColor);
+		this.sBright = brightness(bgColor);
 		this.rotation = radians(random(angleArr));
 		this.color = random(colorArr);
 		this.hue = hue(this.color);
@@ -152,10 +154,10 @@ class Rect {
 				rotate(this.rotation);
 				noFill();
 				// make the stroke width relative to the size of the rectangle
-				let sw = map(this.h, 0, width - this.margin, 0.25, 3, true);
+				let sw = map(this.h, 0, width - this.margin, 0, 3, true);
 				let shue = this.hue;
 				let ssaturation = this.saturation;
-				let sbrightness = this.brightness - 35;
+				let sbrightness = constrain(this.brightness - 35, 10, 100);
 				let salpha = 50;
 				let incr = sw;
 				let sRectWidth = this.w;

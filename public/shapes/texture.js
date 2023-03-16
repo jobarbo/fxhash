@@ -48,7 +48,7 @@ class Texture {
 		this.w = map(noise(this.woff1), 0.6, 1, this.minWidth, this.maxWidth, true);
 		this.x = map(noise(this.xoff), 0, 1, this.mapXHigh, this.mapXLow, true);
 		this.y = map(noise(this.yoff), 0, 1, this.mapYHigh, this.mapYLow, true);
-		this.alpha = map(noise(this.woff1), 0.6, 1, 5, 100, true);
+		this.alpha = map(noise(this.woff1), 0.6, 1, 1, 35, true);
 
 		this.offset = this.w / 2;
 		this.mask.noStroke();

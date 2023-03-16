@@ -3,12 +3,13 @@ let features = '',
 	balls = [],
 	bgTextureDone = false,
 	rectDrawn = false,
-	margin = 0;
-format = {
-	portrait: [1600, 2000],
-	landscape: [2000, 1600],
-	square: [1600, 1600],
-};
+	margin = 0,
+	format = {
+		portrait: [1600, 2000],
+		landscape: [2000, 1600],
+		square: [1600, 1600],
+	},
+	paletteObj = '';
 
 function setup() {
 	features = window.$fxhashFeatures;
@@ -21,7 +22,7 @@ function setup() {
 	noiseSeed(fxrand() * 10000);
 	rectMode(CENTER);
 
-	margin = (width + height) / random([15, 25, 40, 50, 60, 80]);
+	margin = (width + height) / random([25, 40, 50, 60, 80]);
 
 	let bgHue = random([0, 10, 20, 30, 40, 50]);
 	let bgSat = 10;
@@ -29,19 +30,40 @@ function setup() {
 	let bgColor = color(bgHue, bgSat, bgBri);
 	background(bgColor);
 
-	let angleArr = [0, 45, 90, 135, 225, 270, 315];
-	let colorArr = [color(44, 96, 100), color(19, 97, 98), color(334, 100, 100), color(265, 76, 93), color(217, 77, 100)];
+	let angleArr = [0, 45, 90, 135];
+	let paletteObj = {
+		'80s': [color(44, 96, 100), color(19, 97, 98), color(334, 100, 100), color(265, 76, 93), color(217, 77, 100)],
+		'90s': [color(333, 85, 97), color(276, 95, 72), color(258, 93, 64), color(229, 72, 93), color(194, 68, 94)],
+		june: [color(199, 38, 90), color(192, 82, 74), color(200, 97, 48), color(43, 99, 100), color(32, 100, 98)],
+		coworking: [color(196, 49, 92), color(340, 80, 100), color(146, 36, 91), color(29, 98, 100)],
+		traditional: [
+			color(223, 80, 75),
+			color(145, 100, 60),
+			color(43, 88, 85),
+			color(16, 81, 85),
+			color(1, 96, 85),
+			color(334, 75, 75),
+		],
+		mono: [color(0, 0, 10), color(0, 0, 90)],
+	};
 
+	if (features.palette_mode === 'mono' && features.bg_mode === 'light') {
+		paletteObj.mono = [color(0, 0, 10)];
+	} else if (features.palette_mode === 'mono' && features.bg_mode === 'dark') {
+		paletteObj.mono = [color(0, 0, 90)];
+	}
+	let colorArr = paletteObj[features.palette_mode];
 	let total_shape_num = features.ellipse_num + features.rectangle_num;
 
 	if (features.border_mode === 'border') {
-		noStroke();
-		fill(bgHue, bgSat, features.bg_mode == 'light' ? 10 : 100);
+		strokeWeight(margin);
+		stroke(bgHue, bgSat, features.bg_mode == 'light' ? 10 : 100);
+		noFill();
 		rect(width / 2, height / 2, width - margin, height - margin);
 	}
 
 	createTexture(bgColor);
-
+	bgTextureDone = true;
 	checkTexturesAndDrawShapes(features, colorArr, angleArr, bgColor, bgHue, total_shape_num);
 }
 
@@ -66,7 +88,7 @@ function checkTexturesAndDrawShapes(features, colorArr, angleArr, bgColor, bgHue
 			if (features.shape_type.includes('ellipse')) {
 				const elIntervalId = setInterval(() => {
 					if (rectDrawn) {
-						createBalls(margin, colorArr, bgHue, rects, total_shape_num);
+						createBalls(margin, colorArr, bgColor, rects, total_shape_num);
 						clearInterval(elIntervalId);
 					}
 				}, 100);
@@ -75,13 +97,13 @@ function checkTexturesAndDrawShapes(features, colorArr, angleArr, bgColor, bgHue
 	}, 100);
 }
 
-function createBalls(margin, colorArr, bgHue, rects, totalShapes) {
+function createBalls(margin, colorArr, bgColor, rects, totalShapes) {
 	const ballNum = features.ellipse_num;
 	const balls = [];
 	let tries = 1;
 
 	for (let i = 0; i < ballNum; i++) {
-		let ball = new Ball(margin, colorArr, bgHue, ballNum, totalShapes, i + 1, 0);
+		let ball = new Ball(margin, colorArr, bgColor, ballNum, totalShapes, i + 1, 0);
 		let colliding = true;
 
 		do {
@@ -90,7 +112,7 @@ function createBalls(margin, colorArr, bgHue, rects, totalShapes) {
 				rects.some((r) => collideCirclePoly(ball.x, ball.y, ball.d, r.points, true));
 
 			if (colliding) {
-				ball = new Ball(margin, colorArr, bgHue, ballNum, totalShapes, i + 1, ++tries);
+				ball = new Ball(margin, colorArr, bgColor, ballNum, totalShapes, i + 1, ++tries);
 			}
 		} while (colliding);
 
