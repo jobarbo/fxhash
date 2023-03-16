@@ -49,13 +49,13 @@ function setup() {
 			color(1, 96, 85),
 			color(334, 75, 75),
 		],
-		mono: [color(0, 0, 10), color(0, 0, 90)],
+		mono: [color(bgHue, bgSat, 10), color(bgHue, bgSat, 90)],
 	};
 
 	if (features.palette_mode === 'mono' && features.bg_mode === 'light') {
-		paletteObj.mono = [color(0, 0, 10)];
+		paletteObj.mono = [color(bgHue, bgSat, 10)];
 	} else if (features.palette_mode === 'mono' && features.bg_mode === 'dark') {
-		paletteObj.mono = [color(0, 0, 90)];
+		paletteObj.mono = [color(bgHue, bgSat, 90)];
 	}
 	let colorArr = paletteObj[features.palette_mode];
 	let total_shape_num = features.ellipse_num + features.rectangle_num;
