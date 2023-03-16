@@ -15,7 +15,12 @@ function setup() {
 	features = window.$fxhashFeatures;
 
 	let formatMode = features.format_mode;
-	pixelDensity(2.0);
+	// if safari mobile use pixelDensity(2.0) to make the canvas bigger else use pixelDensity(3.0)
+	if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+		pixelDensity(2.0);
+	} else {
+		pixelDensity(3.0);
+	}
 	createCanvas(format[formatMode][0], format[formatMode][1]);
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 10000);
