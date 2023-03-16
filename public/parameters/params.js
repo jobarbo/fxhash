@@ -48,25 +48,25 @@ const bgModeArr = [
 
 const borderModeArr = [
 	// name, probability(0-100)
-	['none', 25],
-	['border', 75],
+	['none', 15],
+	['border', 85],
 ];
 
 const formatModeArr = [
 	// name, probability(0-100)
-	['portrait', 33],
-	['landscape', 33],
-	['square', 33],
+	['portrait', 325],
+	['landscape', 25],
+	['square', 50],
 ];
 
 const paletteModeArr = [
 	// name, probability(0-100)
-	['80s', 16.66],
-	['90s', 16.66],
-	['june', 16.66],
-	['coworking', 16.66],
-	['traditional', 16.66],
-	['mono', 16.66],
+	['80s', 20],
+	['90s', 20],
+	['june', 15],
+	['coworking', 15],
+	['traditional', 15],
+	['mono', 15],
 ];
 
 // all input parameters are optional, they will be chosen at random if not passed into the function
