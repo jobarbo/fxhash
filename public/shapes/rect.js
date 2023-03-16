@@ -17,7 +17,7 @@ class Rect {
 		if (this.type === 'rectangle') {
 			if (w === 0 && h === 0) {
 				// make the rectangle a random size but always 16:9 ratio
-				this.ratio = random([1 / 1, 1 / 2, 3 / 4, 9 / 16, 10 / 16]);
+				this.ratio = random([1 / 1, 1 / 3, 3 / 4, 9 / 16, 10 / 16]);
 				this.w = this.w_shape;
 				this.h = this.w * this.ratio;
 			} else {
