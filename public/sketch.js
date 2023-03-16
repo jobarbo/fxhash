@@ -5,9 +5,9 @@ let features = '',
 	rectDrawn = false,
 	margin = 0,
 	format = {
-		portrait: [1600, 2000],
-		landscape: [2000, 1600],
-		square: [1600, 1600],
+		portrait: [1500, 2000],
+		landscape: [2000, 1500],
+		square: [1500, 1500],
 	},
 	paletteObj = '';
 

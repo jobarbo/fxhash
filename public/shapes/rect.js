@@ -11,7 +11,7 @@ class Rect {
 		}
 
 		this.w_shape = (base / 1.35 - this.margin) / (all_shapes_num / 10 + id) / (tries + 1);
-		this.w_shape = constrain(this.w_shape, base / 4 - this.margin, base / 1.5 - this.margin);
+		this.w_shape = constrain(this.w_shape, base / 5 - this.margin, base / 1.35 - this.margin);
 		// I want to make the width of the shape smaller as the number of shapes increases and the number of tries increases
 
 		if (this.type === 'rectangle') {
