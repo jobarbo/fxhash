@@ -94,7 +94,7 @@ class Rect {
 		pop();
 		// create a new canvas graphics the same size as the canvas to draw textures on
 		this.mask = createGraphics(width, height);
-		this.mask.pixelDensity(1);
+		this.mask.pixelDensity(3.0);
 		this.mask.colorMode(HSB, 360, 100, 100, 100);
 		this.mask.rectMode(CENTER);
 		this.mask.background(this.color);
