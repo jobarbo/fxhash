@@ -9,7 +9,16 @@ let features = '',
 		landscape: [2000, 1500],
 		square: [1500, 1500],
 	},
-	paletteObj = '';
+	angles = {
+		straight: [0, 90],
+		diagonal: [45, 135],
+		straight_0: [0],
+		straight_90: [90],
+		diagonal_45: [45],
+		diagonal_135: [135],
+		random: [0, 90, 180, 270, 45, 135, 225, 315],
+	};
+paletteObj = '';
 
 function setup() {
 	features = window.$fxhashFeatures;
@@ -35,7 +44,7 @@ function setup() {
 	let bgColor = color(bgHue, bgSat, bgBri);
 	background(bgColor);
 
-	let angleArr = [0, 45, 90, 135, 225, 270];
+	let angleArr = angles[features.angle_mode];
 	let paletteObj = {
 		'80s': [color(44, 96, 100), color(19, 97, 98), color(334, 100, 100), color(265, 76, 93), color(217, 77, 100)],
 		'90s': [color(333, 85, 97), color(276, 95, 72), color(258, 93, 64), color(229, 72, 93), color(194, 68, 94)],
@@ -68,6 +77,7 @@ function setup() {
 	}
 
 	createTexture(bgColor);
+	bgTextureDone = true;
 	checkTexturesAndDrawShapes(features, colorArr, angleArr, bgColor, bgHue, total_shape_num);
 }
 

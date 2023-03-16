@@ -26,7 +26,7 @@ let composition_params;
 composition_params = generate_composition_params();
 //console.log(composition_params);
 
-var {shape_type, ellipse_num, line_num, rectangle_num, bg_mode, border_mode, format_mode, palette_mode} =
+var {shape_type, ellipse_num, line_num, rectangle_num, bg_mode, border_mode, format_mode, palette_mode, angle_mode} =
 	composition_params; // unpacking parameters we need in main.js and turning them into globals
 
 //* FXHASH FEATURES DEFINITION *//
@@ -39,6 +39,7 @@ window.$fxhashFeatures = {
 	border_mode: border_mode,
 	format_mode: format_mode,
 	palette_mode: palette_mode,
+	angle_mode: angle_mode,
 };
 
 //* CONSOLE LOGGING *//
@@ -74,7 +75,9 @@ console.log(
 	'\n',
 	'Format Mode -> ' + format_mode,
 	'\n',
-	'Palette Mode -> ' + palette_mode
+	'Palette Mode -> ' + palette_mode,
+	'\n',
+	'Angle Mode -> ' + angle_mode
 );
 
 console.log('%cCONTROLS', 'color: white; background: #000000;', '\n', 'cmd + s   : save artwork with date', '\n');

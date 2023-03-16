@@ -10,14 +10,14 @@ class Rect {
 			this.base = height;
 		}
 
-		this.w_shape = (this.base / 1.35 - this.margin) / (all_shapes_num / 5 + id) / (tries + 1 / 10);
-		this.w_shape = constrain(this.w_shape, this.base / 5 - this.margin, this.base / 1.35 - this.margin);
+		this.w_shape = (this.base / 2 - this.margin) / (all_shapes_num / 10 + id) / ((tries + 1) / 10);
+		this.w_shape = constrain(this.w_shape, this.base / 4 - this.margin, this.base / 2 - this.margin);
 		// I want to make the width of the shape smaller as the number of shapes increases and the number of tries increases
 
 		if (this.type === 'rectangle') {
 			if (w === 0 && h === 0) {
 				// make the rectangle a random size but always 16:9 ratio
-				this.ratio = random([1 / 1, 1 / 3, 3 / 4, 9 / 16, 10 / 16]);
+				this.ratio = random([1 / 1, 2 / 3, 3 / 4, 9 / 16, 10 / 16]);
 				this.w = this.w_shape;
 				this.h = this.w * this.ratio;
 			} else {
@@ -36,8 +36,8 @@ class Rect {
 				this.h = h;
 			}
 		}
-		this.x = random(margin + this.w / 1.5, width - margin - this.w / 1.5);
-		this.y = random(margin + this.w / 1.5, height - margin - this.w / 1.5);
+		this.x = random(margin + this.w / 1.35, width - margin - this.w / 1.35);
+		this.y = random(margin + this.w / 1.35, height - margin - this.w / 1.35);
 		this.bgHue = hue(bgColor);
 		this.bgSat = saturation(bgColor);
 		this.bgBright = brightness(bgColor);

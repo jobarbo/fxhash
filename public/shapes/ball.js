@@ -6,8 +6,8 @@ class Ball {
 			this.base = height;
 		}
 
-		this.w_shape = (this.base / 1.35 - this.margin) / (all_shapes_num / 5 + id) / ((tries + 1) / 10);
-		this.w_shape = constrain(this.w_shape, this.base / 4 - this.margin, this.base / 1.35 - this.margin);
+		this.w_shape = (this.base / 1.5 - this.margin) / (all_shapes_num / 5 + id) / ((tries + 1) / 10);
+		this.w_shape = constrain(this.w_shape, this.base / 6 - this.margin, this.base / 1.5 - this.margin);
 		if (r === 0) {
 			this.d = this.w_shape;
 			this.r = this.d / 2;
@@ -15,8 +15,8 @@ class Ball {
 			this.r = r;
 			this.d = this.r * 2;
 		}
-		this.x = random(margin + this.r, width - (this.r + margin));
-		this.y = random(margin + this.r, height - (this.r + margin));
+		this.x = random(margin + this.d / 1.35, width - margin - this.d / 1.35);
+		this.y = random(margin + this.d / 1.35, height - margin - this.d / 1.35);
 		this.sHue = bgHue;
 		this.color = random(colorArr);
 		this.hue = hue(this.color);

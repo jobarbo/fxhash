@@ -69,6 +69,15 @@ const paletteModeArr = [
 	['mono', 15],
 ];
 
+const angleModeArr = [
+	// name, probability(0-100)
+	['random', 20],
+	['straight', 20],
+	['diagonal', 20],
+	['diagonal_45', 20],
+	['diagonal_135', 20],
+];
+
 // all input parameters are optional, they will be chosen at random if not passed into the function
 function generate_composition_params(
 	shape_type,
@@ -78,7 +87,8 @@ function generate_composition_params(
 	bg_mode,
 	border_mode,
 	format_mode,
-	palette_mode
+	palette_mode,
+	angle_mode
 ) {
 	// SET DEFAULTS IF NOT PASSED IN
 	if (shape_type === undefined) {
@@ -119,6 +129,10 @@ function generate_composition_params(
 		palette_mode = weighted_choice(paletteModeArr);
 	}
 
+	if (angle_mode === undefined) {
+		angle_mode = weighted_choice(angleModeArr);
+	}
+
 	//* EXCEPTIONS AND OVER-RIDES *//
 	// if necessary, add exceptions and over-rides here
 
@@ -132,6 +146,7 @@ function generate_composition_params(
 		border_mode: border_mode,
 		format_mode: format_mode,
 		palette_mode: palette_mode,
+		angle_mode: angle_mode,
 	};
 
 	//* RETURN PARAMETERS *//
