@@ -28,7 +28,7 @@ function setup() {
 	if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
 		return;
 	} else {
-		pixelDensity(3);
+		pixelDensity(1);
 	}
 	createCanvas(format[formatMode][0], format[formatMode][1]);
 	colorMode(HSB, 360, 100, 100, 100);
