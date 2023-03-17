@@ -21,7 +21,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	--bodymargin: 10px;
-	--min: min(100vh, 100vw);
+	--min: min(100vw);
 	--hContent: var(--min);
 	--wContent: var(--min);
 }
@@ -39,6 +39,6 @@ canvas.p5Canvas {
 	height: auto !important;
 	max-width: var(--wContent);
 	max-height: var(--hContent);
-	max-height: 95vh;
+	max-height: 100vh;
 	width: auto !important;
 }
