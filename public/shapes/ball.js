@@ -48,7 +48,7 @@ class Ball {
 		this.mask = createGraphics(width, height);
 		// if safari mobile use pixelDensity(2.0) to make the canvas bigger else use pixelDensity(3.0)
 		if (iOSSafari) {
-			return;
+			this.mask.pixelDensity(1.0);
 		} else {
 			this.mask.pixelDensity(3.0);
 		}
