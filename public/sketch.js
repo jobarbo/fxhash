@@ -28,11 +28,11 @@ function setup() {
 	if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
 		console.log('safari');
 		// if the browser is safari, set the pixel density to 2.0
-		this.mask.pixelDensity(2.0);
+		pixelDensity(2.0);
 	} else {
 		console.log(navigator.userAgent);
 		// if the browser is not safari, set the pixel density to 3.0
-		this.mask.pixelDensity(3.0);
+		pixelDensity(3.0);
 	}
 	createCanvas(format[formatMode][0], format[formatMode][1]);
 	colorMode(HSB, 360, 100, 100, 100);
