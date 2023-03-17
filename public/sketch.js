@@ -24,20 +24,18 @@ function setup() {
 	features = window.$fxhashFeatures;
 
 	let formatMode = features.format_mode;
-	console.log(windowWidth); // 1920
+	var ua = window.navigator.userAgent;
+	var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+	var webkit = !!ua.match(/WebKit/i);
+	var iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+	console.log(ua);
+	console.log(iOS);
+	console.log(webkit);
+	console.log(iOSSafari);
 	// if safari mobile use pixelDensity(2.0) to make the canvas bigger else use pixelDensity(3.0)
-	if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
-		console.log('safari');
-		if (windowWidth < 700) {
-			console.log('safari mobile');
-			return;
-		} else {
-			console.log('safari desktop');
-			pixelDensity(3.0);
-		}
+	if (iOSSafari) {
+		return;
 	} else {
-		console.log(navigator.userAgent);
-		// if the browser is not safari, set the pixel density to 3.0
 		pixelDensity(3.0);
 	}
 	createCanvas(format[formatMode][0], format[formatMode][1]);

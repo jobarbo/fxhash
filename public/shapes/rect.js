@@ -92,19 +92,18 @@ class Rect {
 		// make the stroke inside the rectangle
 		strokeWeight(15);
 		pop();
+
+		var ua = window.navigator.userAgent;
+		var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+		var webkit = !!ua.match(/WebKit/i);
+		var iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+
 		// create a new canvas graphics the same size as the canvas to draw textures on
 		this.mask = createGraphics(width, height);
-		if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
-			// if the browser is safari, set the pixel density to 2.0
-			if (windowWidth < 700) {
-				console.log('safari mobile');
-				return;
-			} else {
-				console.log('safari desktop');
-				this.mask.pixelDensity(2.0);
-			}
+		// if safari mobile use pixelDensity(2.0) to make the canvas bigger else use pixelDensity(3.0)
+		if (iOSSafari) {
+			return;
 		} else {
-			// if the browser is not safari, set the pixel density to 3.0
 			this.mask.pixelDensity(3.0);
 		}
 		this.mask.colorMode(HSB, 360, 100, 100, 100);
