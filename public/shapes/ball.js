@@ -41,8 +41,10 @@ class Ball {
 
 		this.mask = createGraphics(width, height);
 		if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+			// if the browser is safari, set the pixel density to 2.0
 			this.mask.pixelDensity(2.0);
 		} else {
+			// if the browser is not safari, set the pixel density to 3.0
 			this.mask.pixelDensity(3.0);
 		}
 		this.mask.colorMode(HSB, 360, 100, 100, 100);
