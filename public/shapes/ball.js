@@ -40,6 +40,11 @@ class Ball {
 		pop();
 
 		this.mask = createGraphics(width, height);
+		if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+			this.mask.pixelDensity(2.0);
+		} else {
+			this.mask.pixelDensity(3.0);
+		}
 		this.mask.colorMode(HSB, 360, 100, 100, 100);
 		this.mask.background(this.color);
 
