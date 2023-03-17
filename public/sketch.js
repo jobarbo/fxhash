@@ -34,7 +34,7 @@ function setup() {
 	console.log(iOSSafari);
 	// if safari mobile use pixelDensity(2.0) to make the canvas bigger else use pixelDensity(3.0)
 	if (iOSSafari) {
-		return;
+		pixelDensity(1.0);
 	} else {
 		pixelDensity(3.0);
 	}
