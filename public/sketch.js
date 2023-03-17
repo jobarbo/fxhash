@@ -27,8 +27,13 @@ function setup() {
 	// if safari mobile use pixelDensity(2.0) to make the canvas bigger else use pixelDensity(3.0)
 	if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
 		console.log('safari');
-		// if the browser is safari, set the pixel density to 2.0
-		pixelDensity(2.0);
+		if (windowWidth < 700) {
+			console.log('safari mobile');
+			return;
+		} else {
+			console.log('safari desktop');
+			pixelDensity(3.0);
+		}
 	} else {
 		console.log(navigator.userAgent);
 		// if the browser is not safari, set the pixel density to 3.0
