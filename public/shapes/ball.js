@@ -79,7 +79,6 @@ class Ball {
 			let result = sketch_texture.next();
 
 			if (result.done) {
-				this.textureDone = true;
 				this.mask.drawingContext.globalCompositeOperation = 'destination-in';
 				this.mask.noStroke();
 				this.mask.fill(this.color);
@@ -113,7 +112,7 @@ class Ball {
 					sbrightness += sbrightnessInc;
 					ssaturation += ssaturationInc;
 				}
-
+				this.textureDone = true;
 				clearInterval(interval);
 			}
 		}, 0);
@@ -132,5 +131,8 @@ class Ball {
 				}
 			}
 		}
+	}
+	isTextureDone() {
+		return this.textureDone;
 	}
 }

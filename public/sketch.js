@@ -20,6 +20,9 @@ let features = '',
 	};
 paletteObj = '';
 
+rectTextureDone = false;
+ballTextureDone = false;
+
 function setup() {
 	features = window.$fxhashFeatures;
 
@@ -113,11 +116,47 @@ function checkTexturesAndDrawShapes(features, colorArr, angleArr, bgColor, bgHue
 			}
 		}
 	}, 100);
+
+	const previewInterval = setInterval(() => {
+		if (bgTextureDone) {
+			// check if textures are done
+			// make rectTextureDoneArr the same length as rects
+			let rectTextureDoneArr = Array.from({length: rects.length}, () => false);
+			let ballTextureDoneArr = Array.from({length: balls.length}, () => false);
+
+			for (let i = 0; i < rects.length; i++) {
+				rectTextureDoneArr[i] = rects[i].isTextureDone();
+			}
+			for (let i = 0; i < balls.length; i++) {
+				ballTextureDoneArr[i] = balls[i].isTextureDone();
+			}
+
+			const rectTexturesDoneCount = rectTextureDoneArr.filter((val) => val === true).length;
+			const ballTexturesDoneCount = ballTextureDoneArr.filter((val) => val === true).length;
+
+			if (rects.length === 0) {
+				rectTextureDone = true;
+			} else {
+				rectTextureDone = rectTexturesDoneCount === rects.length;
+			}
+
+			if (balls.length === 0) {
+				ballTextureDone = true;
+			} else {
+				ballTextureDone = ballTexturesDoneCount === balls.length;
+			}
+
+			if (rectTextureDone && ballTextureDone) {
+				console.log('done');
+				fxpreview();
+				clearInterval(previewInterval);
+			}
+		}
+	}, 200);
 }
 
 function createBalls(margin, colorArr, bgColor, rects, totalShapes) {
 	const ballNum = features.ellipse_num;
-	const balls = [];
 
 	for (let i = 0; i < ballNum; i++) {
 		let tries = 1;
@@ -165,7 +204,6 @@ function createRectangles(margin, colorArr, angleArr, bgColor, rectType, lineNum
 
 function createTexture(bgColor) {
 	let texture = [];
-	console.time('drawTexture');
 	for (let index = 0; index < 5; index++) {
 		const rdnX = random(0, width);
 		const rdnY = random(0, height);
@@ -177,7 +215,6 @@ function createTexture(bgColor) {
 		let result = sketch_texture.next();
 		if (result.done) {
 			bgTextureDone = true;
-			console.timeEnd('drawTexture');
 			clearInterval(interval);
 		}
 	}, 0);

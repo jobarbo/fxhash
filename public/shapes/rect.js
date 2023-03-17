@@ -148,7 +148,7 @@ class Rect {
 			let result = sketch_texture.next();
 			if (result.done) {
 				this.mask.noStroke();
-				this.textureDone = true;
+
 				this.mask.drawingContext.globalCompositeOperation = 'destination-in';
 				this.mask.noStroke();
 
@@ -194,6 +194,7 @@ class Rect {
 				}
 				pop();
 				//blendMode(BLEND);
+				this.textureDone = true;
 				clearInterval(interval);
 			}
 		}, 0);
@@ -212,5 +213,9 @@ class Rect {
 				}
 			}
 		}
+	}
+
+	isTextureDone() {
+		return this.textureDone;
 	}
 }
