@@ -88,14 +88,13 @@ class Ball {
 
 				noFill();
 				// make the stroke width relative to the size of the circle
-				let sw = map(this.d, 0, width - this.margin, 0.25, 3, true);
+				let sw = map(this.d, 0, width - this.margin, 0.25, 2, true);
 				let shue = this.hue;
 				let ssaturation = constrain(this.sat + 40, 10, 100);
 				let sbrightness = constrain(this.bri - 40, 10, 100);
 				let sbrightnessInc = 0.5;
 				let ssaturationInc = 0.5;
 				if (this.sBright > 50) {
-					console.log(this.sBright);
 					sbrightness = constrain(this.bri + 50, 10, 100);
 					sbrightnessInc = -0.15;
 					ssaturation = constrain(this.sat - 50, 10, 100);

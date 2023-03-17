@@ -165,7 +165,7 @@ class Rect {
 				rotate(this.rotation);
 				noFill();
 				// make the stroke width relative to the size of the rectangle
-				let sw = map(this.h, 0, width - this.margin, 0.01, 3, true);
+				let sw = map(this.h, 0, width - this.margin, 0.01, 2, true);
 				let shue = this.hue;
 				let ssaturation = constrain(this.saturation + 40, 10, 100);
 				let sbrightness = constrain(this.brightness - 40, 10, 100);
