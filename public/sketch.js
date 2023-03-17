@@ -26,8 +26,8 @@ function setup() {
 	let formatMode = features.format_mode;
 	// if safari mobile use pixelDensity(2.0) to make the canvas bigger else use pixelDensity(3.0)
 
-	pixelDensity(3.0);
 	createCanvas(format[formatMode][0], format[formatMode][1]);
+	pixelDensity(3);
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
