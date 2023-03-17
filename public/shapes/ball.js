@@ -1,5 +1,5 @@
 class Ball {
-	constructor(margin, colorArr, bgHue, ballNum, all_shapes_num, id, tries, r = 0) {
+	constructor(margin, colorArr, bgColor, ballNum, all_shapes_num, id, tries, r = 0) {
 		this.margin = margin;
 		this.base = width;
 		if (width > height) {
@@ -17,7 +17,9 @@ class Ball {
 		}
 		this.x = random(margin + this.d / 1.35, width - margin - this.d / 1.35);
 		this.y = random(margin + this.d / 1.35, height - margin - this.d / 1.35);
-		this.sHue = bgHue;
+		this.sHue = hue(bgColor);
+		this.sSat = saturation(bgColor);
+		this.sBright = brightness(bgColor);
 		this.color = random(colorArr);
 		this.hue = hue(this.color);
 		this.sat = saturation(this.color);
@@ -88,8 +90,17 @@ class Ball {
 				// make the stroke width relative to the size of the circle
 				let sw = map(this.d, 0, width - this.margin, 0.25, 3, true);
 				let shue = this.hue;
-				let ssaturation = this.sat;
-				let sbrightness = constrain(this.bri - 35, 10, 90);
+				let ssaturation = constrain(this.sat + 40, 10, 100);
+				let sbrightness = constrain(this.bri - 40, 10, 100);
+				let sbrightnessInc = 0.5;
+				let ssaturationInc = 0.5;
+				if (this.sBright > 50) {
+					console.log(this.sBright);
+					sbrightness = constrain(this.bri + 50, 10, 100);
+					sbrightnessInc = -0.15;
+					ssaturation = constrain(this.sat - 50, 10, 100);
+					ssaturationInc = +0.15;
+				}
 				let salpha = 50;
 				let incr = sw;
 				let sElWidth = this.d;
@@ -97,13 +108,11 @@ class Ball {
 				for (let i = 0; i < 50; i++) {
 					stroke(shue, ssaturation, sbrightness, salpha);
 					strokeWeight(sw);
-					ellipse(this.x, this.y, sElWidth - sw, sElWidth - sw);
+					ellipse(this.x, this.y, sElWidth - sw + 1, sElWidth - sw + 1);
 					salpha = salpha - 1;
 					sElWidth = sElWidth - sw;
-					sbrightness += 0.5;
-					if (sbrightness > this.brightness) {
-						sbrightness = this.brightness;
-					}
+					sbrightness += sbrightnessInc;
+					ssaturation += ssaturationInc;
 				}
 
 				clearInterval(interval);

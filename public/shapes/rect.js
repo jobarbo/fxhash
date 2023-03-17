@@ -165,10 +165,18 @@ class Rect {
 				rotate(this.rotation);
 				noFill();
 				// make the stroke width relative to the size of the rectangle
-				let sw = map(this.h, 0, width - this.margin, 0, 3, true);
+				let sw = map(this.h, 0, width - this.margin, 0.01, 3, true);
 				let shue = this.hue;
-				let ssaturation = this.saturation;
-				let sbrightness = constrain(this.brightness - 50, 10, 90);
+				let ssaturation = constrain(this.saturation + 40, 10, 100);
+				let sbrightness = constrain(this.brightness - 40, 10, 100);
+				let sbrightnessInc = 0.5;
+				let ssaturationInc = 0.5;
+				if (this.sBright > 50) {
+					sbrightness = constrain(this.brightness + 50, 10, 100);
+					sbrightnessInc = -0.15;
+					ssaturation = constrain(this.saturation - 50, 10, 100);
+					ssaturationInc = +0.15;
+				}
 				let salpha = 50;
 				let incr = sw;
 				let sRectWidth = this.w;
@@ -181,10 +189,8 @@ class Rect {
 					salpha = salpha - 1;
 					sRectWidth = sRectWidth - sw;
 					sRectHeight = sRectHeight - sw;
-					sbrightness += 0.5;
-					if (sbrightness > this.brightness) {
-						sbrightness = this.brightness;
-					}
+					sbrightness += sbrightnessInc;
+					ssaturation += ssaturationInc;
 				}
 				pop();
 				//blendMode(BLEND);

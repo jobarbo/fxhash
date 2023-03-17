@@ -55,9 +55,9 @@ function setup() {
 	let angleArr = angles[features.angle_mode];
 	let paletteObj = {
 		'80s': [color(44, 96, 100), color(19, 97, 98), color(334, 100, 100), color(265, 76, 93), color(217, 77, 100)],
-		'90s': [color(333, 85, 97), color(276, 95, 72), color(258, 93, 64), color(229, 72, 93), color(194, 68, 94)],
-		june: [color(199, 38, 90), color(192, 82, 74), color(200, 97, 48), color(43, 99, 100), color(32, 100, 98)],
-		coworking: [color(196, 49, 92), color(340, 80, 100), color(146, 36, 91), color(29, 98, 100)],
+		'90s': [color(333, 85, 97), color(276, 95, 72), color(258, 93, 64), color(229, 72, 93), color(194, 68, 88)],
+		june: [color(199, 56, 90), color(192, 82, 74), color(200, 97, 48), color(43, 99, 100), color(32, 100, 98)],
+		mango: [color(196, 69, 92), color(340, 80, 92), color(146, 66, 91), color(29, 98, 92), color(45, 100, 90)],
 		traditional: [
 			color(223, 80, 75),
 			color(145, 100, 60),
@@ -85,6 +85,7 @@ function setup() {
 	}
 
 	createTexture(bgColor);
+	bgTextureDone = true;
 	checkTexturesAndDrawShapes(features, colorArr, angleArr, bgColor, bgHue, total_shape_num);
 }
 

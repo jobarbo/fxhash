@@ -64,7 +64,7 @@ const paletteModeArr = [
 	['80s', 20],
 	['90s', 20],
 	['june', 15],
-	['coworking', 15],
+	['mango', 15],
 	['traditional', 15],
 	['mono', 15],
 ];
