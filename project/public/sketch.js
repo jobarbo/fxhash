@@ -24,7 +24,8 @@ rectTextureDone = false;
 ballTextureDone = false;
 
 function setup() {
-	features = window.$fxhashFeatures;
+	console.log($fx.getFeatures());
+	features = $fx.getFeatures();
 
 	let formatMode = features.format_mode;
 	var ua = window.navigator.userAgent;
