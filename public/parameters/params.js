@@ -71,11 +71,11 @@ const paletteModeArr = [
 
 const angleModeArr = [
 	// name, probability(0-100)
-	['random', 20],
-	['straight', 20],
-	['diagonal', 20],
-	['diagonal_45', 20],
-	['diagonal_135', 20],
+	['random', 10],
+	['straight', 30],
+	['diagonal', 40],
+	['diagonal_45', 10],
+	['diagonal_135', 10],
 ];
 
 // all input parameters are optional, they will be chosen at random if not passed into the function

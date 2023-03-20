@@ -42,6 +42,18 @@ window.$fxhashFeatures = {
 	angle_mode: angle_mode,
 };
 
+$fx.features({
+	shape_type: shape_type,
+	ellipse_num: ellipse_num,
+	line_num: line_num,
+	rectangle_num: rectangle_num,
+	bg_mode: bg_mode,
+	border_mode: border_mode,
+	format_mode: format_mode,
+	palette_mode: palette_mode,
+	angle_mode: angle_mode,
+});
+
 //* CONSOLE LOGGING *//
 
 var jbarbeau_logo =
