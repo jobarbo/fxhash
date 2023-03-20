@@ -42,6 +42,8 @@ window.$fxhashFeatures = {
 	angle_mode: angle_mode,
 };
 
+console.log($fx);
+
 $fx.features({
 	shape_type: shape_type,
 	ellipse_num: ellipse_num,
