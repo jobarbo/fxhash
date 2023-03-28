@@ -260,7 +260,7 @@ class Mountains {
 			lineAlpha -= 5;
 		}
 		this.outlineTextureDone = true;
-		console.log('outlineTextureDone');
+		console.log('outlineTextureDonse');
 	}
 	drawMask() {
 		this.mask.drawingContext.globalCompositeOperation = 'destination-in';
