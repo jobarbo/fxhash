@@ -7,7 +7,7 @@ function setup() {
 	pixelDensity(2.0);
 	createCanvas(1000, 1000);
 	colorMode(HSB, 360, 100, 100, 100);
-	background(40, 5, 10);
+	background(40, 0, 100);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
 
@@ -46,20 +46,27 @@ function setup() {
 }
 
 function draw() {
-	stroke(0, 0, 100, 100);
+	stroke(0, 0, 0, 100);
 
 	strokeWeight(3);
 
-	horizon.draw();
+	noStroke();
+	fill(0, 100, 0, 100);
+	noFill();
+	stroke(0, 100, 0, 100);
+	ellipse(ellipseX, ellipseY - ellipseR / 2, ellipseR, ellipseR);
+	strokeWeight(1.5);
+	ellipse(ellipseX, ellipseY - ellipseR / 2, ellipseR / 5, ellipseR / 5);
+	line(0, 0, ellipseX, ellipseY - ellipseR / 2);
+	line(width, 0, ellipseX, ellipseY - ellipseR / 2);
+	line(0, height, ellipseX, ellipseY - ellipseR / 2);
+	line(width, height, ellipseX, ellipseY - ellipseR / 2);
 
 	// draw a rect at the horizon line full width that goes to the bottom of the canvas
-	fill(111, 30, 100, 100);
+	fill(111, 30, 0, 100);
 	rect(0, horizon.y, width, height);
 
+	horizon.draw();
+
 	// always draw the ellipse on the top half of the canvas
-
-	noStroke();
-	fill(325, 100, 100, 100);
-
-	ellipse(ellipseX, ellipseY - ellipseR / 2, 100, 100);
 }
