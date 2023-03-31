@@ -134,19 +134,18 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 	let newSaturation = map(noiseFactor, 0, 1, 100, 20);
 	let newBrightness = map(noiseFactor, 0, 1, 20, 95);
 	let angle = map(noiseFactor, 0, 1, 0, baseAngle);
-	let sw = map(noiseFactor, 0, 1, maxsw, width / 8000);
-	let len = map(noiseFactor, 0, 1, width / 8000, baselen + random(0, baselen / 5));
+	let sw = map(noiseFactor, 0, 1, maxsw, width / 8000, true);
+	let len = map(noiseFactor, 0, 1, width / 8000, baselen + random(0, baselen / 100), true);
 
 	push();
 	translate(x, y);
 	rotate(angle);
 
-	strokeWeight(sw);
-	stroke(newHue, newSaturation, newBrightness, 100);
-	fill(newHue, newSaturation, newBrightness, 100);
-	line(0, 0, len, 0);
-
 	if (noiseFactor > 0.5) {
+		strokeWeight(sw);
+		stroke(newHue, newSaturation, newBrightness, 100);
+		fill(newHue, newSaturation, newBrightness, 100);
+		//line(0, 0, len, 0);
 		strokeWeight(2);
 		stroke(newHue, newSaturation + 10, newBrightness - 35, 15);
 		if (reliefMode == 'rocky') {
@@ -155,11 +154,19 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 			ellipse(len, random(-len / 10, len / 10), sw / 3, sw * 3); // draw an ellipse
 		}
 	} else {
+		strokeWeight(sw);
+		stroke(190, newSaturation, newBrightness, 100);
+		fill(newHue, newSaturation, newBrightness, 100);
+		line(0, 0, len, 0);
+
 		// draw beaches
 		noFill();
 		strokeWeight(5);
 		stroke(newHue, 5, 95, 10);
-		ellipse(len, len / 5, len / 5, len / 10);
+		ellipse(len, len / 2, len / 5, len / 5);
+
+		stroke(190, 100, newBrightness - 10, 10);
+		ellipse(0, 0, len / 5);
 	}
 	pop();
 }
