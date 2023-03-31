@@ -113,9 +113,9 @@ function setup() {
 			text(txt, border + (textWidth(txt) + width / 40) / 2, border + textAscent(txt) / 1.5);
 
 			// draw texture
-			createTexture(hue);
+			//createTexture(hue);
 
-			fxpreview();
+			//fxpreview();
 		}
 	}, 0);
 }
