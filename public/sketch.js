@@ -145,7 +145,7 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 		strokeWeight(sw);
 		stroke(newHue, newSaturation, newBrightness, 100);
 		fill(newHue, newSaturation, newBrightness, 100);
-		//line(0, 0, len, 0);
+		line(0, 0, len, 0);
 		strokeWeight(2);
 		stroke(newHue, newSaturation + 10, newBrightness - 35, 15);
 		if (reliefMode == 'rocky') {
@@ -153,6 +153,18 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 		} else {
 			ellipse(len, random(-len / 10, len / 10), sw / 3, sw * 3); // draw an ellipse
 		}
+		/*
+		clouds
+		if (noiseFactor > 0.6) {
+			if (frameCount % int(random([1, 2, 10, 12, 27, 61, 111, 456, 777])) == 0) {
+				noFill();
+				strokeWeight(5);
+				stroke(newHue, 5, 95, 10);
+				rotate(-angle);
+				ellipse(len, -len * 4, random(len), random(len) * random(1, 3));
+				rotate(angle);
+			}
+		} */
 	} else {
 		strokeWeight(sw);
 		stroke(190, newSaturation, newBrightness, 100);
@@ -162,7 +174,7 @@ function drawLine(x, y, noiseFactor, baselen, hue, hueSteps, maxsw, baseAngle, r
 		// draw beaches
 		noFill();
 		strokeWeight(5);
-		stroke(newHue, 5, 95, 10);
+		stroke(45, 15, 95, 10);
 		ellipse(len, len / 2, len / 5, len / 5);
 
 		stroke(190, 100, newBrightness - 10, 10);
