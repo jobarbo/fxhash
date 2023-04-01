@@ -3,6 +3,7 @@ let ellipseX = '';
 let ellipseY = '';
 let ellipseR = '';
 let horizon_lineArr = [];
+let vanishing_point = '';
 function setup() {
 	pixelDensity(2.0);
 	createCanvas(1000, 1000);
@@ -35,10 +36,11 @@ function setup() {
 
 		height,
 	];
+
 	let horizon_line = random(horizon_lineArr);
 
-	console.log('horizon line: ' + horizon_line);
 	horizon = new Horizon(horizon_line);
+	vanishing_point = new VanishingPoint(random(0, width), horizon.y);
 
 	ellipseX = random(width);
 	ellipseY = horizon.y;
@@ -46,27 +48,24 @@ function setup() {
 }
 
 function draw() {
-	stroke(0, 0, 0, 100);
-
-	strokeWeight(3);
-
-	noStroke();
-	fill(0, 100, 0, 100);
-	noFill();
+	noLoop();
+	/* 	noFill();
 	stroke(0, 100, 0, 100);
 	ellipse(ellipseX, ellipseY, ellipseR, ellipseR);
 	strokeWeight(1.5);
 	ellipse(ellipseX, ellipseY, ellipseR / 5, ellipseR / 5);
 	line(0, 0, ellipseX, ellipseY);
 	line(width, 0, ellipseX, ellipseY);
+	stroke(0, 0, 100, 100);
 	line(0, height, ellipseX, ellipseY);
-	line(width, height, ellipseX, ellipseY);
-
-	// draw a rect at the horizon line full width that goes to the bottom of the canvas
-	fill(111, 30, 0, 100);
-	rect(0, horizon.y, width, height);
-
-	horizon.draw();
-
+	line(width, height, ellipseX, ellipseY); */
 	// always draw the ellipse on the top half of the canvas
+}
+
+function keyPressed() {
+	// if user presses 'd' key, toggle debug mode
+	if (keyIsDown(68)) {
+		horizon.debug = !horizon.debug;
+		vanishing_point.debug = !vanishing_point.debug;
+	}
 }
