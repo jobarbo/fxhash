@@ -37,12 +37,12 @@ function setup() {
 	];
 	let horizon_line = random(horizon_lineArr);
 
-	ellipseX = random(width);
-	ellipseY = random(horizon_line);
-	ellipseR = 100;
-
 	console.log('horizon line: ' + horizon_line);
 	horizon = new Horizon(horizon_line);
+
+	ellipseX = random(width);
+	ellipseY = horizon.y;
+	ellipseR = 100;
 }
 
 function draw() {
@@ -54,13 +54,13 @@ function draw() {
 	fill(0, 100, 0, 100);
 	noFill();
 	stroke(0, 100, 0, 100);
-	ellipse(ellipseX, ellipseY - ellipseR / 2, ellipseR, ellipseR);
+	ellipse(ellipseX, ellipseY, ellipseR, ellipseR);
 	strokeWeight(1.5);
-	ellipse(ellipseX, ellipseY - ellipseR / 2, ellipseR / 5, ellipseR / 5);
-	line(0, 0, ellipseX, ellipseY - ellipseR / 2);
-	line(width, 0, ellipseX, ellipseY - ellipseR / 2);
-	line(0, height, ellipseX, ellipseY - ellipseR / 2);
-	line(width, height, ellipseX, ellipseY - ellipseR / 2);
+	ellipse(ellipseX, ellipseY, ellipseR / 5, ellipseR / 5);
+	line(0, 0, ellipseX, ellipseY);
+	line(width, 0, ellipseX, ellipseY);
+	line(0, height, ellipseX, ellipseY);
+	line(width, height, ellipseX, ellipseY);
 
 	// draw a rect at the horizon line full width that goes to the bottom of the canvas
 	fill(111, 30, 0, 100);
