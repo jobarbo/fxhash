@@ -52,6 +52,14 @@ function setup() {
 
 function draw() {
 	noLoop();
+
+	// check if key 68 is pressed
+	// if so, toggle debug mode
+	if (keyIsDown(68)) {
+		horizon.debug = !horizon.debug;
+		vanishing_point.debug = !vanishing_point.debug;
+	}
+
 	/* 	noFill();
 	stroke(0, 100, 0, 100);
 	ellipse(ellipseX, ellipseY, ellipseR, ellipseR);
@@ -63,12 +71,4 @@ function draw() {
 	line(0, height, ellipseX, ellipseY);
 	line(width, height, ellipseX, ellipseY); */
 	// always draw the ellipse on the top half of the canvas
-}
-
-function keyPressed() {
-	// if user presses 'd' key, toggle debug mode
-	if (keyIsDown(68)) {
-		horizon.debug = !horizon.debug;
-		vanishing_point.debug = !vanishing_point.debug;
-	}
 }
