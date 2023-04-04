@@ -40,7 +40,10 @@ function setup() {
 	let horizon_line = random(horizon_lineArr);
 
 	horizon = new Horizon(horizon_line);
-	vanishing_point = new VanishingPoint(random(0, width), horizon.y);
+	vanishing_point = new VanishingPoint(random(0, width), horizon.y, 1);
+
+	horizon.debug = true;
+	vanishing_point.debug = true;
 
 	ellipseX = random(width);
 	ellipseY = horizon.y;
