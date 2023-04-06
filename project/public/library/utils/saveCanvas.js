@@ -26,19 +26,13 @@ function saveArtwork() {
 	];
 	var d = new Date();
 	var datestring =
-		dayoftheweek[d.getDay()] +
-		'_' +
-		monthoftheyear[d.getMonth()] +
-		'_' +
 		d.getDate() +
+		'_' +
+		`${d.getMonth() + 1}` +
 		'_' +
 		d.getFullYear() +
 		'_' +
-		d.getHours() +
-		'_' +
-		d.getMinutes() +
-		'_' +
-		d.getSeconds();
+		`${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
 	var fileName = datestring + '.png';
 
 	save(fileName);
