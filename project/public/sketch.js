@@ -1,5 +1,7 @@
+let features = '';
+
 function setup() {
-	console.log($fx.getFeatures());
+	console.log(features);
 	features = $fx.getFeatures();
 
 	let formatMode = features.format_mode;
@@ -18,8 +20,20 @@ function setup() {
 	colorMode(HSB, 360, 100, 100, 100);
 	randomSeed(fxrand() * 10000);
 	noiseSeed(fxrand() * 10000);
+	console.log(features);
+}
+
+function draw() {
+	// put drawing code here
 	background(255);
 	noStroke();
 	fill(0, 100, 100);
-	ellipse(width / 2, height / 2, 100, 100);
+
+	if (features.shape_type == 'ellipse') {
+		ellipse(mouseX, mouseY, 100, 100);
+	}
+	if (features.shape_type == 'rectangle') {
+		rectMode(CENTER);
+		rect(mouseX, mouseY, 100, 100);
+	}
 }
