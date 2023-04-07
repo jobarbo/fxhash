@@ -3,3 +3,4 @@ dist/
 dist-zipped/
 yarn.lock
 public/library/
+project/public/library/
