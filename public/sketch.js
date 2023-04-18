@@ -1,14 +1,14 @@
 let bleed = 0;
 let inc = 0.02;
 let cells = [];
-let w = Math.floor(15 * 300);
-let h = Math.floor(15 * 300);
+let w = Math.floor(22 * 300);
+let h = Math.floor(30 * 300);
 let p_d = 3;
 
 function setup() {
 	createCanvas(w, h);
 	noLoop();
-	pixelDensity(3);
+	pixelDensity(1);
 	colorMode(HSB, 360, 100, 100, 100);
 	background(10, 0, 10, 100);
 	rectMode(CENTER);

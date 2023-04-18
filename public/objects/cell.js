@@ -37,30 +37,30 @@ class Cell {
 	createNoise() {
 		let nx = this.x,
 			ny = this.y,
-			a = 900.5,
-			sc = 0.002,
+			a = 9,
+			sc = 0.001,
 			dx,
 			dy;
 
-		dx = n3(nx, ny, sc, 0);
-		dy = n3(nx, ny, sc, 1);
+		dx = oct3(nx, ny, sc, 1);
+		dy = oct3(nx, ny, sc, 2);
 		nx += dx * a;
 		ny += dy * a;
 
-		dx = n3(nx, ny, sc, 0);
-		dy = n3(nx, ny, sc, 1);
+		dx = oct3(nx, ny, sc, 2);
+		dy = oct3(nx, ny, sc, 3);
 		nx += dx * a;
 		ny += dy * a;
 
-		dx = n3(nx, ny, sc, 0);
-		dy = n3(nx, ny, sc, 1);
+		dx = oct3(nx, ny, sc, 0);
+		dy = oct3(nx, ny, sc, 1);
 		nx += dx * a;
 		ny += dy * a;
 
 		//this.noise = noise(this.xoff, this.yoff);
 		//this.index = int(map(this.noise, 0.2, 0.8, 0, this.biomes.length - 1, true));
 
-		this.noise = n3(nx, ny, 0.005, 2);
+		this.noise = oct3(nx, ny, 0.001, 1);
 		this.index = int(map(this.noise, -0.5, 0.5, 0, this.biomes.length - 1, true));
 
 		this.hue = this.biomes[this.index][0];

@@ -117,7 +117,7 @@ let palettes = {
 // choose a random key from the palettes object
 // chose a random key from the key array using math.random
 let themeArray = Object.keys(palettes);
-let randomThemeKey = themeArray[5];
+let randomThemeKey = themeArray[2];
 
 // chose a palette randomly from the palettes object
 let chosenPalette = palettes[randomThemeKey];
