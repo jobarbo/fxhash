@@ -2,7 +2,7 @@
 // put global settings here if needed
 
 //* COMPOSITION TYPE DEFINITION *//
-// CATEGORISE VARIABILITY INSIDE ARRAYS //
+// CATEGORISE VARIABILITY INSsIDE ARRAYS //
 
 const example_type = [
 	// name, probability(0-100)
