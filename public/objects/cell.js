@@ -37,31 +37,35 @@ class Cell {
 	createNoise() {
 		let nx = this.x,
 			ny = this.y,
-			a = 9,
-			sc = 0.001,
+			a = 20000,
+			a2 = 20000,
+			sc = 0.00021,
+			sc2 = 0.00021,
 			dx,
 			dy;
 
-		dx = oct3(nx, ny, sc, 1);
-		dy = oct3(nx, ny, sc, 2);
+		dx = oct4(nx, ny, sc, 3);
+		dy = oct4(ny, nx, sc2, 1);
 		nx += dx * a;
-		ny += dy * a;
+		ny += dy * a2;
 
-		dx = oct3(nx, ny, sc, 2);
-		dy = oct3(nx, ny, sc, 3);
+		dx = oct4(nx, ny, sc, 2);
+		dy = oct4(ny, nx, sc2, 0);
+		nx += dx * a2;
+		ny += dy * a2;
+
+		dx = oct4(nx, ny, sc, 1);
+		dy = oct4(ny, nx, sc2, 2);
 		nx += dx * a;
-		ny += dy * a;
+		ny += dy * a2;
 
-		dx = oct3(nx, ny, sc, 0);
-		dy = oct3(nx, ny, sc, 1);
-		nx += dx * a;
-		ny += dy * a;
+		let un = oct4(nx, ny, sc, 1);
+		let vn = oct4(nx, ny, sc2, 3);
 
-		//this.noise = noise(this.xoff, this.yoff);
-		//this.index = int(map(this.noise, 0.2, 0.8, 0, this.biomes.length - 1, true));
+		let u = map(un, -0.5, 0.5, -0.5, 0.5);
+		let v = map(vn, -0.5, 0.5, -0.5, 0.5);
 
-		this.noise = oct3(nx, ny, 0.001, 1);
-		this.index = int(map(this.noise, -0.5, 0.5, 0, this.biomes.length - 1, true));
+		this.index = int(map(u + v, -1, 1, 0, this.biomes.length - 1, true));
 
 		this.hue = this.biomes[this.index][0];
 		this.sat = this.biomes[this.index][1];
