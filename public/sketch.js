@@ -1,8 +1,8 @@
 let bleed = 0;
 let inc = 0.02;
 let cells = [];
-let w = Math.floor(22 * 300);
-let h = Math.floor(30 * 300);
+let w = Math.floor(16 * 300);
+let h = Math.floor(22 * 300);
 let p_d = 3;
 
 function setup() {
