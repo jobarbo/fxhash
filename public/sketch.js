@@ -1,13 +1,23 @@
 let bleed = 0;
 let inc = 0.02;
 let cells = [];
-let w = Math.floor(18 * 300);
-let h = Math.floor(24 * 300);
+let w = Math.floor(16 * 100);
+let h = Math.floor(22 * 100);
 let p_d = 3;
 
 function setup() {
-	pixelDensity(4);
-	createCanvas(w / 3, h / 3);
+	var ua = window.navigator.userAgent;
+	var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+	var webkit = !!ua.match(/WebKit/i);
+	var iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+
+	// if Safari mobile or any smartphone browser, use pixelDensity(0.5) to make the canvas bigger, else use pixelDensity(3.0)
+	if (iOSSafari || (iOS && !iOSSafari) || (!iOS && !ua.match(/iPad/i) && ua.match(/Mobile/i))) {
+		pixelDensity(2);
+	} else {
+		pixelDensity(3);
+	}
+	createCanvas(w, h);
 	noLoop();
 	colorMode(HSB, 360, 100, 100, 100);
 	background(10, 0, 10, 100);
@@ -20,7 +30,7 @@ function setup() {
 
 	// have a cell width unit that is relative to the width of the screen
 	// cellWidth is always equal to 1 pixel relative to the width of the screen
-	let cellWidth = 2;
+	let cellWidth = 1;
 	let cellHeight = cellWidth;
 	console.log('cellWidth: ' + cellWidth);
 	console.log('cellHeight: ' + cellHeight);
