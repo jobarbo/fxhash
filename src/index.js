@@ -170,18 +170,16 @@ let palettes = {
 // choose a random key from the palettes object
 // chose a random key from the key array using math.random
 let themeArray = Object.keys(palettes);
-let randomThemeKey = themeArray[2];
+let randomThemeKey = themeArray[4];
 
 // chose a palette randomly from the palettes object
 let chosenPalette = palettes[randomThemeKey];
 // create an array of the chosen palette colors withouth the name
 let paletteArr = Object.values(palettes[randomThemeKey]);
-console.log(paletteArr);
 // chose a random number of mountains between 2 and 5
 
 window.$fxhashFeatures = {
 	// chose a random palette from the palettes object in vanilla JS
-	palette: chosenPalette,
 	biome: randomThemeKey,
 	biomeColorList: paletteArr,
 };

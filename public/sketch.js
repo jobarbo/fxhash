@@ -26,24 +26,17 @@ function setup() {
 	noiseSeed(fxrand() * 10000);
 
 	let palette = window.$fxhashFeatures.biomeColorList;
-	console.log(palette);
 
 	// have a cell width unit that is relative to the width of the screen
 	// cellWidth is always equal to 1 pixel relative to the width of the screen
 	let cellWidth = 1;
 	let cellHeight = cellWidth;
-	console.log('cellWidth: ' + cellWidth);
-	console.log('cellHeight: ' + cellHeight);
 
 	//	calculates the number of cells that can fit in the screen according to cellWidth and cellHeight
 	let cellCountX = width / cellWidth;
 	let cellCountY = height / cellHeight;
 
-	console.log('cellCountX: ' + cellCountX);
-	console.log('cellCountY: ' + cellCountY);
-
 	let margin = cellWidth * 0;
-	console.log(margin);
 
 	// create a grid of cells that fill the sreen and is relative to the width and height of the screen
 	//noiseDetail(5, 0.55);
@@ -63,7 +56,6 @@ function setup() {
 	}, 0);
 
 	let t1 = performance.now();
-	console.log('Call to doSomething took ' + (t1 - t0) + ' milliseconds.');
 
 	// make a bleed around the canvas that match the cellWidth and cellHeight
 	let bleed = cellWidth * 0;

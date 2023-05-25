@@ -7,9 +7,6 @@ class Cell {
 		this.w = w - margin;
 		this.h = h - margin;
 
-		//console.log(`this.w: ${this.w}`);
-		//console.log(`this.h: ${this.h}`);
-
 		this.xoff = xoff;
 		this.yoff = yoff;
 
