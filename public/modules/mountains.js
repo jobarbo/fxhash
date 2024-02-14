@@ -1,18 +1,5 @@
 class Mountains {
-	constructor(
-		ID,
-		color,
-		position,
-		mountainHeight,
-		index,
-		indexMax,
-		satOffset,
-		brightOffset,
-		skyColor,
-		skySatOffset,
-		skyBrightOffset,
-		sunPos
-	) {
+	constructor(ID, color, position, mountainHeight, index, indexMax, satOffset, brightOffset, skyColor, skySatOffset, skyBrightOffset, sunPos) {
 		this.mtnID = ID;
 		this.mtnTotal = indexMax;
 		this.satOffset = satOffset;
@@ -31,7 +18,7 @@ class Mountains {
 		this.height = (mountainHeight * this.div) / indexMax;
 		this.textureNum = $fxhashFeatures.mountain_texture.count;
 		this.backgroundTextureNum = this.textureNum * 1;
-		this.mask = '';
+		this.mask = "";
 
 		this.bgTextureDone = false;
 		this.fgTextureDone = false;
@@ -51,14 +38,14 @@ class Mountains {
 		this.skyHue = hue(skyColor);
 		this.skySaturation = constrain(saturation(skyColor) + this.skySatOffset, 10, 100);
 		this.skyBrightness = constrain(brightness(skyColor) + this.skyBrightOffset, 10, 100);
-		this.skyAlpha = 10;
+		this.skyAlpha = 100;
 		this.reflectionAngle = 0;
 		this.rYoff = random(10000);
 		this.rXoff = random(10000);
 	}
 
 	draw() {
-		console.log('draw() called');
+		console.log("draw() called");
 		this.started = true;
 		console.log(`'draw' started for mtnID: ${this.mtnID}`);
 		// make a custom shape using beginShape() and endShape() and noise();
@@ -170,7 +157,7 @@ class Mountains {
 			count++;
 		}
 		this.bgTextureDone = true;
-		console.log('bgTextureDone');
+		console.log("bgTextureDone");
 	}
 
 	*drawForegroundTexture() {
@@ -182,13 +169,7 @@ class Mountains {
 
 			// change the value of yBleed to change the height of the texture with perlins noise
 			let yBleed = map(noise(this.rYoff), 0, 1, 20, this.height * 1.5);
-			let xBleed = map(
-				noise(this.rXoff),
-				0,
-				1,
-				$fxhashFeatures.mountain_texture.xBleedMin,
-				$fxhashFeatures.mountain_texture.xBleedMax
-			);
+			let xBleed = map(noise(this.rXoff), 0, 1, $fxhashFeatures.mountain_texture.xBleedMin, $fxhashFeatures.mountain_texture.xBleedMax);
 			this.rYoff += 0.2;
 			this.rXoff += 0.1;
 			let density = map(this.mtnID, 1, 5, 0.2, 0.05);
@@ -212,7 +193,7 @@ class Mountains {
 					let x2 = map(noise(xoff), 0, 1, 0 - xBleed, 0 + xBleed);
 					//let y2 = map(noise(yoff), 0, 1, 0 - yBleed, 0 + yBleed);
 					let y2 = map(skewed, 0, 1, -20, yEnd);
-					let sw = map(y2, 0, this.height, 2, 0.1);
+					let sw = map(y2, 0, this.height, 0.52, 0.05);
 					/*
 					this.mask.strokeWeight(sw);
 					this.mask.stroke(this.skyHue, this.skySaturation, this.skyBrightness, this.skyAlpha);
@@ -231,7 +212,7 @@ class Mountains {
 			this.mask.pop();
 		}
 		this.fgTextureDone = true;
-		console.log('fgTextureDone');
+		console.log("fgTextureDone");
 	}
 
 	*drawOutline() {
@@ -260,10 +241,10 @@ class Mountains {
 			lineAlpha -= 5;
 		}
 		this.outlineTextureDone = true;
-		console.log('outlineTextureDonse');
+		console.log("outlineTextureDonse");
 	}
 	drawMask() {
-		this.mask.drawingContext.globalCompositeOperation = 'destination-in';
+		this.mask.drawingContext.globalCompositeOperation = "destination-in";
 
 		this.mask.noStroke();
 		this.mask.fill(this.hue, this.saturation, this.brightness, this.alpha);

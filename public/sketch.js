@@ -66,7 +66,7 @@ function setup() {
 				clearInterval(drawMountainInterval);
 				mtnDone = true;
 				var endTime = performance.now();
-				console.log('mountain draw time: ' + (endTime - startTime) + 'ms');
+				console.log("mountain draw time: " + (endTime - startTime) + "ms");
 			}
 		} else {
 			if (!mountains[i].started) {
