@@ -58,6 +58,7 @@ function setup() {
 }
 
 function draw() {
+	//pick
 	// at each second, draw the background
 	//background(210, 23, 12, 90);
 	vol = mic.getLevel();
