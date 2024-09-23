@@ -17,7 +17,7 @@
 
 let palettes = {
 	// name of the palette
-	'Damp Highland': {
+	"Damp Highland": {
 		// array of colors
 		mountain: [16, 59, 76],
 		sun: [43, 42, 98],
@@ -26,49 +26,49 @@ let palettes = {
 		ground: [59, 56, 43],
 	},
 	// another palette
-	'Rain Forest': {
+	"Rain Forest": {
 		mountain: [134, 23, 37],
 		sun: [42, 20, 85],
 		sea: [123, 17, 45],
 		sky: [101, 9, 71],
 		ground: [20, 59, 69],
 	},
-	'Northern Ridge': {
+	"Northern Ridge": {
 		mountain: [186, 21, 52],
 		sun: [46, 58, 81],
 		sea: [192, 76, 21],
 		sky: [88, 9, 76],
 		ground: [54, 76, 59],
 	},
-	'Scorched Land': {
+	"Scorched Land": {
 		mountain: [357, 89, 72],
 		sun: [30, 98, 97],
 		sea: [171, 74, 47],
 		sky: [154, 39, 75],
 		ground: [19, 87, 98],
 	},
-	'Arid Cliff': {
+	"Arid Cliff": {
 		mountain: [37, 99, 95],
 		sun: [45, 43, 98],
 		sea: [168, 81, 58],
 		sky: [143, 41, 38],
 		ground: [14, 89, 93],
 	},
-	'Vapor Fjord': {
+	"Vapor Fjord": {
 		mountain: [191, 81, 50],
 		sun: [19, 74, 96],
 		sea: [172, 60, 51],
 		sky: [347, 73, 86],
 		ground: [141, 18, 67],
 	},
-	'Fiji Shrubland': {
+	"Fiji Shrubland": {
 		mountain: [159, 54, 49],
 		sun: [34, 55, 98],
 		sea: [95, 12, 76],
 		sky: [91, 12, 82],
 		ground: [5, 29, 85],
 	},
-	'Sakura Steppe': {
+	"Sakura Steppe": {
 		mountain: [177, 76, 55],
 		sun: [39, 50, 96],
 		sea: [159, 25, 60],
@@ -78,16 +78,16 @@ let palettes = {
 };
 let MountainTextureStyle = {
 	// name of the texture
-	'Smooth Shading': {
+	"Smooth Shading": {
 		xBleedMin: 20,
 		xBleedMax: 40,
 		count: 25000,
 	},
-	'Corduroy Insanity': {
+	/* 	'Corduroy Insanity': {
 		xBleedMin: 6,
 		xBleedMax: 14,
 		count: 25000,
-	},
+	}, */
 	/* 'Basic Shading': {
 		xBleedMin: 20,
 		xBleedMax: 40,
@@ -106,7 +106,7 @@ let chosenPalette = palettes[randomThemeKey];
 let mountainNum = Math.floor(Math.random() * 4) + 2;
 // chose a between 0.009 and 0.03
 
-let mountainXoffIteratorArr = [0.001, 0.003, 0.005, 0.007, 0.01, 0.015, 0.02, 0.025, 0.03];
+let mountainXoffIteratorArr = [0.005, 0.007, 0.01, 0.015, 0.02, 0.025, 0.03];
 let mountainXoffIterator = mountainXoffIteratorArr[Math.floor(Math.random() * mountainXoffIteratorArr.length)];
 
 let mountainTextureNameArray = Object.keys(MountainTextureStyle);

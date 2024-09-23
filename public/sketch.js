@@ -32,7 +32,7 @@ function setup() {
 	let sunPosition = sun.getSunPosition();
 
 	// draw the mountains
-	let mtnPos = height * random(0.7, 0.9);
+	let mtnPos = height * random(0.6, 0.8);
 	let mtnHeight = random(height / 2, height / 1.1);
 	let mtnNum = window.$fxhashFeatures.mountain_num;
 	let mtnID = 1;
